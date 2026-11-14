@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From 1 to 1,024 · Erdo Deshiant Garnaby</title>
+<meta name="description" content="From HR to Community Development: Creating Impact Beyond Organizational Boundaries. Talk oleh Erdo Deshiant Garnaby, Founder OD.ID.">
+<meta name="theme-color" content="#FAF7F2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAF7F2; --card:#FFFFFF; --line:#ECE5DA;
+  --ink:#16171C; --ink2:#55514A; --mute:#8C877F;
+  --od:#FF914D; --od-deep:#C2561A; --od-soft:#FFE6D6;
+  --night:#16171C; --night2:#22242B; --nightline:#33353D;
+  --ease:cubic-bezier(.22,.8,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--paper);overflow:hidden;font-family:'Plus Jakarta Sans',system-ui,Arial,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+body.is-dark{background:var(--night)}
+body{transition:background .6s var(--ease)}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:1}
+#stage{position:relative;width:1920px;height:1080px;flex:none;transform-origin:center center}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .6s var(--ease),visibility 0s linear .6s}
+.slide.active{opacity:1;visibility:visible;transition:opacity .6s var(--ease),visibility 0s}
+.slide.dark{color:#F5F3F0}
+.abs{position:absolute}
+[data-step]{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+[data-step].in{opacity:1;transform:none}
+[data-step].fade{transform:none}
+[data-step].from-right{transform:translateX(80px)}
+[data-step].from-right.in{transform:none}
+[data-out]{transition:opacity .5s var(--ease),transform .5s var(--ease)}
+[data-out].gone{opacity:0!important;transform:translateY(-16px)!important;pointer-events:none}
+
+/* type */
+.mark{font-size:26px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--od-deep);display:flex;gap:18px;align-items:center}
+.mark b{display:inline-flex;align-items:center;justify-content:center;min-width:64px;height:40px;padding:0 14px;border-radius:999px;background:var(--od);color:var(--ink);font-size:22px;letter-spacing:.06em}
+.dark .mark{color:var(--od)}
+.h1{font-size:132px;font-weight:800;line-height:1;letter-spacing:-.04em}
+.h2{font-size:72px;font-weight:800;line-height:1.05;letter-spacing:-.03em}
+.en{font-size:28px;font-style:italic;font-weight:400;color:var(--mute);margin-top:12px}
+.dark .en{color:#9C978F}
+.lead{font-size:34px;line-height:1.4;color:var(--ink2)}
+.dark .lead{color:#B9B4AA}
+.od{color:var(--od)}
+.od-deep{color:var(--od-deep)}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:0 10px 40px rgba(22,23,28,.06)}
+.dark .card{background:var(--night2);border-color:var(--nightline);box-shadow:none}
+.photo{object-fit:cover;border-radius:20px;display:block;background:#ddd}
+.pill{display:inline-flex;align-items:center;gap:12px;padding:14px 28px;border-radius:999px;font-weight:700;font-size:28px;text-decoration:none}
+.pill.primary{background:var(--od);color:var(--ink)}
+.pill.ghost{border:2px solid var(--ink);color:var(--ink)}
+
+/* slide 1 */
+.dotgrid circle{transition:fill .5s var(--ease),stroke .5s var(--ease),r .5s var(--ease)}
+.dotgrid .e{fill:none;stroke:#3A3C44;stroke-width:3}
+.dotgrid .one{fill:var(--od);stroke:none}
+.dotgrid.lit circle{fill:var(--od);stroke:none}
+#grp.full{left:0!important;width:1920px!important}
+
+/* slide 2 timeline */
+.tl-line{position:absolute;left:183px;top:452px;height:4px;width:0;background:var(--od);border-radius:4px;transition:width 1s var(--ease)}
+.tl-base{position:absolute;left:183px;top:452px;height:4px;width:1554px;background:var(--line);border-radius:4px}
+.tl-node{position:absolute;top:438px;width:32px;height:32px;margin-left:-16px;border-radius:50%;background:var(--paper);border:4px solid var(--od)}
+.tl-node.now{background:var(--od);box-shadow:0 0 0 10px var(--od-soft)}
+.tl-card{position:absolute;top:510px;width:206px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.logo-tile{height:104px;border-radius:14px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;padding:14px}
+.logo-tile img{max-width:100%;max-height:100%;object-fit:contain}
+.tl-card h3{font-size:24px;font-weight:800;line-height:1.15}
+.tl-card p{font-size:22px;line-height:1.35;color:var(--ink2)}
+.tag-now{align-self:flex-start;font-size:20px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--od);color:var(--ink);padding:6px 14px;border-radius:999px}
+
+/* chips */
+.chip{position:absolute;height:96px;display:flex;align-items:center;padding:0 30px;font-size:30px;font-weight:700;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:0 6px 24px rgba(22,23,28,.05)}
+.chip::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--od);margin-right:18px;flex:none}
+
+.cap{position:absolute;font-size:22px;font-weight:600;color:var(--ink2)}
+.year{position:absolute;font-size:56px;font-weight:800;letter-spacing:-.03em;line-height:1}
+
+/* formula */
+.fcard{position:absolute;top:340px;width:300px;height:240px;padding:30px;display:flex;flex-direction:column;gap:12px;border-top:6px solid var(--od)}
+.fcard h3{font-size:34px;font-weight:800;line-height:1.1}
+.fcard p{font-size:24px;line-height:1.35;color:var(--ink2)}
+.plus{position:absolute;top:420px;width:41px;text-align:center;font-size:52px;font-weight:800;color:var(--od)}
+.ben{position:absolute;font-size:40px;font-weight:800}
+
+/* closing network */
+.net line{stroke:var(--od);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s var(--ease)}
+.net.on line{stroke-dashoffset:0}
+.net .w1{stroke-width:3.5;opacity:.95}
+.net .w2{stroke-width:2.8;opacity:.75;transition-delay:1s}
+.net .w3{stroke-width:2.2;opacity:.55;transition-delay:2s}
+.net circle{fill:var(--od);stroke:var(--night);stroke-width:4}
+
+/* chrome */
+#bar{position:fixed;left:0;bottom:0;height:4px;background:var(--od);width:0;z-index:5;transition:width .5s var(--ease)}
+#hud{position:fixed;right:20px;bottom:16px;z-index:6;display:flex;gap:10px;align-items:center;font-size:14px;color:var(--mute);font-weight:600}
+#hud button{all:unset;cursor:pointer;width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.75);border:1px solid var(--line);color:var(--ink);font-size:18px}
+body.is-dark #hud button{background:rgba(34,36,43,.8);border-color:var(--nightline);color:#F5F3F0}
+#hud .count{min-width:56px;text-align:center}
+#hint{position:fixed;left:20px;bottom:16px;z-index:6;font-size:13px;color:var(--mute);transition:opacity .6s}
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:42vh;overflow:auto;z-index:7;background:rgba(22,23,28,.94);color:#F5F3F0;padding:22px 28px 64px;font-size:17px;line-height:1.55;white-space:pre-wrap;transform:translateY(100%);transition:transform .4s var(--ease)}
+#notes.open{transform:none}
+#notes h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--od);margin-bottom:8px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="viewport"><div id="stage">
+
+<!-- 1 · COVER -->
+<section class="slide dark" data-title="Sendirian" data-notes="BUKA (0:00–1:00)
+
+(Slide: satu titik oranye di antara titik kosong.) Selamat malam. Pernahkah teman-teman merasa sendirian? Terutama dalam profesi. Satu-satunya di kantor yang mengerjakan hal itu, dan tidak ada yang benar-benar paham. Saya pernah. Lama.
+
+[KLIK] Tapi tahun ini, saya punya 1.024 teman seprofesi.
+
+Di sini siapa yang punya grup WhatsApp di atas 1.000 anggota? Grup apa? (tanggapi spontan)
+🎤 “Grup keluarga saya baru 30 orang, tapi sudah ribut tiap pagi soal stiker Selamat Pagi.”
+
+[KLIK] Nama saya Erdo. Sepuluh menit ke depan, saya mau cerita bagaimana saya bisa sampai From 1 to 1,024.
+
+[KLIK] (Foto berganti ke foto bersama peserta OD Summit 2026.) Ini 1.024 itu, sebagian dari mereka, malam itu.
+
+[KLIK] (Foto membesar layar penuh. Jeda 2 detik, biarkan ruangan melihatnya.)">
+  <p class="abs mark" style="left:128px;top:128px" data-out="2">Pernah merasa…</p>
+  <p class="abs h1" style="left:128px;top:184px;font-size:200px;letter-spacing:-.05em" data-out="2">Sendirian.</p>
+  <svg class="abs dotgrid" id="grid1" style="left:128px;top:440px" width="896" height="336" viewBox="0 0 896 336" data-out="2" aria-label="96 titik kosong dengan satu titik oranye"></svg>
+  <p class="abs lead" style="left:128px;top:820px;width:1000px" data-out="2">…terutama dalam profesi Anda?</p>
+  <p class="abs fade" style="left:1100px;top:470px;width:700px;font-size:44px;font-weight:700;color:#B9B4AA" data-step="1" data-out="2">Tahun ini:</p>
+  <p class="abs fade" style="left:1100px;top:530px;width:700px;font-size:220px;font-weight:800;letter-spacing:-.05em;line-height:1;color:var(--od)" data-step="1" data-out="2">1.024</p>
+  <p class="abs fade" style="left:1100px;top:760px;width:700px;font-size:60px;font-weight:800" data-step="1" data-out="2">seprofesi.</p>
+
+  <img class="abs fade" src="assets/01_cover_odid_kaos.jpg" alt="Pria berkaos OD.ID mengangkat kedua tangan, dilihat dari belakang" style="left:1240px;top:0;width:680px;height:1080px;object-fit:cover" data-step="2" data-out="3">
+  <img class="abs fade" id="grp" src="assets/01b_group_summit.jpg" alt="Foto bersama seluruh peserta OD Summit 2026 di dalam bioskop" style="left:1240px;top:0;width:680px;height:1080px;object-fit:cover;transition:opacity .9s var(--ease),left 1.3s var(--ease),width 1.3s var(--ease)" data-step="3">
+  <div class="abs fade" style="left:1240px;top:0;width:10px;height:1080px;background:var(--od)" data-step="2" data-out="4"></div>
+  <img class="abs" src="assets/logo_odid_dark.png" alt="OD.ID" style="left:128px;top:170px;height:92px" data-step="2" data-out="4">
+  <h1 class="abs h1" style="left:128px;top:320px;width:1100px;font-size:124px;white-space:nowrap" data-step="2" data-out="4">From <span class="od">1</span> to <span class="od">1,024</span></h1>
+  <p class="abs" style="left:128px;top:630px;width:1040px;font-size:40px;font-weight:700" data-step="2" data-out="4">From HR to Community Development</p>
+  <p class="abs lead" style="left:128px;top:690px;width:1040px" data-step="2" data-out="4">Creating Impact Beyond Organizational Boundaries</p>
+  <p class="abs mark" style="left:128px;top:860px" data-step="2" data-out="4">Erdo Deshiant Garnaby · Founder OD.ID</p>
+  <div class="abs fade" style="left:0;top:700px;width:1920px;height:380px;background:linear-gradient(to top,rgba(10,10,12,.85),rgba(10,10,12,0))" data-step="4"></div>
+  <p class="abs fade" style="left:128px;top:940px;width:1664px;font-size:52px;font-weight:800;letter-spacing:-.02em" data-step="4">1.024 orang seprofesi. <span class="od">OD Summit 2026.</span></p>
+</section>
+
+<!-- 2 · CAREER TIMELINE -->
+<section class="slide" data-title="Latar belakang" data-notes="LATAR BELAKANG (1:00–2:30) · cerita, slide hanya pengingat.
+
+Keluarga besar dari Badran, Jogja. Di keluarga kami, UGM itu semacam default setting. Saya sempat ikut UM UGM, tapi tidak saya ambil, dan malah “diekspor” ke Bandung.
+🎤 Medali perak OSN Biologi: “Di keluarga kami, perak Biologi itu bukan prestasi, itu tiket otomatis ke Farmasi.”
+Yang paling sukses di keluarga Badran kuliah Farmasi UGM (seniornya Mbak Tami). Ibu keluar dari Badran, kuliah di IKIP (sekarang UNY), katanya sempat diterima Teknik Nuklir UGM. Adik dari Manajemen UNY akhirnya masuk FEB UGM, di tahun yang sama dengan kakaknya.
+
+[KLIK] Kerja di lab Pharos: product development dan production. [KLIK] Lalu Nestlé: quality assurance dan production.
+[KLIK] Yang menarik justru bukan formulanya, tapi organisasinya: strategi beda, culture beda, cara berorganisasi beda.
+[KLIK] Itu yang membuat saya ambil master Industrial Engineering, dibimbing Prof. Yassierli, sekarang Menteri Ketenagakerjaan.
+🎤 “Jadi kalau dulu revisi tesis saya banyak, sekarang saya maklum. Beliau memang terbiasa mengurus tenaga kerja satu Indonesia.”
+[KLIK] Lalu saya switch career ke konsultan: FMC. [KLIK] Dwidaya World Wide. [KLIK] Tigaraksa Satria. [KLIK] Dan sekarang, ALTO Network.">
+  <p class="abs mark" style="left:128px;top:128px"><b>02</b> Latar belakang</p>
+  <div class="abs" style="left:128px;top:186px;width:1664px">
+    <h2 class="h2">Dari laboratorium ke organisasi</h2>
+    <p class="en">From the lab to the organization</p>
+  </div>
+  <div class="tl-base"></div>
+  <div class="tl-line" id="tlLine"></div>
+  <div class="tl-node" style="left:183px"></div>
+  <div class="tl-node" style="left:405px" data-step="1"></div>
+  <div class="tl-node" style="left:627px" data-step="2"></div>
+  <div class="tl-node" style="left:849px" data-step="4"></div>
+  <div class="tl-node" style="left:1071px" data-step="5"></div>
+  <div class="tl-node" style="left:1293px" data-step="6"></div>
+  <div class="tl-node" style="left:1515px" data-step="7"></div>
+  <div class="tl-node now" style="left:1737px" data-step="8"></div>
+
+  <div class="tl-card card" style="left:80px;"><div class="logo-tile"><img src="assets/logo_itb.png" alt="Logo ITB"></div><h3>Farmasi</h3></div>
+  <div class="tl-card card" style="left:302px;" data-step="1"><div class="logo-tile"><img src="assets/logo_pharos.png" alt="Logo Pharos"></div><h3>Product Development &amp; Production</h3></div>
+  <div class="tl-card card" style="left:524px;" data-step="2"><div class="logo-tile"><img src="assets/logo_nestle.png" alt="Logo Nestlé"></div><h3>Quality Assurance &amp; Production</h3></div>
+  <div class="tl-card card" style="left:746px;" data-step="4"><div class="logo-tile"><img src="assets/logo_itb.png" alt="Logo ITB"></div><h3>Master Industrial Engineering</h3></div>
+  <div class="tl-card card" style="left:968px;" data-step="5"><div class="logo-tile"><img src="assets/logo_fmc.jpg" alt="Logo FMC"></div><h3>Switching career in consulting</h3></div>
+  <div class="tl-card card" style="left:1190px;" data-step="6"><div class="logo-tile"><img src="assets/logo_dwidaya.jpg" alt="Logo Dwidaya World Wide"></div><h3>Dwidaya World Wide</h3></div>
+  <div class="tl-card card" style="left:1412px;" data-step="7"><div class="logo-tile"><img src="assets/logo_tigaraksa.jpg" alt="Logo PT Tigaraksa Satria Tbk"></div><h3>Tigaraksa Satria</h3></div>
+  <div class="tl-card card" style="left:1634px;border:2px solid var(--od);" data-step="8"><div class="logo-tile"><img src="assets/logo_alto.png" alt="Logo ALTO"></div><h3>ALTO Network</h3><span class="tag-now">Sekarang</span></div>
+
+  <p class="abs" style="left:128px;top:300px;width:1664px;text-align:right;font-size:30px;font-weight:700;color:var(--ink2)" data-step="3" data-out="4">Dua organisasi: <span class="od-deep">strategi, culture, dan organisasi</span> yang berbeda.</p>
+</section>
+
+<!-- 3 · WEF + WHAT IS OD -->
+<section class="slide" data-title="OD itu apa sih?" data-notes="PEMICU + OD ITU APA (2:30–3:45)
+
+2018, saya baca laporan WEF Future of Jobs.
+[KLIK] Nomor 9: Organisational Development Specialists. Profesi yang membuat saya sendirian justru diramal tumbuh.
+🎤 “Kalau ramalannya benar, saya harus siap. Kalau salah, setidaknya saya punya teman senasib.”
+
+[KLIK] OD itu apa sih? Merancang organisasi supaya strategi bisa jalan. Sebagai konsultan, portofolio saya: Job Evaluation, Workload Analysis [KLIK] Organization Design, Culture [KLIK] Strategic Planning, Leadership Framework.
+🎤 (opsional) “Tiap saya bilang kerja di OD, responsnya: Oh, OB ya? Bisa minta tolong fotokopi?”
+Kembali ke korporasi, jabatan OD masih digabung: OD-PD, OD-TM. 🎤 “Seperti anak kos: punya kamar, tapi namanya tidak ada di kartu keluarga.” Maka saya mulai cari teman.">
+  <p class="abs mark" style="left:128px;top:128px"><b>03</b> Pemicu · WEF Future of Jobs 2018</p>
+  <div class="abs" style="left:128px;top:186px;width:1664px">
+    <h2 class="h2">OD masuk 10 besar. Tapi OD itu apa sih?</h2>
+  </div>
+  <div class="abs card" style="left:128px;top:300px;width:640px;height:640px;padding:10px">
+    <img src="assets/03_wef_2018.jpg" alt="Infografis WEF The Jobs Landscape in 2022, nomor 9 Organisational Development Specialists" style="width:620px;height:620px;object-fit:contain;border-radius:16px">
+  </div>
+  <div class="abs" style="left:420px;top:643px;width:236px;height:28px;border:4px solid var(--od);border-radius:8px;box-shadow:0 0 0 6px rgba(255,145,77,.25)" data-step="1"></div>
+  <p class="abs" style="left:840px;top:310px;width:952px;font-size:38px;font-weight:800;line-height:1.25" data-step="1"><span class="od-deep">#9 Organisational Development Specialists</span>, diramal tumbuh sampai 2022.</p>
+  <p class="abs lead" style="left:840px;top:450px;width:952px;font-size:30px" data-step="2">OD merancang organisasi supaya strategi bisa jalan. Portofolio saya sebagai konsultan:</p>
+  <div class="chip" style="left:840px;top:580px;width:462px" data-step="2">Job Evaluation</div>
+  <div class="chip" style="left:1330px;top:580px;width:462px" data-step="2">Workload Analysis</div>
+  <div class="chip" style="left:840px;top:700px;width:462px" data-step="3">Organization Design</div>
+  <div class="chip" style="left:1330px;top:700px;width:462px" data-step="3">Culture</div>
+  <div class="chip" style="left:840px;top:820px;width:462px" data-step="4">Strategic Planning</div>
+  <div class="chip" style="left:1330px;top:820px;width:462px" data-step="4">Leadership Framework</div>
+  <p class="abs" style="left:128px;top:980px;width:1664px;font-size:20px;color:var(--mute)">Sumber: World Economic Forum, The Future of Jobs Report 2018.</p>
+</section>
+
+<!-- 4 · EVENTS + SPEAKER -->
+<section class="slide" data-title="From Event to Speaker" data-notes="DARI GRUP KE EVENT (3:45–4:45)
+
+Agustus 2020: bikin grup WhatsApp, ajak 39 orang pertama satu per satu lewat LinkedIn. Pandemi bikin semua orang fasih webinar.
+Dari Zoom kami berani bertemu: board game bersama TNYI di Bandung, [KLIK] belajar di Paragon Corp, [KLIK] sampai nobar bareng HR ITB.
+🎤 “Komunitas HR itu unik. Diajak nonton film saja, pulangnya bahas employee engagement tokoh utamanya.”
+[KLIK] Lalu yang tidak saya rencanakan: saya mulai diundang bicara. Direktorat pemerintah, Kemenkes, kampus, meetup HR, sampai panel hrX.
+🎤 “Dulu menjelaskan pekerjaan saya ke keluarga butuh lima menit. Sekarang saya malah diundang untuk menjelaskannya selama satu jam.”">
+  <p class="abs mark" style="left:128px;top:128px"><b>04</b> Komunitas bergerak</p>
+  <div class="abs" style="left:128px;top:186px;width:1664px"><h2 class="h2">From Event to Speaker</h2></div>
+  <img class="abs photo" src="assets/04a_tnyi_bandung.jpg" alt="OD.ID bersama TNYI di Bandung" style="left:128px;top:290px;width:480px;height:280px">
+  <img class="abs photo" src="assets/04b_tnyi_flipchart.jpg" alt="Sesi flipchart insights" style="left:628px;top:290px;width:200px;height:280px">
+  <img class="abs photo" src="assets/04c_paragon.jpg" alt="OD.ID bersama Paragon Corp" style="left:848px;top:290px;width:480px;height:280px" data-step="1">
+  <img class="abs photo" src="assets/04d_nobar_hr_itb.jpg" alt="Nobar bersama HR ITB" style="left:1348px;top:290px;width:444px;height:280px" data-step="2">
+  <p class="cap" style="left:128px;top:586px">OD.ID × TNYI · Bandung</p>
+  <p class="cap" style="left:848px;top:586px" data-step="1">OD.ID × Paragon Corp</p>
+  <p class="cap" style="left:1348px;top:586px" data-step="2">Nobar bersama HR ITB</p>
+  <p class="abs" style="left:128px;top:650px;width:1664px;font-size:38px;font-weight:800" data-step="3">Lalu saya mulai <span class="od-deep">diundang bicara.</span></p>
+  <img class="abs photo" src="assets/04e_speaker_dkst.jpg" alt="Berbicara di Directorate for Science and Technology" style="left:128px;top:716px;width:220px;height:220px;border-radius:16px" data-step="3">
+  <img class="abs photo" src="assets/04f_speaker_kemenkes_data_culture.jpg" alt="Developing Data Culture in Organization bersama Kemenkes" style="left:369px;top:716px;width:220px;height:220px;border-radius:16px" data-step="3">
+  <img class="abs photo" src="assets/04g_speaker_kelas.jpg" alt="Bersama mahasiswa di kelas" style="left:610px;top:716px;width:220px;height:220px;border-radius:16px" data-step="3">
+  <img class="abs photo" src="assets/04h_speaker_bhayangkara.jpg" alt="Berbicara di Universitas Bhayangkara Jakarta Raya, 4 Agustus 2026" style="left:851px;top:716px;width:220px;height:220px;border-radius:16px;object-position:46% 50%" data-step="3">
+  <img class="abs photo" src="assets/04i_speaker_hrstories.jpg" alt="HR Stories Meetup di Garuda Spark" style="left:1092px;top:716px;width:220px;height:220px;border-radius:16px" data-step="3">
+  <img class="abs photo" src="assets/04j_speaker_upskilling_talks.jpg" alt="Upskilling Talks" style="left:1333px;top:716px;width:220px;height:220px;border-radius:16px" data-step="3">
+  <img class="abs photo" src="assets/04k_speaker_hrx_panel.jpg" alt="Panel hrX Indonesia 2025" style="left:1574px;top:716px;width:218px;height:220px;border-radius:16px" data-step="3">
+</section>
+
+<!-- 5 · SUMMIT TIMELINE -->
+<section class="slide" data-title="OD Summit" data-notes="OD SUMMIT (4:45–5:30)
+
+2022 gathering di kafe. [KLIK] 2023 Summit bersama Akrivia HCM. [KLIK] 2024 di Dispusip. [KLIK] 2025 di PPM Manajemen. [KLIK] 2026 The Grand Voyage, di bioskop.
+🎤 “Tiap tahun venue-nya naik kelas: kafe, ballroom, kampus, bioskop. Tahun depan, kalau ada yang punya stadion, DM saya.”
+[KLIK → foto 2026 membesar ke slide berikutnya]">
+  <p class="abs mark" style="left:128px;top:128px"><b>05</b> Tatap muka</p>
+  <div class="abs" style="left:128px;top:186px;width:1664px"><h2 class="h2">OD Summit, dari tahun ke tahun</h2></div>
+  <img class="abs photo" src="assets/05a_2022_gathering_kafe.jpg" alt="Gathering di kafe 2022" style="left:128px;top:300px;width:316px;height:460px">
+  <p class="year" style="left:128px;top:786px;color:var(--mute)">2022</p><p class="cap" style="left:128px;top:856px">Gathering di kafe</p>
+  <img class="abs photo" src="assets/05b_summit_2023.jpg" alt="OD.ID Summit 2023" style="left:465px;top:300px;width:316px;height:460px" data-step="1">
+  <p class="year" style="left:465px;top:786px" data-step="1">2023</p><p class="cap" style="left:465px;top:856px" data-step="1">Bersama Akrivia HCM</p>
+  <img class="abs photo" src="assets/05c_summit_2024.jpg" alt="OD.ID Summit 2024 di Dispusip" style="left:802px;top:300px;width:316px;height:460px" data-step="2">
+  <p class="year" style="left:802px;top:786px" data-step="2">2024</p><p class="cap" style="left:802px;top:856px" data-step="2">Di Dispusip</p>
+  <img class="abs photo" src="assets/05d_summit_2025.jpg" alt="OD.ID Summit 2025 di PPM Manajemen" style="left:1139px;top:300px;width:316px;height:460px" data-step="3">
+  <p class="year" style="left:1139px;top:786px" data-step="3">2025</p><p class="cap" style="left:1139px;top:856px" data-step="3">Di PPM Manajemen</p>
+  <img class="abs photo" id="s26a" src="assets/05e_summit_2026_panggung.jpg" alt="OD Summit 2026 The Grand Voyage di bioskop" style="left:1476px;top:300px;width:316px;height:460px;outline:6px solid var(--od);outline-offset:-6px" data-step="4">
+  <p class="year od" style="left:1476px;top:786px" data-step="4">2026</p><p class="cap" style="left:1476px;top:856px" data-step="4">The Grand Voyage, di bioskop</p>
+</section>
+
+<!-- 6 · SUMMIT 2026 ZOOM -->
+<section class="slide dark" data-title="OD Summit 2026" data-notes="OD SUMMIT 2026 (5:30–6:00)
+
+(Foto 2026 membesar.) Di panggung ini kami umumkan: grup WhatsApp kami 1.024. Penuh. Kami tidak berhenti mengajak orang, WhatsApp yang berhenti menampung.
+[KLIK] Sampai diliput media. Di Summit ini juga lahir sub-komunitas PD.ID, TM.ID, CB.ID, IR.ID, plus chapter sektor dan lokal.">
+  <p class="abs mark" style="left:128px;top:128px">OD Summit 2026 · The Grand Voyage</p>
+  <img class="abs photo" id="s26b" src="assets/05e_summit_2026_panggung.jpg" alt="Panggung OD Summit 2026 di bioskop, layar menampilkan Erdo sebagai Founder OD.ID" style="left:128px;top:200px;width:1060px;height:630px;outline:6px solid var(--od);outline-offset:-6px">
+  <p class="abs" style="left:128px;top:860px;width:1060px;font-size:34px;font-weight:700">Di dalam bioskop. Grup WhatsApp kami resmi penuh: <span class="od">1.024</span>.</p>
+  <img class="abs photo from-right" src="assets/06_berita_suara_utama.jpg" alt="Berita Suara Utama 9 Agustus 2026: Pemimpin Organisasi Menemukan Arah Baru di Tengah Perubahan" style="left:1230px;top:128px;width:562px;height:730px;border-radius:18px" data-step="1">
+  <p class="abs fade" style="left:1230px;top:880px;width:562px;font-size:22px;color:#9C978F" data-step="1">Diliput Suara Utama, 9 Agustus 2026</p>
+</section>
+
+<!-- 7 · FORMULA -->
+<section class="slide" data-title="Professional Networking Formula" data-notes="RUMUS NETWORKING (6:00–7:45)
+
+LinkedIn untuk personal branding, [KLIK] platform (WA, Telegram, Discord), [KLIK] event online, [KLIK] event offline, [KLIK] socmed dan website. [KLIK] Contohnya orgdev.id, silakan scan.
+🎤 “Networking itu seperti antibiotik: dosis kecil, rutin, dan jangan berhenti di tengah jalan.”
+[KLIK] Manfaatnya: ilmu, pengalaman, opportunity. [KLIK] Tapi niat saya dari awal: jembatan silaturahmi, menghubungkan orang. Dan silaturahmi itu membuka rezeki.
+Cerita nyata: beasiswa TNYI berawal dari Mbak Shafii; pekerjaan sekarang dari referensi praktisi OD; posisi kosong di tim terisi dari komunitas; pengganti saya dan bawahan saya di kantor lama juga dari komunitas; banyak teman dapat kerja dari info grup.
+🎤 “OD.ID mungkin satu-satunya grup WhatsApp yang lebih sering kirim lowongan kerja daripada ucapan selamat pagi.”
+Semoga ini juga membuka peluang untuk teman-teman di sini: riset, project, atau karier.">
+  <p class="abs mark" style="left:128px;top:128px"><b>07</b> Yang bisa Anda tiru</p>
+  <div class="abs" style="left:128px;top:186px;width:1664px"><h2 class="h2" style="font-size:58px">Professional Networking Formula<br><span class="od-deep">for Community Development</span></h2></div>
+  <div class="fcard card" style="left:128px"><h3>LinkedIn</h3><p>Personal branding, cari dan ajak orang</p></div>
+  <p class="plus" style="left:428px" data-step="1">+</p>
+  <div class="fcard card" style="left:469px" data-step="1"><h3>Platform</h3><p>WhatsApp, Telegram, Discord</p></div>
+  <p class="plus" style="left:769px" data-step="2">+</p>
+  <div class="fcard card" style="left:810px" data-step="2"><h3>Event online</h3><p>Webinar dan sharing session</p></div>
+  <p class="plus" style="left:1110px" data-step="3">+</p>
+  <div class="fcard card" style="left:1151px" data-step="3"><h3>Event offline</h3><p>Gathering sampai Summit</p></div>
+  <p class="plus" style="left:1451px" data-step="4">+</p>
+  <div class="fcard card" style="left:1492px" data-step="4"><h3>Socmed &amp; web</h3><p>Instagram, YouTube, website</p></div>
+  <div class="abs card" style="left:128px;top:610px;width:300px;height:300px;padding:16px" data-step="5"><img src="assets/07_qr_orgdev.png" alt="QR orgdev.id" style="width:266px;height:266px"></div>
+  <p class="abs mark" style="left:460px;top:640px" data-step="5">Contoh</p>
+  <a class="abs" href="https://orgdev.id" target="_blank" rel="noopener" style="left:460px;top:690px;font-size:68px;font-weight:800;color:var(--od-deep);text-decoration:none" data-step="5">orgdev.id</a>
+  <p class="abs lead" style="left:460px;top:790px;width:440px;font-size:26px" data-step="5">Scan untuk melihat semua kanal OD.ID</p>
+  <div class="abs" style="left:960px;top:610px;width:6px;height:300px;background:var(--od);border-radius:6px" data-step="6"></div>
+  <p class="abs mark" style="left:1000px;top:614px" data-step="6">Manfaatnya</p>
+  <p class="ben" style="left:1000px;top:680px" data-step="6">Ilmu</p>
+  <p class="ben" style="left:1264px;top:680px" data-step="6">Pengalaman</p>
+  <p class="ben" style="left:1528px;top:680px" data-step="6">Opportunity</p>
+  <p class="ben od-deep" style="left:1000px;top:790px" data-step="7">Silaturahmi</p>
+  <p class="ben od-deep" style="left:1264px;top:790px" data-step="7">Koneksi</p>
+  <p class="ben od-deep" style="left:1528px;top:790px" data-step="7">Rezeki</p>
+</section>
+
+<!-- 8 · CTA -->
+<section class="slide" data-title="Go Global Community" data-notes="AJAKAN (7:45–8:30)
+
+Rabu, 18 November: Post Event OD Summit 2026 bersama Stories of Asia, From HR to Community Development, bersama Sam Neo dan Miranda Meng. Go Global Community: semoga makin banyak praktisi HR Indonesia berkarier di regional dan global. Silakan scan QR sekarang, sebelum saya ganti slide. (Beri 5–10 detik.)">
+  <div class="abs card" style="left:128px;top:128px;width:800px;height:824px;padding:14px;display:flex;align-items:center;justify-content:center"><img src="assets/08_poster_post_event_v3.jpg" alt="Poster Post Event OD Summit 2026: From HR to Community Development, pembicara Sam Neo, Miranda Meng dan Erdo Deshiant Garnaby, Rabu 18 November 2026, 19.00–21.00 WIB, Jakarta, di tiket.com Wisma Barito Pacific II" style="max-width:100%;max-height:100%;border-radius:12px"></div>
+  <p class="abs mark" style="left:1000px;top:140px">Post Event OD Summit 2026</p>
+  <h2 class="abs h2" style="left:1000px;top:196px;width:800px;font-size:70px">Go Global Community</h2>
+  <p class="abs" style="left:1000px;top:380px;width:792px;font-size:42px;font-weight:800">Rabu, 18 November 2026</p>
+  <p class="abs lead" style="left:1000px;top:442px;width:792px">19.00–21.00 WIB · Jakarta</p>
+  <div class="abs card" style="left:1000px;top:540px;width:300px;height:300px;padding:16px"><img src="assets/08_qr_daftar_luma.png" alt="QR pendaftaran luma.com/cdfvmknd" style="width:266px;height:266px"></div>
+  <p class="abs mark" style="left:1340px;top:580px">Daftar di</p>
+  <a class="abs pill primary" href="https://luma.com/cdfvmknd" target="_blank" rel="noopener" style="left:1340px;top:630px">luma.com/cdfvmknd →</a>
+</section>
+
+<!-- 9 · CLOSING -->
+<section class="slide dark" data-title="Connecting the dots" data-notes="PENUTUP (8:30–9:30) · pelan, banyak jeda.
+
+Enam tahun lalu saya kira saya satu-satunya. Jadi kalau ada yang merasa sendirian di profesinya…
+[KLIK] …sebenarnya Anda tidak sendiri. (titik-titik mulai terhubung; biarkan animasi selesai)
+[KLIK] Mungkin belum terkoneksi. Orangnya ada, hanya belum saling kenal, sama seperti 39 orang pertama yang saya ajak satu per satu.
+[KLIK] Atau, ini kesempatan pertama Anda untuk menginisiasi. Connecting the dots.
+Buat grupnya. Ajak satu orang, lalu satu lagi. Siapa tahu, enam tahun lagi, grup Anda yang penuh.
+[KLIK] Terima kasih.">
+  <svg class="abs net" id="net" style="left:1000px;top:190px" width="792" height="700" viewBox="0 0 792 700" aria-label="Titik-titik oranye yang perlahan saling terhubung">
+    <g>
+      <line class="w1" pathLength="1" x1="396" y1="350" x2="250" y2="220"/><line class="w1" pathLength="1" x1="396" y1="350" x2="540" y2="200"/><line class="w1" pathLength="1" x1="396" y1="350" x2="620" y2="380"/><line class="w1" pathLength="1" x1="396" y1="350" x2="520" y2="540"/><line class="w1" pathLength="1" x1="396" y1="350" x2="270" y2="520"/><line class="w1" pathLength="1" x1="396" y1="350" x2="150" y2="360"/><line class="w1" pathLength="1" x1="396" y1="350" x2="420" y2="230"/>
+      <line class="w2" pathLength="1" x1="250" y1="220" x2="120" y2="120"/><line class="w2" pathLength="1" x1="250" y1="220" x2="420" y2="230"/><line class="w2" pathLength="1" x1="420" y1="230" x2="400" y2="80"/><line class="w2" pathLength="1" x1="540" y1="200" x2="400" y2="80"/><line class="w2" pathLength="1" x1="540" y1="200" x2="700" y2="120"/><line class="w2" pathLength="1" x1="620" y1="380" x2="740" y2="300"/><line class="w2" pathLength="1" x1="520" y1="540" x2="720" y2="560"/><line class="w2" pathLength="1" x1="520" y1="540" x2="560" y2="660"/><line class="w2" pathLength="1" x1="270" y1="520" x2="330" y2="650"/><line class="w2" pathLength="1" x1="150" y1="360" x2="40" y2="420"/><line class="w2" pathLength="1" x1="270" y1="520" x2="120" y2="600"/>
+      <line class="w3" pathLength="1" x1="120" y1="120" x2="60" y2="240"/><line class="w3" pathLength="1" x1="60" y1="240" x2="40" y2="420"/><line class="w3" pathLength="1" x1="40" y1="420" x2="120" y2="600"/><line class="w3" pathLength="1" x1="120" y1="600" x2="330" y2="650"/><line class="w3" pathLength="1" x1="330" y1="650" x2="560" y2="660"/><line class="w3" pathLength="1" x1="560" y1="660" x2="720" y2="560"/><line class="w3" pathLength="1" x1="720" y1="560" x2="740" y2="300"/><line class="w3" pathLength="1" x1="740" y1="300" x2="700" y2="120"/><line class="w3" pathLength="1" x1="700" y1="120" x2="400" y2="80"/><line class="w3" pathLength="1" x1="400" y1="80" x2="120" y2="120"/>
+    </g>
+    <g>
+      <circle cx="396" cy="350" r="22"/><circle cx="250" cy="220" r="14"/><circle cx="540" cy="200" r="14"/><circle cx="620" cy="380" r="14"/><circle cx="520" cy="540" r="14"/><circle cx="270" cy="520" r="14"/><circle cx="150" cy="360" r="14"/><circle cx="420" cy="230" r="14"/><circle cx="120" cy="120" r="12"/><circle cx="400" cy="80" r="12"/><circle cx="700" cy="120" r="12"/><circle cx="740" cy="300" r="12"/><circle cx="720" cy="560" r="12"/><circle cx="560" cy="660" r="12"/><circle cx="330" cy="650" r="12"/><circle cx="120" cy="600" r="12"/><circle cx="40" cy="420" r="12"/><circle cx="60" cy="240" r="12"/>
+    </g>
+  </svg>
+  <div class="abs" style="left:128px;top:120px;width:900px;display:flex;flex-direction:column;gap:22px">
+    <p style="font-size:56px;font-weight:700;line-height:1.12;color:#9C978F">Jika merasa Sendiri dalam Profesi</p>
+    <p style="font-size:68px;font-weight:800;line-height:1.08;letter-spacing:-.02em" data-step="1">Sebenarnya Anda tidak sendiri.</p>
+    <p style="font-size:68px;font-weight:800;line-height:1.08;letter-spacing:-.02em" data-step="2">Mungkin belum terkoneksi,</p>
+    <p style="font-size:78px;font-weight:800;line-height:1.04;letter-spacing:-.035em;color:var(--od)" data-step="3">atau kesempatan pertama Anda menginisiasi.</p>
+  </div>
+  <p class="abs mark fade" style="left:1000px;top:910px;width:792px;justify-content:flex-end" data-step="3">Connecting the dots</p>
+  <img class="abs fade" src="assets/logo_odid_dark.png" alt="OD.ID" style="left:128px;top:880px;height:64px" data-step="4">
+  <p class="abs fade" style="left:390px;top:886px;font-size:40px;font-weight:700" data-step="4">Terima kasih.</p>
+</section>
+
+</div></div>
+
+<div id="bar"></div>
+<div id="hint">← → atau klik untuk lanjut · N catatan · F layar penuh</div>
+<div id="hud"><button id="prevBtn" aria-label="Sebelumnya">‹</button><span class="count" id="count">1 / 9</span><button id="nextBtn" aria-label="Berikutnya">›</button><button id="notesBtn" aria-label="Catatan pembicara">N</button><button id="fsBtn" aria-label="Layar penuh">⤢</button></div>
+<div id="notes" aria-live="polite"><h4 id="notesTitle"></h4><div id="notesBody"></div></div>
+
+<script>
+(()=>{
+  const stage=document.getElementById('stage');
+  const slides=[...document.querySelectorAll('.slide')];
+  let si=0, step=0;
+
+  // dot grid on slide 1
+  const g=document.getElementById('grid1'); let html='';
+  for(let r=0;r<6;r++)for(let c=0;c<16;c++){const one=(r===2&&c===9);html+=`<circle cx="${28+c*56}" cy="${28+r*56}" r="${one?15:12}" class="${one?'one':'e'}"/>`;}
+  g.innerHTML=html;
+
+  function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`scale(${s})`;return s;}
+  addEventListener('resize',fit); let scale=fit();
+  addEventListener('resize',()=>{scale=fit()});
+
+  const maxStep=s=>{let m=0;s.querySelectorAll('[data-step],[data-out]').forEach(e=>{m=Math.max(m,+(e.dataset.step||0),+(e.dataset.out||0))});return m};
+
+  function hooks(s,st){
+    if(s.contains(g)){ g.classList.toggle('lit',st>=1); s.querySelector('#grp').classList.toggle('full',st>=4); }
+    const line=s.querySelector('#tlLine');
+    if(line){const pts=[0,222,444,444,666,888,1110,1332,1554];line.style.width=pts[Math.min(st,8)]+'px';}
+    const net=s.querySelector('#net'); if(net) net.classList.toggle('on',st>=1);
+  }
+
+  function render(){
+    slides.forEach((s,i)=>s.classList.toggle('active',i===si));
+    const s=slides[si];
+    s.querySelectorAll('[data-step]').forEach(e=>e.classList.toggle('in',step>=+e.dataset.step));
+    s.querySelectorAll('[data-out]').forEach(e=>e.classList.toggle('gone',step>=+e.dataset.out));
+    hooks(s,step);
+    document.body.classList.toggle('is-dark',s.classList.contains('dark'));
+    document.getElementById('count').textContent=`${si+1} / ${slides.length}`;
+    const total=slides.reduce((a,x)=>a+maxStep(x)+1,0);
+    const done=slides.slice(0,si).reduce((a,x)=>a+maxStep(x)+1,0)+step+1;
+    document.getElementById('bar').style.width=(done/total*100)+'%';
+    document.getElementById('notesTitle').textContent=`${si+1} · ${s.dataset.title||''}`;
+    document.getElementById('notesBody').textContent=s.dataset.notes||'';
+    history.replaceState(null,'',`#${si+1}`);
+    bg.intensity = s.classList.contains('dark')?1:.8;
+  }
+
+  function go(i,st){ if(i<0||i>=slides.length) return; si=i; step=st; render(); }
+  function next(){const m=maxStep(slides[si]); if(step<m){step++;render();} else if(si<slides.length-1){ if(slides[si].querySelector('#s26a')){const ra=document.getElementById('s26a').getBoundingClientRect(); si++;step=0;render();flipFrom(ra);} else go(si+1,0);} }
+  function prev(){ if(step>0){step--;render();} else if(si>0){ go(si-1,maxStep(slides[si-1])); } }
+  function flipFrom(ra){
+    const b=document.getElementById('s26b'); const rb=b.getBoundingClientRect();
+    const sx=ra.width/rb.width, sy=ra.height/rb.height, dx=(ra.left-rb.left)/scale, dy=(ra.top-rb.top)/scale;
+    b.style.transition='none'; b.style.transformOrigin='0 0';
+    b.style.transform=`translate(${dx}px,${dy}px) scale(${sx},${sy})`;
+    b.getBoundingClientRect();
+    requestAnimationFrame(()=>{b.style.transition='transform .9s cubic-bezier(.22,.8,.24,1)';b.style.transform='none';});
+  }
+
+  addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();next();}
+    else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();prev();}
+    else if(e.key==='n'||e.key==='N'){toggleNotes();}
+    else if(e.key==='f'||e.key==='F'){toggleFs();}
+    else if(e.key==='Home'){go(0,0);} else if(e.key==='End'){go(slides.length-1,maxStep(slides.at(-1)));}
+  });
+  document.getElementById('viewport').addEventListener('click',e=>{ if(e.target.closest('a')) return; (e.clientX<innerWidth*0.2)?prev():next(); });
+  let tx=null; addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+  addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx; if(Math.abs(d)>40){d<0?next():prev();} tx=null;},{passive:true});
+  document.getElementById('nextBtn').onclick=e=>{e.stopPropagation();next()};
+  document.getElementById('prevBtn').onclick=e=>{e.stopPropagation();prev()};
+  const notes=document.getElementById('notes');
+  function toggleNotes(){notes.classList.toggle('open')}
+  document.getElementById('notesBtn').onclick=e=>{e.stopPropagation();toggleNotes()};
+  function toggleFs(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.()}
+  document.getElementById('fsBtn').onclick=e=>{e.stopPropagation();toggleFs()};
+  setTimeout(()=>document.getElementById('hint').style.opacity=0,6000);
+
+  // background: drifting dots that connect when near (subtle)
+  const cv=document.getElementById('bg'), ctx=cv.getContext('2d');
+  const bg={intensity:.8}; window.bg=bg;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W,H,P=[];
+  function size(){const d=devicePixelRatio||1;W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);
+    const n=Math.round(Math.min(70,Math.max(30,W*H/26000)));
+    P=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:1.4+Math.random()*1.8}));}
+  size(); addEventListener('resize',size);
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    const dark=document.body.classList.contains('is-dark');
+    const k=bg.intensity, maxD=150;
+    for(const p of P){ if(!reduce){p.x+=p.vx;p.y+=p.vy;} if(p.x<-20)p.x=W+20; if(p.x>W+20)p.x=-20; if(p.y<-20)p.y=H+20; if(p.y>H+20)p.y=-20; }
+    for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){
+      const a=P[i],b=P[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);
+      if(d<maxD){ctx.strokeStyle=`rgba(255,145,77,${(1-d/maxD)*(dark?.22:.18)*k})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+    }
+    for(const p of P){ctx.fillStyle=`rgba(255,145,77,${(dark?.45:.35)*k})`;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();}
+    requestAnimationFrame(frame);
+  }
+  frame();
+
+  const h=parseInt(location.hash.slice(1)); if(h>=1&&h<=slides.length){si=h-1;}
+  render();
+})();
+</script>
+</body>
+</html>

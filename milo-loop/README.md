@@ -2,11 +2,12 @@
 
 MBA UGM Marketing Management, BPR pitch by Erdo Deshiant Garnaby (NIM 50755).
 
-- `index.html`: the deck (8 slides, ~3 minutes) and the game host. Open on the projector.
+- `index.html`: the deck (3 slides, ~3 minutes: hook, live BPR game, closing) and the game host. Open on the projector.
+- `FIP_Erdo_50755_KK_TNYI.pdf`: the full marketing-plan paper, downloadable from the closing slide (button and QR).
 - `play.html`: the phone controller. Players reach it by scanning the QR on the deck.
 
 ## Presenter keys
-→ / Space next · ← back · N speaker notes · T 3:00 timer · F full screen · S start round (slide 7) · R reset
+→ / Space next · ← back · N speaker notes · T 3:00 timer · F full screen · S start round (slide 2) · R reset
 
 ## How the game works
 Up to 15 players. Each gets a role in the circular supply chain: farmer, factory operator, distributor truck,

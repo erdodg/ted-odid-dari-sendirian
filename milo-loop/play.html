@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#123524">
+<title>Close the Loop · Pemain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#123524;--bg2:#1B4632;--cream:#FAF6F0;--ink:#123524;--gold:#F7C948;--or:#FF7A45;--soft:#B9CDBF;--line:#2E5A43}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--cream);font-family:'Plus Jakarta Sans',system-ui,sans-serif;overscroll-behavior:none;touch-action:none;user-select:none;-webkit-user-select:none}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
+.hidden{display:none!important}
+h1{font-size:34px;line-height:1.05;margin:8px 0 8px;font-weight:800;letter-spacing:-.5px}
+.eyebrow{font-size:13px;letter-spacing:2px;font-weight:800;color:var(--gold)}
+p{margin:0;line-height:1.4}
+.lead{color:var(--soft);font-size:16px}
+#join{justify-content:center;gap:16px;touch-action:auto}
+#join input{width:100%;font:inherit;font-size:20px;padding:16px;border-radius:14px;border:2px solid var(--line);background:var(--bg2);color:var(--cream);outline:none;touch-action:auto;user-select:text;-webkit-user-select:text}
+#join input:focus{border-color:var(--gold)}
+.btn{font:inherit;font-weight:800;font-size:20px;padding:16px;border-radius:14px;border:0;background:var(--gold);color:var(--ink);width:100%}
+.btn:disabled{opacity:.5}
+.status{font-size:14px;color:var(--soft);min-height:20px}
+.loop{display:flex;gap:6px;flex-wrap:wrap;font-size:24px}
+/* game */
+#game{gap:10px}
+.top{display:flex;align-items:center;gap:12px}
+.av{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;border:3px solid var(--cream);flex:none}
+.who{flex:1;min-width:0}
+.who .n{font-weight:800;font-size:19px;line-height:1.15}
+.who .r{font-size:13px;color:var(--soft)}
+.timer{font-weight:800;font-size:28px;color:var(--gold);min-width:56px;text-align:right}
+.task{font-size:14px;color:var(--soft);background:var(--bg2);border-radius:12px;padding:10px 12px}
+.hint{font-size:19px;font-weight:800;background:var(--cream);color:var(--ink);border-radius:14px;padding:14px;min-height:56px;display:flex;align-items:center}
+.carry{font-size:14px;color:var(--soft);min-height:18px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--bg2);border-radius:12px;padding:8px;text-align:center}
+.stat b{display:block;font-size:22px}
+.stat span{font-size:11px;color:var(--soft)}
+.pad{flex:1;display:flex;gap:14px;align-items:stretch;min-height:200px}
+#stick{flex:1.2;position:relative;border-radius:24px;background:var(--bg2);border:2px dashed var(--line);touch-action:none}
+#stick .base{position:absolute;width:150px;height:150px;border-radius:50%;border:3px solid var(--line);left:50%;top:50%;transform:translate(-50%,-50%)}
+#knob{position:absolute;width:76px;height:76px;border-radius:50%;background:var(--cream);left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 6px 18px rgba(0,0,0,.35)}
+#stick .lbl{position:absolute;bottom:10px;width:100%;text-align:center;font-size:12px;color:var(--soft)}
+#act{flex:1;border:0;border-radius:24px;background:var(--or);color:#fff;font:inherit;font-weight:800;font-size:30px;box-shadow:0 8px 0 #B9481F;touch-action:none}
+#act:active,#act.on{transform:translateY(6px);box-shadow:0 2px 0 #B9481F}
+.phase{font-size:13px;text-align:center;color:var(--gold);font-weight:700}
+.banner{position:fixed;left:12px;right:12px;top:12px;background:#C4500F;color:#fff;padding:10px 12px;border-radius:12px;font-size:14px;font-weight:700;z-index:9}
+</style>
+</head>
+<body>
+<section id="join" class="screen">
+  <p class="eyebrow">NESTLÉ · MILO ISI ULANG</p>
+  <h1>Close the Loop</h1>
+  <p class="lead">Kamu akan jadi satu mata rantai pasok MILO: dari kebun, pabrik, truk, warung, rumah, sampai kemasannya kembali dan diisi ulang.</p>
+  <div class="loop" aria-hidden="true">🌱 → 🏭 → 🚚 → 🏪 → 🧒 → 🛵 → ♻️ → 🏭</div>
+  <input id="name" maxlength="14" placeholder="Nama panggilan" autocomplete="off" enterkeyhint="go">
+  <button id="go" class="btn" disabled>Menghubungkan…</button>
+  <p id="jstatus" class="status"></p>
+</section>
+
+<section id="game" class="screen hidden">
+  <div class="top">
+    <div id="av" class="av">🚚</div>
+    <div class="who"><div id="rname" class="n">Peran</div><div id="pname" class="r"></div></div>
+    <div id="timer" class="timer">–</div>
+  </div>
+  <p id="task" class="task"></p>
+  <div id="hint" class="hint">Menunggu…</div>
+  <div id="carry" class="carry"></div>
+  <div class="stats">
+    <div class="stat"><b id="s1">0</b><span>gelas diminum</span></div>
+    <div class="stat"><b id="s2">0</b><span>kemasan kembali</span></div>
+    <div class="stat"><b id="s3">0</b><span>diisi ulang</span></div>
+  </div>
+  <p id="phase" class="phase">Latihan dulu · ronde dimulai dari layar presenter</p>
+  <div class="pad">
+    <div id="stick"><div class="base"></div><div id="knob"></div><div class="lbl">geser untuk bergerak</div></div>
+    <button id="act">AKSI</button>
+  </div>
+</section>
+<div id="banner" class="banner hidden"></div>
+
+<script src="vendor/mqtt.min.js"></script>
+<script src="js/roles.js"></script>
+<script src="js/net.js"></script>
+<script>
+(function () {
+  const D = window.LOOP_DEF;
+  const q = new URLSearchParams(location.search);
+  const room = (q.get('r') || '').toUpperCase();
+  const broker = q.has('b') ? +q.get('b') : 0;
+  const $ = (id) => document.getElementById(id);
+  let id = null, net = null, me = null, joined = false, joinTimer = null;
+  try { id = sessionStorage.getItem('loop_id_' + room); } catch (e) {}
+  if (!id) { id = window.LoopNet.rid(6); try { sessionStorage.setItem('loop_id_' + room, id); } catch (e) {} }
+  try { $('name').value = localStorage.getItem('loop_name') || ''; } catch (e) {}
+
+  if (!room) { $('go').textContent = 'Kode ruangan tidak ada'; $('jstatus').textContent = 'Scan ulang QR di layar presenter.'; return; }
+
+  function banner(t) { const b = $('banner'); if (t) { b.textContent = t; b.classList.remove('hidden'); } else b.classList.add('hidden'); }
+
+  function onMsg(m) {
+    if (!m) return;
+    if (m.t === 'st') {
+      const mine = m.p && m.p[id];
+      if (!mine && joined) { sendJoin(); return; }
+      if (mine) { if (!me || me.role !== mine[0]) setRole(mine[0], mine[1], me ? me.name : $('name').value); render(mine, m); }
+      return;
+    }
+    if (m.id !== id) return;
+    if (m.t === 'as') setRole(m.role, m.ci, m.name);
+    else if (m.t === 'who') sendJoin();
+    else if (m.t === 'full') { $('jstatus').textContent = 'Ruangan penuh (15 pemain). Tonton di layar ya!'; $('go').disabled = true; }
+  }
+
+  function setRole(role, ci, name) {
+    me = { role, ci, name };
+    joined = true; clearInterval(joinTimer);
+    const R = D.roles[role];
+    $('av').textContent = R.icon; $('av').style.background = D.colors[ci % D.colors.length];
+    $('rname').textContent = R.name; $('pname').textContent = (name || '') + ' · ' + R.en + ' · ruang ' + room;
+    $('task').textContent = R.task;
+    $('join').classList.add('hidden'); $('game').classList.remove('hidden');
+  }
+
+  let lastPh = '';
+  function render(mine, m) {
+    $('hint').textContent = mine[3];
+    $('carry').textContent = mine[2] ? 'Membawa: ' + mine[2] : (D.roles[mine[0]].vehicle ? 'Kendaraan kosong' : '');
+    $('s1').textContent = m.sc[0]; $('s2').textContent = m.sc[1]; $('s3').textContent = m.sc[2];
+    $('timer').textContent = m.ph === 'run' ? m.tl + 's' : (m.ph === 'end' ? '✓' : '–');
+    $('phase').textContent = m.ph === 'run' ? 'Ronde berjalan · kerja sama tim!' : m.ph === 'end' ? 'Selesai! Lihat hasil di layar presenter' : 'Latihan dulu · ronde dimulai dari layar presenter';
+    if (m.ph !== lastPh && m.ph === 'run' && navigator.vibrate) navigator.vibrate([80, 60, 80]);
+    lastPh = m.ph;
+    banner('');
+  }
+
+  function sendJoin() {
+    const name = ($('name').value || '').trim() || 'Pemain';
+    try { localStorage.setItem('loop_name', name); } catch (e) {}
+    net && net.send({ t: 'join', id, name });
+  }
+
+  $('go').addEventListener('click', () => {
+    if (!net) return;
+    $('go').disabled = true; $('go').textContent = 'Bergabung…';
+    sendJoin();
+    clearInterval(joinTimer);
+    joinTimer = setInterval(() => { if (!joined) sendJoin(); }, 1500);
+    setTimeout(() => { if (!joined) { $('go').disabled = false; $('go').textContent = 'Coba lagi'; $('jstatus').textContent = 'Layar presenter belum menjawab. Pastikan deck sedang terbuka.'; } }, 9000);
+  });
+  $('name').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('go').click(); });
+
+  window.LoopNet.connect({
+    room, role: 'player', broker, net: q.get('net') || '', onMsg,
+    onStatus: (s) => {
+      if (s.ok) { $('jstatus').textContent = ''; banner(''); }
+      else if (joined) banner('Koneksi terputus, menyambung ulang…');
+      else $('jstatus').textContent = 'Koneksi: ' + s.label;
+    }
+  }).then((c) => {
+    net = c;
+    if (!c) { $('go').textContent = 'Tidak bisa terhubung'; $('jstatus').textContent = 'Jaringan memblokir server game. Coba data seluler.'; return; }
+    $('go').disabled = false; $('go').textContent = 'Gabung ke rantai pasok';
+  });
+
+  /* joystick */
+  const stick = $('stick'), knob = $('knob');
+  let vx = 0, vy = 0, sentX = 0, sentY = 0, lastSend = 0, active = null;
+  function sendInput(force) {
+    const now = Date.now();
+    if (!net || !joined) return;
+    if (!force && now - lastSend < 90) return;
+    if (!force && Math.abs(vx - sentX) < 0.08 && Math.abs(vy - sentY) < 0.08) return;
+    lastSend = now; sentX = vx; sentY = vy;
+    net.send({ t: 'in', id, x: +vx.toFixed(2), y: +vy.toFixed(2) });
+  }
+  function moveTo(cx, cy) {
+    const r = stick.getBoundingClientRect();
+    const ox = r.left + r.width / 2, oy = r.top + r.height / 2;
+    let dx = cx - ox, dy = cy - oy;
+    const max = 70, d = Math.hypot(dx, dy);
+    if (d > max) { dx = dx / d * max; dy = dy / d * max; }
+    knob.style.transform = 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px))';
+    vx = dx / max; vy = dy / max;
+    sendInput(false);
+  }
+  stick.addEventListener('pointerdown', (e) => { active = e.pointerId; stick.setPointerCapture(e.pointerId); moveTo(e.clientX, e.clientY); });
+  stick.addEventListener('pointermove', (e) => { if (e.pointerId === active) moveTo(e.clientX, e.clientY); });
+  const release = (e) => { if (e.pointerId !== active) return; active = null; vx = vy = 0; knob.style.transform = 'translate(-50%,-50%)'; sendInput(true); };
+  stick.addEventListener('pointerup', release); stick.addEventListener('pointercancel', release);
+  setInterval(() => { if (vx || vy) sendInput(true); }, 400);           // resend while held, in case a message was lost
+  setInterval(() => { if (net && joined) net.send({ t: 'ping', id }); }, 5000);
+
+  const act = $('act');
+  act.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    act.classList.add('on');
+    if (net && joined) net.send({ t: 'act', id });
+    if (navigator.vibrate) navigator.vibrate(25);
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => act.addEventListener(ev, () => act.classList.remove('on')));
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+})();
+</script>
+</body>
+</html>

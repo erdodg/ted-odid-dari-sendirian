@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Close the Loop</title>
+<meta name="description" content="3-minute pitch: Nestlé's best circular-economy initiatives, the MILO Isi Ulang BPR, and a live supply-chain game for up to 15 players.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#123524;--bg2:#1B4632;--bg3:#24563F;--cream:#FAF6F0;--paper:#F3ECE1;--line:#2E5A43;--soft:#B9CDBF;--gold:#F7C948;--or:#FF7A45;--choc:#5B3A29;--blue:#4FC3F7;--ink:#123524}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0B2217;overflow:hidden;font-family:'Plus Jakarta Sans',Arial,sans-serif;color:var(--cream)}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--bg);overflow:hidden}
+.slide{position:absolute;inset:0;padding:110px 128px;opacity:0;visibility:hidden;transition:opacity .45s ease}
+.slide.active{opacity:1;visibility:visible}
+.slide.light{background:var(--paper);color:var(--ink)}
+h1{font-size:104px;line-height:1.02;letter-spacing:-2.5px;margin:0;font-weight:800}
+h2{font-size:62px;line-height:1.08;letter-spacing:-1.2px;margin:0 0 40px;font-weight:800;max-width:1500px}
+h3{font-size:30px;line-height:1.2;margin:0;font-weight:800}
+p{margin:0;font-size:30px;line-height:1.38}
+.eyebrow{font-size:24px;font-weight:800;letter-spacing:3px;color:var(--gold);margin-bottom:18px}
+.light .eyebrow{color:#C4500F}
+.sm{font-size:24px;line-height:1.38;color:var(--soft)}
+.light .sm{color:#4E5A52}
+.src{position:absolute;left:128px;right:128px;bottom:56px;font-size:20px;line-height:1.3;color:var(--soft)}
+.light .src{color:#5E6A62}
+.slide.active .rise{animation:rise .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*110ms)}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+/* chrome */
+#bar{position:absolute;left:0;bottom:0;height:8px;background:var(--gold);transition:width .4s}
+#count{position:absolute;right:40px;bottom:22px;font-size:20px;color:var(--soft);font-weight:700}
+#clock{position:absolute;right:40px;top:28px;font-size:26px;font-weight:800;color:var(--gold);display:none}
+#badge{position:absolute;right:40px;bottom:56px;width:250px;background:var(--cream);color:var(--ink);border-radius:22px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 18px 40px rgba(0,0,0,.35);transition:opacity .3s}
+#badge .q{width:210px;height:210px}
+#badge .q svg{width:100%;height:100%}
+#badge b{font-size:20px}
+#badge span{font-size:17px;color:#4E5A52;text-align:center;line-height:1.25}
+#notes{position:absolute;left:40px;right:40px;bottom:40px;background:rgba(10,24,17,.94);border:2px solid var(--gold);border-radius:18px;padding:22px 28px;font-size:26px;line-height:1.4;display:none;z-index:30;color:var(--cream)}
+#nav{position:absolute;left:40px;bottom:18px;display:flex;gap:10px;opacity:.35;transition:opacity .2s}
+#nav:hover{opacity:1}
+#nav button{font:inherit;font-weight:800;font-size:20px;border:0;border-radius:12px;padding:8px 16px;background:var(--bg3);color:var(--cream);cursor:pointer}
+
+/* s1 hero */
+.hero-text{position:absolute;left:128px;top:210px;width:820px}
+.hero-text h1{font-size:88px}
+.lede{font-size:32px;line-height:1.32;color:var(--soft);margin-top:36px}
+.by{font-size:24px;font-weight:700;margin-top:56px}
+.by span{color:var(--soft);font-weight:600}
+.hero-loop{position:absolute;left:960px;top:120px;width:700px;height:700px}
+
+/* stats */
+.stats{display:flex;gap:32px}
+.stat{flex:1;background:var(--bg2);border:2px solid var(--line);border-radius:26px;padding:48px 40px}
+.light .stat{background:#FFFDF9;border-color:#E2D8CA}
+.stat .big{font-size:100px;font-weight:800;line-height:1;letter-spacing:-2px;color:var(--gold)}
+.light .stat .big{color:#C4500F}
+.stat .lbl{font-size:28px;line-height:1.3;margin-top:20px}
+.kicker{font-size:40px;font-weight:800;line-height:1.25;margin-top:56px;max-width:1450px}
+.kicker em{font-style:normal;color:var(--gold)}
+
+/* cards grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;width:1400px}
+.card{background:#FFFDF9;border:2px solid #E2D8CA;border-radius:24px;padding:30px 30px 28px;position:relative}
+.card .n{font-size:64px;font-weight:800;letter-spacing:-1.5px;line-height:1;color:#C4500F}
+.card h3{margin-top:12px}
+.card .sm{margin-top:10px}
+.card.pick{background:var(--ink);color:var(--cream);border-color:var(--gold)}
+.card.pick .n{color:var(--gold)}
+.card.pick .sm{color:var(--soft)}
+.tag{position:absolute;top:-18px;right:24px;background:var(--gold);color:var(--ink);font-size:18px;font-weight:800;border-radius:20px;padding:4px 14px;letter-spacing:1px}
+.dark .card{background:var(--bg2);border-color:var(--line);color:var(--cream)}
+.dark .card .n{color:var(--gold)}
+.dark .card .sm{color:var(--soft)}
+.dark .card.pick{background:var(--cream);color:var(--ink);border-color:var(--gold)}
+.dark .card.pick .n{color:#C4500F}
+.dark .card.pick .sm{color:#4E5A52}
+
+/* s5 bpr */
+.bpr{display:flex;gap:40px;align-items:flex-start}
+.panel{background:var(--bg2);border:2px solid var(--line);border-radius:26px;padding:28px 30px}
+.panel h3{display:flex;align-items:center;gap:14px}
+.pill{font-size:18px;font-weight:800;padding:4px 14px;border-radius:20px;letter-spacing:1px}
+.pill.bad{background:#C4500F;color:#fff}
+.pill.good{background:var(--gold);color:var(--ink)}
+.three{display:flex;flex-direction:column;gap:14px;margin-top:20px}
+.three div{font-size:24px;line-height:1.3;padding-left:22px;border-left:5px solid var(--gold)}
+.counter{font-size:22px;color:var(--soft);margin-top:10px}
+.counter b{color:var(--or);font-size:30px}
+
+/* s6 mix */
+.mix{display:grid;grid-template-columns:1fr 1fr;gap:26px;width:1400px}
+.mx{background:#FFFDF9;border:2px solid #E2D8CA;border-radius:24px;padding:30px 34px;display:flex;gap:26px;align-items:flex-start}
+.mx .ic{font-size:54px;line-height:1}
+.mx .k{font-size:20px;font-weight:800;letter-spacing:2px;color:#C4500F}
+.mx h3{font-size:34px;margin:6px 0 8px}
+
+/* s7 game */
+.gwrap{position:absolute;left:60px;top:150px;width:1420px;height:799px;border-radius:24px;overflow:hidden;border:3px solid var(--line)}
+#cv{width:100%;height:100%;display:block}
+.ghead{position:absolute;left:64px;top:44px;width:1420px;display:flex;align-items:flex-end;justify-content:space-between}
+.ghead h2{margin:0;font-size:54px}
+#gtimer{font-size:84px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-2px}
+.gside{position:absolute;left:1510px;top:44px;width:360px;display:flex;flex-direction:column;gap:16px}
+.qbig{background:var(--cream);color:var(--ink);border-radius:22px;padding:16px;text-align:center}
+.qbig .q{width:300px;height:300px;margin:0 auto}
+.qbig .q svg{width:100%;height:100%}
+.qbig b{font-size:24px;display:block;margin-top:4px}
+.qbig span{font-size:17px;color:#4E5A52}
+.gbtns{display:flex;gap:10px}
+.gbtns button{flex:1;font:inherit;font-weight:800;font-size:22px;border:0;border-radius:14px;padding:14px 8px;cursor:pointer}
+#bStart{background:var(--or);color:#fff}
+#bReset{background:var(--bg3);color:var(--cream)}
+.gsc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gsc div{background:var(--bg2);border-radius:16px;padding:12px 14px}
+.gsc b{display:block;font-size:34px;line-height:1.1;color:var(--gold)}
+.gsc span{font-size:16px;color:var(--soft)}
+#plist{display:flex;flex-wrap:wrap;gap:6px;max-height:150px;overflow:hidden}
+#plist i{font-style:normal;font-size:16px;font-weight:700;border-radius:14px;padding:3px 10px;color:var(--ink)}
+#netst{font-size:15px;color:var(--soft)}
+.legend{position:absolute;left:60px;top:962px;width:1420px;display:flex;gap:28px;font-size:19px;color:var(--soft);flex-wrap:wrap}
+.legend i{display:inline-block;width:16px;height:16px;border-radius:50%;margin-right:8px;vertical-align:-2px}
+
+/* s8 close */
+.res{display:flex;gap:26px;width:1660px}
+.res div{flex:1;background:var(--bg2);border:2px solid var(--line);border-radius:22px;padding:28px}
+.res b{display:block;font-size:72px;font-weight:800;letter-spacing:-1.5px;line-height:1;color:var(--gold)}
+.res span{font-size:22px;color:var(--soft);display:block;margin-top:12px;line-height:1.3}
+.targets{display:flex;gap:26px;width:1660px;margin-top:26px}
+.targets div{flex:1;border-top:5px solid var(--or);padding-top:16px}
+.targets b{font-size:46px;display:block;font-weight:800}
+.targets span{font-size:22px;color:var(--soft);line-height:1.3;display:block;margin-top:6px}
+.prog{margin-top:44px;font-size:26px;line-height:1.4;color:var(--soft);max-width:1660px}
+.prog b{color:var(--cream)}
+aside{display:none}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 1 -->
+<section class="slide active" data-notes="[0:00–0:15] Selamat pagi. Saya Erdo, NIM 50755. Sebelum saya mulai, silakan scan QR di kanan bawah dan isi nama. Dalam tiga menit, kalian semua akan menjadi rantai pasok MILO, dari kebun sampai kemasannya kembali.">
+  <div class="hero-text">
+    <p class="eyebrow rise" style="--i:0">MBA UGM · MARKETING MANAGEMENT · BPR PITCH</p>
+    <h1 class="rise" style="--i:1">Close the loop on every glass of MILO</h1>
+    <p class="lede rise" style="--i:2">A business process redesign for Nestlé Indonesia's sachet, built on the circular-economy work Nestlé already does best.</p>
+    <p class="by rise" style="--i:3">Erdo Deshiant Garnaby <span>· NIM 50755 · MBA UGM Jakarta, Kelas Khusus TNYI</span></p>
+  </div>
+  <svg class="hero-loop" viewBox="-90 -30 990 860" aria-label="Animated circular supply chain">
+    <defs>
+      <path id="ring" d="M390,90 a300,300 0 1,1 -0.1,0 z"/>
+    </defs>
+    <circle cx="390" cy="390" r="300" fill="none" stroke="#24563F" stroke-width="54"/>
+    <circle cx="390" cy="390" r="300" fill="none" stroke="#F7C948" stroke-width="4" stroke-dasharray="18 22">
+      <animate attributeName="stroke-dashoffset" from="0" to="-400" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <g id="nodes"></g>
+    <g id="movers"></g>
+    <text x="390" y="372" text-anchor="middle" font-size="40" font-weight="800" fill="#FAF6F0" font-family="Plus Jakarta Sans, Arial, sans-serif">FMCG supply chain</text>
+    <text x="390" y="420" text-anchor="middle" font-size="26" font-weight="600" fill="#B9CDBF" font-family="Plus Jakarta Sans, Arial, sans-serif">farm → shelf → home → back again</text>
+  </svg>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-notes="[0:15–0:35] Masalahnya sederhana: satu gelas MILO, satu sachet, satu sampah. Indonesia memakai sekitar 67 miliar sachet setahun. Nilai materialnya cuma sekitar 0,3 sen dolar, jadi pemulung tidak mau mengambil. Dan di level grup, kemasan Nestlé yang reusable baru 0,51 persen. Daur ulang lebih banyak tidak menyelesaikan kemasan yang tidak pernah dikumpulkan.">
+  <p class="eyebrow rise" style="--i:0">THE PROBLEM</p>
+  <h2 class="rise" style="--i:1">One glass, one sachet, one piece of waste</h2>
+  <div class="stats">
+    <div class="stat rise" style="--i:2"><div class="big" data-count="67" data-suffix=" bn">0</div><p class="lbl">sachets used in Indonesia every year</p></div>
+    <div class="stat rise" style="--i:3"><div class="big">US$0.003</div><p class="lbl">material value of one small sachet, too low for waste pickers to collect</p></div>
+    <div class="stat rise" style="--i:4"><div class="big" data-count="0.51" data-dec="2" data-suffix="%">0</div><p class="lbl">of Nestlé's packaging was reusable in 2025</p></div>
+  </div>
+  <p class="kicker rise" style="--i:5">The sachet runs a <em>linear</em> process. Better recycling cannot fix a pack that nobody collects.</p>
+  <p class="src">Sources: Hogg (2024), Mismanaged Sachets, Break Free From Plastic; Food Dive (29 Sep 2026); DairyReporter (19 Mar 2026).</p>
+</section>
+
+<!-- 3 -->
+<section class="slide light" data-notes="[0:35–0:55] Nestlé global sebenarnya kuat. Tahun 2025 emisi turun 24,5 persen dari 2018, melewati target 20 persen. 27,6 persen bahan utama dari pertanian regeneratif. Plastik baru turun 28 persen. Contoh sirkular terbaik menurut saya: refill pouch kertas NESCAFÉ, kemasannya 97 persen lebih ringan dan konsumen mengisi ulang toples sendiri. Celahnya satu: reuse.">
+  <p class="eyebrow rise" style="--i:0">NESTLÉ GLOBAL · WHAT WORKS</p>
+  <h2 class="rise" style="--i:1">Strong upstream and on materials. Reuse is the gap.</h2>
+  <div class="grid">
+    <div class="card rise" style="--i:2"><div class="n">−24.5%</div><h3>GHG emissions vs 2018</h3><p class="sm">2025 result, beating the 20% target. Next: −50% by 2030, net zero by 2050.</p></div>
+    <div class="card rise" style="--i:3"><div class="n">27.6%</div><h3>Regenerative agriculture</h3><p class="sm">Share of key ingredients in 2025, above the 20% target.</p></div>
+    <div class="card rise" style="--i:4"><div class="n">−28%</div><h3>Virgin plastic</h3><p class="sm">87.5% of plastic packaging designed for recycling; about 21% recycled content.</p></div>
+    <div class="card pick rise" style="--i:5"><span class="tag">CIRCULAR PICK</span><div class="n">−97%</div><h3>NESCAFÉ paper refill pack</h3><p class="sm">Refill the glass jar at home. Pack weight down 97%, recyclable with paper.</p></div>
+    <div class="card rise" style="--i:6"><div class="n">12</div><h3>Countries with collection systems</h3><p class="sm">Covering about 10% of Nestlé's plastic footprint.</p></div>
+    <div class="card rise" style="--i:7"><div class="n">0.51%</div><h3>Reusable packaging</h3><p class="sm">Reuse and refill are still mostly pilots. That is where MILO comes in.</p></div>
+  </div>
+  <p class="src">Sources: GreenTechLead and DairyReporter on Nestlé's 2025 sustainability results (2026); Food Dive (29 Sep 2026); Packaging Europe (3 Sep 2024).</p>
+</section>
+
+<!-- 4 -->
+<section class="slide dark" data-notes="[0:55–1:15] Di Indonesia, potongan loop-nya sudah ada. Nestlé Waste Station bersama Rekosistem: 15 titik, 244 ton terkumpul sejak 2023, naik 46,5 persen di 2025, poinnya bisa ditukar voucher Alfamart. Reuse sudah diuji: refill dengan Siklus, vending Algramo, dan MILO 22 gram yang bisa dikembalikan bersama Koinpack. Plus edukasi sekolah. Masalahnya, semua ini masih program terpisah, belum satu proses dengan satu pemilik.">
+  <p class="eyebrow rise" style="--i:0">NESTLÉ INDONESIA · THE LOOP ALREADY EXISTS IN PIECES</p>
+  <h2 class="rise" style="--i:1">Collection, reuse and education are here. They are not one process yet.</h2>
+  <div class="grid">
+    <div class="card pick rise" style="--i:2"><span class="tag">CIRCULAR PICK</span><div class="n">244 t</div><h3>Nestlé Waste Station × Rekosistem</h3><p class="sm">15 points (Jakarta, Bandung, Bali, Surabaya). 126 t in 2025, +46.5%. Scan QR, earn Alfamart vouchers.</p></div>
+    <div class="card pick rise" style="--i:3"><span class="tag">CIRCULAR PICK</span><div class="n">21</div><h3>Reusable MILO 22 g with Koinpack</h3><p class="sm">Deposit-return pack at 21 outlets in South and East Jakarta (Dec 2023).</p></div>
+    <div class="card rise" style="--i:4"><div class="n">2</div><h3>Refill pilots</h3><p class="sm">Refill with Siklus in Tebet (2021); MILO and Koko Krunch vending with Algramo (2023).</p></div>
+    <div class="card rise" style="--i:5"><div class="n">14,154</div><h3>Waste Station users</h3><p class="sm">More than 14,154 users, up 44.6% year on year.</p></div>
+    <div class="card rise" style="--i:6"><div class="n">5,000</div><h3>Recycled school benches</h3><p class="sm">2025 target of "Membangun Generasi Peduli Lingkungan", with schools and waste groups.</p></div>
+    <div class="card rise" style="--i:7"><div class="n">450 m</div><h3>Plastic straws targeted</h3><p class="sm">Paper straws on NESCAFÉ ready-to-drink (2019).</p></div>
+  </div>
+  <p class="src">Sources: Katadata (7 May 2026); JPNN (15 Dec 2023); iNews (8 Sep 2021); Food Business MEA (13 Mar 2023); CNBC Indonesia (12 Jun 2025); Fimela (30 Sep 2019).</p>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-notes="[1:15–1:40] Inilah BPR-nya. Proses lama: pabrik, truk, warung, rumah, lalu sachet berakhir di TPA. Proses baru, MILO Isi Ulang: pouch refill 330 gram satu jenis plastik dengan toples MILO, MILO Kembali 22 gram dengan deposit 500 rupiah, dan kemasan kosong pulang lewat Waste Station dan warung, naik truk yang sama saat pulang. Jadi produknya tetap MILO, yang berubah prosesnya.">
+  <p class="eyebrow rise" style="--i:0">BUSINESS PROCESS REDESIGN</p>
+  <h2 class="rise" style="--i:1">From a one-way sachet to MILO Isi Ulang</h2>
+  <div class="bpr">
+    <div class="panel rise" style="--i:2;width:760px">
+      <h3><span class="pill bad">AS-IS</span> Linear sachet</h3>
+      <svg viewBox="0 0 700 420" width="700" height="420" aria-label="Linear process ending in landfill">
+        <path id="lin" d="M60,120 H640 V300 H60" fill="none" stroke="#2E5A43" stroke-width="40" stroke-linejoin="round"/>
+        <g font-size="46" text-anchor="middle" font-family="Apple Color Emoji,Segoe UI Emoji,Noto Color Emoji">
+          <text x="60" y="80">🏭</text><text x="250" y="80">🚚</text><text x="450" y="80">🏪</text><text x="640" y="80">🏠</text><text x="60" y="380">🗑️</text>
+        </g>
+        <g font-size="20" text-anchor="middle" fill="#B9CDBF" font-family="Plus Jakarta Sans, Arial, sans-serif" font-weight="700">
+          <text x="60" y="165">Factory</text><text x="250" y="165">Distributor</text><text x="450" y="165">Warung</text><text x="640" y="165">Use once</text><text x="140" y="395" text-anchor="start">Landfill, burning, leakage</text>
+        </g>
+        <g id="linMovers"></g>
+      </svg>
+      <p class="counter">Sachets dumped while this slide is open: <b id="dumped">0</b></p>
+    </div>
+    <div class="panel rise" style="--i:3;width:760px">
+      <h3><span class="pill good">TO-BE</span> MILO Isi Ulang loop</h3>
+      <svg viewBox="0 0 700 420" width="700" height="420" aria-label="Circular process with returns">
+        <path id="circ" d="M350,40 C560,40 660,120 660,210 C660,300 560,380 350,380 C140,380 40,300 40,210 C40,120 140,40 350,40 Z" fill="none" stroke="#2E5A43" stroke-width="40"/>
+        <path d="M350,40 C560,40 660,120 660,210 C660,300 560,380 350,380 C140,380 40,300 40,210 C40,120 140,40 350,40 Z" fill="none" stroke="#F7C948" stroke-width="3" stroke-dasharray="14 16">
+          <animate attributeName="stroke-dashoffset" from="0" to="-300" dur="5s" repeatCount="indefinite"/>
+        </path>
+        <g font-size="44" text-anchor="middle" font-family="Apple Color Emoji,Segoe UI Emoji,Noto Color Emoji">
+          <text x="350" y="56">🏭</text><text x="610" y="110">🚚</text><text x="610" y="350">🏪</text><text x="350" y="396">🏠</text><text x="90" y="350">🛵</text><text x="90" y="110">♻️</text>
+        </g>
+        <g font-size="19" text-anchor="middle" fill="#B9CDBF" font-family="Plus Jakarta Sans, Arial, sans-serif" font-weight="700">
+          <text x="350" y="100">Refill line</text><text x="520" y="160">Deliver</text><text x="520" y="290">Sell + deposit</text><text x="350" y="340">Use, keep pack</text><text x="185" y="290">Return</text><text x="185" y="160">Wash, backhaul</text>
+        </g>
+        <g id="circMovers"></g>
+        <text x="350" y="222" text-anchor="middle" font-size="30" font-weight="800" fill="#FAF6F0" font-family="Plus Jakarta Sans, Arial, sans-serif">same MILO,</text>
+        <text x="350" y="258" text-anchor="middle" font-size="30" font-weight="800" fill="#F7C948" font-family="Plus Jakarta Sans, Arial, sans-serif">new process</text>
+      </svg>
+      <p class="counter">Packs back in the loop: <b id="looped" style="color:#F7C948">0</b></p>
+    </div>
+  </div>
+  <div class="three" style="flex-direction:row;gap:40px;margin-top:30px">
+    <div class="rise" style="--i:4;flex:1">330 g mono-material refill pouch + reusable MILO Jar</div>
+    <div class="rise" style="--i:5;flex:1">MILO Kembali 22 g, reusable, Rp500 deposit</div>
+    <div class="rise" style="--i:6;flex:1">Returns via Waste Stations, warung and backhaul trucks</div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide light" data-notes="[1:40–2:00] Marketing mix singkatnya. Produk dinilai dengan Triple Bottom Line. Harga good-value: 2.460 rupiah per gelas, lima persen lebih murah dari sachet, plus deposit 500 yang kembali. Distribusi hijau: truk yang sama membawa kemasan kosong pulang. Komunikasinya: Isi Energi, Kurangi Sampah, lewat event olahraga sekolah MILO. Sekarang, mari kita coba prosesnya bersama.">
+  <p class="eyebrow rise" style="--i:0">MARKETING MIX</p>
+  <h2 class="rise" style="--i:1">Greener only works if it is also cheaper and easier</h2>
+  <div class="mix">
+    <div class="mx rise" style="--i:2"><div class="ic">🌍</div><div><div class="k">PRODUCT · TRIPLE BOTTOM LINE</div><h3>Planet, People, Profit</h3><p class="sm">Fewer packs per serving; low-income buyers not priced out; packaging cost spread over many servings.</p></div></div>
+    <div class="mx rise" style="--i:3"><div class="ic">🏷️</div><div><div class="k">PRICE · GOOD-VALUE + DEPOSIT</div><h3>Rp2,460 per glass</h3><p class="sm">5% below the Rp2,580 sachet. Starter kit bundle Rp49,900. Rp500 deposit refunded on return.</p></div></div>
+    <div class="mx rise" style="--i:4"><div class="ic">🚚</div><div><div class="k">PLACE · GREEN CHANNEL</div><h3>Forward and back on one truck</h3><p class="sm">Omnichannel vertical system; Waste Stations, warung and waste banks as return points; backhaul of empties.</p></div></div>
+    <div class="mx rise" style="--i:5"><div class="ic">📣</div><div><div class="k">PROMOTION · IMC</div><h3>"Isi Energi, Kurangi Sampah"</h3><p class="sm">School sports events, QR on every pack, "10 returns = 1 free glass". Claims only after third-party audit.</p></div></div>
+  </div>
+  <p class="src">Prices are the author's proposals, to be validated with Nestlé cost data. Reference sachet price from online listings, Nov 2026.</p>
+</section>
+
+<!-- 7 -->
+<section class="slide" id="gameSlide" data-notes="[2:00–2:45] Sekarang kalian rantai pasoknya. Setiap orang dapat satu peran: petani, operator pabrik, sopir truk, warung, keluarga, kolektor, petugas Waste Station. Gerakkan karakter dengan joystick, tekan AKSI di stasiun kalian. Targetnya: sebanyak mungkin gelas diminum, dan sebanyak mungkin kemasan kembali dan diisi ulang. Saya mulai ronde 45 detik… sekarang. (Tekan S atau tombol Start.)">
+  <div class="ghead"><div><p class="eyebrow" style="margin-bottom:8px">LIVE GAME · UP TO 15 PLAYERS</p><h2>Now you are the supply chain</h2></div><div id="gtimer">45s</div></div>
+  <div class="gwrap"><canvas id="cv" width="1600" height="900"></canvas></div>
+  <div class="legend">
+    <span><i style="background:#9BC53D"></i>raw material</span><span><i style="background:#2E8B57"></i>MILO</span><span><i style="background:#C9B79C"></i>empty pack</span><span><i style="background:#4FC3F7"></i>clean pack (refill)</span><span>"auto" = no player in that role yet, it runs slowly</span>
+  </div>
+  <div class="gside">
+    <div class="qbig"><div class="q" id="qrBig"></div><b id="roomBig">Room ····</b><span>Scan, enter your name, get a role</span></div>
+    <div class="gbtns"><button id="bStart">▶ Start 45s</button><button id="bReset">Reset</button></div>
+    <div class="gsc">
+      <div><b id="gServed">0</b><span>glasses served</span></div>
+      <div><b id="gRet">0%</b><span>return rate</span></div>
+      <div><b id="gReuse">0</b><span>packs refilled</span></div>
+      <div><b id="gRev">Rp0</b><span>revenue</span></div>
+    </div>
+    <div id="netst">Connecting to game server…</div>
+    <div><b id="pcount" style="font-size:22px">0 / 15 players</b></div>
+    <div id="plist"></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-notes="[2:45–3:00] Dalam 45 detik, ruangan ini menjalankan loop yang sama dengan pilot 2027 kami: 10 juta gelas, 70 persen kemasan kembali, 1.500 outlet, anggaran 18,5 miliar, dan keputusan stage-gate di Q4 2027. Paper marketing plan sudah lengkap; langkah berikutnya validasi harga dan teks resmi Permen LHK 75/2019. Terima kasih.">
+  <p class="eyebrow rise" style="--i:0">RESULT · THIS ROOM, 45 SECONDS</p>
+  <h2 class="rise" style="--i:1">You just ran the loop. The 2027 pilot runs it at scale.</h2>
+  <div class="res rise" style="--i:2">
+    <div><b id="rServed">0</b><span>glasses of MILO served</span></div>
+    <div><b id="rRet">0</b><span>packs returned (deposit back to families)</span></div>
+    <div><b id="rRate">0%</b><span>return rate</span></div>
+    <div><b id="rReuse">0</b><span>packs refilled instead of new</span></div>
+    <div><b id="rRev">Rp0</b><span>revenue at Rp2,460 per glass</span></div>
+  </div>
+  <div class="targets rise" style="--i:3">
+    <div><b>10 million</b><span>servings moved from sachets to refill, Jabodetabek 2027</span></div>
+    <div><b>70%</b><span>return rate for MILO Kembali packs</span></div>
+    <div><b>1,500</b><span>outlets: 1,000 warung and canteens, 500 modern trade</span></div>
+    <div><b>Rp18.5 bn</b><span>pilot budget (author's estimate), Q4 2027 stage gate</span></div>
+  </div>
+  <p class="prog rise" style="--i:4"><b>Marketing plan progress:</b> paper complete (BPR, Triple Bottom Line, pricing, green channel, IMC, team, KPI). <b>Next:</b> validate prices and the ~15 t film estimate with Nestlé data; confirm the official text of Permen LHK 75/2019.</p>
+</section>
+
+<div id="badge"><div class="q" id="qrSmall"></div><b id="roomSmall">Scan to play</b><span id="badgeTxt">Join the MILO supply chain</span></div>
+<div id="clock">3:00</div>
+<div id="notes"></div>
+<div id="nav"><button id="prev">←</button><button id="next">→</button><button id="nbtn">Notes (N)</button><button id="tbtn">Timer (T)</button><button id="fbtn">Full (F)</button></div>
+<div id="bar"></div>
+<div id="count"></div>
+</div>
+
+<script src="vendor/mqtt.min.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="js/roles.js"></script>
+<script src="js/net.js"></script>
+<script src="js/game.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const stage = $('stage');
+  const slides = [...document.querySelectorAll('.slide')];
+  let cur = 0;
+
+  function fit() {
+    const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+    stage.style.transform = 'translate(' + (innerWidth - 1920 * s) / 2 + 'px,' + (innerHeight - 1080 * s) / 2 + 'px) scale(' + s + ')';
+  }
+  addEventListener('resize', fit); fit();
+
+  /* ---------- animated supply chain on slide 1 ---------- */
+  const NS = 'http://www.w3.org/2000/svg';
+  const nodes = [['🌱', 'Farm'], ['🏭', 'Factory'], ['🚚', 'Distributor'], ['🏪', 'Warung'], ['🏠', 'Home'], ['🛵', 'Collect'], ['♻️', 'Wash & refill']];
+  const gN = $('nodes');
+  nodes.forEach((n, i) => {
+    const a = -Math.PI / 2 + i * 2 * Math.PI / nodes.length;
+    const x = 390 + 300 * Math.cos(a), y = 390 + 300 * Math.sin(a);
+    const g = document.createElementNS(NS, 'g');
+    g.innerHTML = '<circle cx="' + x + '" cy="' + y + '" r="52" fill="#FAF6F0" stroke="#F7C948" stroke-width="4"/>' +
+      '<text x="' + x + '" y="' + (y + 16) + '" text-anchor="middle" font-size="46" font-family="Apple Color Emoji,Segoe UI Emoji,Noto Color Emoji">' + n[0] + '</text>' +
+      '<text x="' + (390 + 372 * Math.cos(a)) + '" y="' + (390 + 372 * Math.sin(a) + 8) + '" text-anchor="' + (Math.cos(a) > 0.3 ? 'start' : Math.cos(a) < -0.3 ? 'end' : 'middle') + '" font-size="22" font-weight="800" fill="#FAF6F0" font-family="Plus Jakarta Sans, Arial, sans-serif">' + n[1] + '</text>';
+    gN.appendChild(g);
+  });
+  function movers(gid, pathId, items, dur) {
+    const g = $(gid);
+    items.forEach((it, i) => {
+      const el = document.createElementNS(NS, 'g');
+      const shape = it.emoji
+        ? '<text text-anchor="middle" y="12" font-size="' + (it.size || 34) + '" font-family="Apple Color Emoji,Segoe UI Emoji,Noto Color Emoji">' + it.emoji + '</text>'
+        : '<rect x="-9" y="-9" width="18" height="18" rx="4" fill="' + it.color + '"/>';
+      el.innerHTML = shape + '<animateMotion dur="' + dur + 's" repeatCount="indefinite" begin="' + (-i * dur / items.length) + 's" ' + (it.once ? '' : '') + '><mpath href="#' + pathId + '"/></animateMotion>';
+      g.appendChild(el);
+    });
+  }
+  const pk = ['#9BC53D', '#2E8B57', '#2E8B57', '#2E8B57', '#C9B79C', '#C9B79C', '#4FC3F7', '#4FC3F7'];
+  movers('movers', 'ring', [{ emoji: '🚚', size: 38 }].concat(pk.map(c => ({ color: c }))).concat([{ emoji: '🛵', size: 34 }]).concat(pk.map(c => ({ color: c }))), 16);
+  movers('linMovers', 'lin', ['#2E8B57', '#2E8B57', '#2E8B57', '#2E8B57', '#2E8B57', '#2E8B57'].map(c => ({ color: c })), 7);
+  movers('circMovers', 'circ', [{ emoji: '🚚', size: 30 }, { color: '#2E8B57' }, { color: '#2E8B57' }, { color: '#C9B79C' }, { emoji: '🛵', size: 30 }, { color: '#C9B79C' }, { color: '#4FC3F7' }, { color: '#4FC3F7' }], 9);
+
+  /* ---------- count-ups and counters ---------- */
+  function countUp(sl) {
+    sl.querySelectorAll('[data-count]').forEach(el => {
+      const end = +el.dataset.count, dec = +(el.dataset.dec || 0), suf = el.dataset.suffix || '';
+      const t0 = performance.now();
+      (function f(t) { const k = Math.min(1, (t - t0) / 1200); el.textContent = (end * (1 - Math.pow(1 - k, 3))).toFixed(dec) + suf; if (k < 1) requestAnimationFrame(f); })(t0);
+    });
+  }
+  let dumped = 0, looped = 0;
+  setInterval(() => { if (cur === 4) { dumped++; looped++; $('dumped').textContent = dumped; $('looped').textContent = looped; } }, 1170);
+
+  /* ---------- navigation ---------- */
+  function go(i) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle('active', k === cur));
+    $('bar').style.width = (100 * (cur + 1) / slides.length) + '%';
+    $('count').textContent = (cur + 1) + ' / ' + slides.length;
+    $('badge').style.opacity = [4, 6, 7].includes(cur) ? 0 : 1;
+    $('notes').textContent = slides[cur].dataset.notes || '';
+    if (cur === 4) { dumped = 0; looped = 0; }
+    countUp(slides[cur]);
+    if (cur === 7) showResults();
+    try { history.replaceState(null, '', '#' + (cur + 1)); } catch (e) {}
+  }
+  addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+    const k = e.key;
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(k)) { e.preventDefault(); go(cur + 1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(k)) { e.preventDefault(); go(cur - 1); }
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(slides.length - 1);
+    else if (k === 'n' || k === 'N') toggleNotes();
+    else if (k === 't' || k === 'T') toggleClock();
+    else if (k === 'f' || k === 'F') full();
+    else if ((k === 's' || k === 'S') && cur === 6) $('bStart').click();
+    else if ((k === 'r' || k === 'R') && cur === 6) $('bReset').click();
+  });
+  function toggleNotes() { const n = $('notes'); n.style.display = n.style.display === 'block' ? 'none' : 'block'; }
+  function full() { if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+  let clockT = null;
+  function toggleClock() {
+    const c = $('clock');
+    if (clockT) { clearInterval(clockT); clockT = null; c.style.display = 'none'; return; }
+    let left = 180; c.style.display = 'block'; c.textContent = '3:00';
+    clockT = setInterval(() => { left--; c.textContent = (left < 0 ? '-' : '') + Math.floor(Math.abs(left) / 60) + ':' + String(Math.abs(left) % 60).padStart(2, '0'); c.style.color = left < 20 ? '#FF7A45' : '#F7C948'; }, 1000);
+  }
+  $('prev').onclick = () => go(cur - 1); $('next').onclick = () => go(cur + 1);
+  $('nbtn').onclick = toggleNotes; $('tbtn').onclick = toggleClock; $('fbtn').onclick = full;
+
+  /* ---------- game host ---------- */
+  function qrInto(el, url) {
+    const q = qrcode(0, 'M'); q.addData(url); q.make();
+    el.innerHTML = q.createSvgTag({ cellSize: 4, margin: 1, scalable: true });
+  }
+  let last = { served: 0, returned: 0, returnRate: 0, reused: 0, revenue: 0 };
+  const game = window.LoopHost.create({
+    canvas: $('cv'),
+    duration: 45,
+    onReady: ({ room, url }) => {
+      qrInto($('qrBig'), url); qrInto($('qrSmall'), url);
+      $('roomBig').textContent = 'Room ' + room; $('roomSmall').textContent = 'Scan to play · ' + room;
+      window.__joinUrl = url;
+    },
+    onStatus: (s) => { $('netst').textContent = s.ok ? 'Game server: ' + s.label : 'Game server: ' + s.label; },
+    onPlayers: (list) => {
+      $('pcount').textContent = list.length + ' / 15 players';
+      $('badgeTxt').textContent = list.length ? list.length + ' player' + (list.length > 1 ? 's' : '') + ' in the chain' : 'Join the MILO supply chain';
+      $('plist').innerHTML = list.map(p => '<i style="background:' + LOOP_DEF.colors[p.ci % 15] + '">' + LOOP_DEF.roles[p.role].icon + ' ' + p.name.replace(/[<>&]/g, '') + '</i>').join('');
+    },
+    onScore: (s) => {
+      $('gServed').textContent = s.served; $('gRet').textContent = s.returnRate + '%';
+      $('gReuse').textContent = s.reused; $('gRev').textContent = LoopHost.fmtRp(s.revenue);
+      $('gtimer').textContent = s.phase === 'run' ? Math.ceil(s.timeLeft) + 's' : s.phase === 'end' ? 'Done' : 'Practice';
+      if (s.phase !== 'lobby') last = s;
+    },
+    onEnd: (s) => { last = s; setTimeout(() => { if (cur === 6) go(7); }, 2500); }
+  });
+  window.__game = game;
+  $('bStart').onclick = () => game.startRound(45);
+  $('bReset').onclick = () => game.reset();
+  function showResults() {
+    const s = last;
+    $('rServed').textContent = s.served; $('rRet').textContent = s.returned; $('rRate').textContent = s.returnRate + '%';
+    $('rReuse').textContent = s.reused; $('rRev').textContent = LoopHost.fmtRp(s.revenue);
+  }
+
+  const h = parseInt((location.hash || '').slice(1), 10);
+  go(h > 0 ? h - 1 : 0);
+})();
+</script>
+</body>
+</html>

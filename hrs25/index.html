@@ -3,17 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Culture · HRS #25</title>
+<title>Learning Culture · Erdo · HRS #25</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap">
 <style>
-/* VOICE: warm, practical, talk-show energy; casual Indonesian like Erdo talks.
-   IDEA: a nursery bench — two pots, one keeps growing, one stalls. Every poll is a plant bed.
-   PICTURE: SVG pots and growing leaves on the cover; poll bars grow like stems.
-   COLOUR and TYPE: deep forest green field, paper white, sun yellow accent; Familjen Grotesk + Inter.
-   LAYOUT: fixed 16:9 stage scaled to the screen for the host; one calm column on the phone for the audience. */
-:root{--g:#0d3a2b;--g2:#15563f;--leaf:#3fb27c;--leaf2:#8fd9a8;--sun:#f5c542;--paper:#f7f6f0;--ink:#10241b;--mute:#5d6f66;
---hd:"Familjen Grotesk",system-ui,sans-serif;--bd:Inter,system-ui,sans-serif;color-scheme:light}
+/* VOICE: warm, practical talk-show energy in casual Indonesian; one speaker (Erdo).
+   IDEA: a nursery bench — some pots keep growing, some stall. Each segment is its own colour of bloom.
+   PICTURE: SVG pots with a flowering plant on the cover; poll bars grow like coloured stems.
+   COLOUR and TYPE: forest green base, coral / sky / sun / berry / leaf per segment; Familjen Grotesk + Inter.
+   LAYOUT: fluid unit --u from the viewport; landscape = 16:9 composition, portrait/phone = stacked and scrollable. */
+:root{--g:#0d3a2b;--g2:#15563f;--leaf:#3fb27c;--leaf2:#8fd9a8;--sun:#f5c542;--coral:#ff6f59;--sky:#4aa8ff;--berry:#e0457b;--teal:#17b3a3;
+--paper:#f8f6ef;--ink:#10241b;--mute:#5d6f66;--hd:"Familjen Grotesk",system-ui,sans-serif;--bd:Inter,system-ui,sans-serif;
+--u:min(calc(100vw / 1600),calc(100vh / 900));color-scheme:light}
 *{box-sizing:border-box;min-width:0}
 html,body{margin:0;height:100%}
 body{font:16px/1.5 var(--bd);background:var(--g);color:var(--paper);overflow-x:clip}
@@ -21,43 +22,48 @@ button{font:inherit;cursor:pointer}
 button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 .hidden{display:none!important}
 
-/* ---------- HOST ---------- */
-#host{position:fixed;inset:0;display:grid;place-items:center;background:#08261c}
-#stage{width:1600px;height:900px;position:relative;transform-origin:center center;overflow:hidden;border-radius:6px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
-.slide{position:absolute;inset:0;padding:80px 96px 110px;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .45s ease}
+/* ---------- HOST (fluid) ---------- */
+#host{position:fixed;inset:0;background:var(--g)}
+.slide{position:absolute;inset:0;padding:calc(var(--u)*70) calc(var(--u)*96) calc(var(--u)*110);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .45s ease;overflow:hidden;--acc:var(--leaf)}
 .slide.on{opacity:1;pointer-events:auto}
-.slide.dark{background:var(--g);color:var(--paper)}
-.slide.light{background:var(--paper);color:var(--ink)}
-.slide.sun{background:var(--sun);color:var(--ink)}
-.seg{font:600 20px/1 var(--bd);color:var(--leaf2);margin-bottom:28px}
-.light .seg,.sun .seg{color:var(--g2)}
+.dark{background:var(--g);color:var(--paper)}
+.light{background:var(--paper);color:var(--ink)}
+.coral{background:var(--coral);color:var(--ink)}.sky{background:var(--sky);color:var(--ink)}.sunb{background:var(--sun);color:var(--ink)}.berry{background:var(--berry);color:#fff}.leafb{background:var(--leaf);color:var(--ink)}
+.a-coral{--acc:var(--coral)}.a-sky{--acc:var(--sky)}.a-sun{--acc:var(--sun)}.a-berry{--acc:var(--berry)}.a-leaf{--acc:var(--leaf)}
+.light:before{content:"";position:absolute;left:0;top:0;bottom:0;width:calc(var(--u)*18);background:var(--acc)}
+.seg{font:600 calc(var(--u)*20)/1.2 var(--bd);margin-bottom:calc(var(--u)*24);display:inline-flex;align-items:center;gap:calc(var(--u)*10)}
+.seg:before{content:"";width:calc(var(--u)*14);height:calc(var(--u)*14);border-radius:50%;background:var(--acc)}
+.dark .seg{color:var(--leaf2)}
+.light .seg{color:var(--g2)}
 h1,h2,h3{font-family:var(--hd);margin:0;text-wrap:balance;letter-spacing:-.01em}
-h1{font-size:96px;line-height:1}
-h2{font-size:64px;line-height:1.05}
-h3{font-size:34px;line-height:1.15}
-.lead{font-size:30px;line-height:1.4;max-width:1100px}
+h1{font-size:calc(var(--u)*110);line-height:1}
+h2{font-size:calc(var(--u)*62);line-height:1.05}
+h3{font-size:calc(var(--u)*32);line-height:1.15}
+.lead{font-size:calc(var(--u)*28);line-height:1.4;max-width:calc(var(--u)*1150)}
+.small{font-size:calc(var(--u)*17)}
 .mute{color:var(--mute)}.dark .mute{color:#a8c7b8}
-.row{display:flex;gap:40px}
+.row{display:flex;gap:calc(var(--u)*40)}
 .grow{flex:1}
-.chrome{position:absolute;left:96px;right:96px;bottom:30px;display:flex;justify-content:space-between;align-items:center;font-size:17px;opacity:.85;z-index:2}
-.prog{position:absolute;left:0;bottom:0;height:6px;background:var(--sun);transition:width .4s}
-.chrome .pill,#cpage{background:rgba(8,38,28,.82);color:#f7f6f0;padding:8px 16px;border-radius:99px}
-.pill{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:99px;background:rgba(255,255,255,.12);font-weight:600}
-.light .pill:not(.chrome *),.sun .pill:not(.chrome *){background:rgba(13,58,43,.09)}
-.dot{width:12px;height:12px;border-radius:50%;background:#999}
-.dot.live{background:var(--leaf);box-shadow:0 0 0 0 var(--leaf);animation:pulse 1.8s infinite}
-.dot.err{background:#e5684f}
-@keyframes pulse{70%{box-shadow:0 0 0 12px rgba(63,178,124,0)}100%{box-shadow:0 0 0 0 rgba(63,178,124,0)}}
+.src{margin-top:auto;padding-top:calc(var(--u)*16);font-size:calc(var(--u)*16);opacity:.7}
+.chrome{position:fixed;left:calc(var(--u)*96);right:calc(var(--u)*96);bottom:calc(var(--u)*28);display:flex;justify-content:space-between;align-items:center;font-size:calc(var(--u)*17);z-index:5;pointer-events:none}
+.chrome>span{background:rgba(8,38,28,.85);color:#f8f6ef;padding:calc(var(--u)*8) calc(var(--u)*16);border-radius:99px;display:inline-flex;gap:calc(var(--u)*10);align-items:center;font-weight:600}
+.prog{position:fixed;left:0;bottom:0;height:calc(var(--u)*7);background:linear-gradient(90deg,var(--coral),var(--sun),var(--leaf),var(--sky),var(--berry));transition:width .4s;z-index:5}
+.dot{width:calc(var(--u)*12);height:calc(var(--u)*12);min-width:8px;min-height:8px;border-radius:50%;background:#999}
+.dot.live{background:var(--leaf);animation:pulse 1.8s infinite}
+.dot.err{background:var(--coral)}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(63,178,124,0)}0%{box-shadow:0 0 0 0 rgba(63,178,124,.7)}}
+.step{opacity:0;transform:translateY(calc(var(--u)*30));transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.step.shown{opacity:1;transform:none}
 
 /* cover */
-.cover{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;height:100%}
-.cover h1{font-size:88px;margin:18px 0 26px}
-.speakers{display:grid;grid-template-columns:1fr 1fr;gap:18px 30px;margin-top:auto;font-size:21px}
-.speakers b{display:block;font:700 26px/1.2 var(--hd);color:var(--paper)}
-.joinbox{display:flex;gap:26px;align-items:center;background:var(--paper);color:var(--ink);border-radius:22px;padding:22px;margin-top:30px}
-.joinbox canvas,.qrbig canvas{display:block;border-radius:10px;background:#fff}
-.joinbox b{font:700 30px/1.1 var(--hd)}
-.url{font:600 20px/1.3 var(--bd);word-break:break-all;color:var(--g2)}
+.cover{display:grid;grid-template-columns:1.15fr .85fr;gap:calc(var(--u)*40);height:100%}
+.cover h1{font-size:calc(var(--u)*92);margin:calc(var(--u)*14) 0 calc(var(--u)*26)}
+.who{font-size:calc(var(--u)*24)}.who b{display:block;font:700 calc(var(--u)*34)/1.15 var(--hd);color:var(--sun)}
+.joinbox{display:flex;gap:calc(var(--u)*26);align-items:center;background:var(--paper);color:var(--ink);border-radius:calc(var(--u)*22);padding:calc(var(--u)*22);margin-top:auto;border-left:calc(var(--u)*14) solid var(--coral)}
+.joinbox canvas,.qrbig canvas,.qrsmall canvas{display:block;border-radius:10px;background:#fff;width:calc(var(--u)*170);height:calc(var(--u)*170)}
+.qrsmall canvas{width:calc(var(--u)*210);height:calc(var(--u)*210)}
+.joinbox b{font:700 calc(var(--u)*30)/1.1 var(--hd)}
+.url{font:600 calc(var(--u)*19)/1.3 var(--bd);word-break:break-all;color:var(--g2)}
 .plants{width:100%;height:100%}
 .stem{transform-origin:bottom center;animation:rise 2.4s cubic-bezier(.2,.8,.2,1) both}
 .leafg{transform-box:fill-box;transform-origin:left bottom;animation:pop .7s cubic-bezier(.3,1.6,.5,1) both}
@@ -65,94 +71,131 @@ h3{font-size:34px;line-height:1.15}
 @keyframes pop{from{transform:scale(0)}}
 
 /* poll */
-.pollq{font:700 60px/1.06 var(--hd);max-width:1250px;text-wrap:balance}
-.bars{margin-top:44px;display:flex;flex-direction:column;gap:18px;flex:1}
-.bar{position:relative;display:grid;grid-template-columns:60px 1fr 150px;align-items:center;gap:20px;font-size:28px;cursor:default}
-.bar .k{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font:700 26px var(--hd);background:rgba(13,58,43,.1)}
-.dark .bar .k{background:rgba(255,255,255,.12)}
-.track{position:relative;height:64px;border-radius:16px;background:rgba(13,58,43,.07);overflow:hidden}
-.dark .track{background:rgba(255,255,255,.08)}
-.fill{position:absolute;inset:0 auto 0 0;width:0;background:rgba(63,178,124,.5);border-radius:16px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
-.bar.top .fill{background:var(--sun)}
-.dark .bar.top .fill{background:var(--sun)}
-.lbl{position:absolute;left:22px;top:50%;transform:translateY(-50%);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;right:16px}
-.pct{text-align:right;font:700 34px var(--hd)}
-.pct small{display:block;font:500 17px var(--bd);opacity:.65}
-.manual .bar{cursor:pointer}
-.manual .bar:hover .track{outline:3px dashed var(--sun)}
-.pollside{width:340px;display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center}
-.count{font:700 120px/1 var(--hd)}
-.qrsmall canvas{width:220px;height:220px}
-.scaleWrap{display:flex;gap:26px;align-items:flex-end;height:400px;margin-top:40px}
-.col{flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;height:100%;justify-content:flex-end}
-.colbar{width:100%;border-radius:18px 18px 6px 6px;background:var(--leaf);height:0;transition:height .9s cubic-bezier(.2,.8,.2,1)}
-.col.top .colbar{background:var(--g2)}
-.col b{font:700 40px var(--hd)}
-.avg{font:700 150px/1 var(--hd)}
-.ends{display:flex;justify-content:space-between;font-size:22px;margin-top:14px}
-.wall{flex:1;display:flex;flex-wrap:wrap;gap:16px;align-content:flex-start;margin-top:40px;overflow:hidden}
-.chip{padding:14px 24px;border-radius:99px;background:var(--g2);color:var(--paper);font:500 26px/1.2 var(--bd);animation:pop .5s both;max-width:100%}
-.chip:nth-child(3n){background:var(--leaf);color:var(--ink)}
-.chip:nth-child(5n){background:var(--sun);color:var(--ink)}
+.pollgrid{display:grid;grid-template-columns:1fr calc(var(--u)*330);gap:calc(var(--u)*40);flex:1;min-height:0}
+.pollq{font:700 calc(var(--u)*56)/1.06 var(--hd);text-wrap:balance}
+.bars{margin-top:calc(var(--u)*36);display:flex;flex-direction:column;gap:calc(var(--u)*16)}
+.bar{display:grid;grid-template-columns:calc(var(--u)*56) 1fr calc(var(--u)*130);align-items:center;gap:calc(var(--u)*18);font-size:calc(var(--u)*27)}
+.bar .k{width:calc(var(--u)*52);height:calc(var(--u)*52);border-radius:calc(var(--u)*14);display:grid;place-items:center;font:700 calc(var(--u)*24) var(--hd);background:var(--c);color:var(--ink)}
+.track{position:relative;height:calc(var(--u)*62);border-radius:calc(var(--u)*16);background:rgba(13,58,43,.07);overflow:hidden}
+.fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--c);opacity:.75;border-radius:calc(var(--u)*16);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.bar.top .fill{opacity:1}
+.bar.top .lbl{font-weight:700}
+.lbl{position:absolute;left:calc(var(--u)*22);right:calc(var(--u)*14);top:50%;transform:translateY(-50%);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pct{text-align:right;font:700 calc(var(--u)*34) var(--hd)}
+.pct small{display:block;font:500 calc(var(--u)*16) var(--bd);opacity:.65}
+.manual .bar,.manual .col{cursor:pointer}
+.manual .track{outline:2px dashed var(--coral)}
+.pollside{display:flex;flex-direction:column;gap:calc(var(--u)*16);align-items:center;text-align:center}
+.count{font:700 calc(var(--u)*120)/1 var(--hd);color:var(--acc)}
+.light .count{-webkit-text-stroke:calc(var(--u)*2) var(--ink)}
+.scaleWrap{display:flex;gap:calc(var(--u)*24);align-items:flex-end;height:calc(var(--u)*380);margin-top:calc(var(--u)*30)}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*10);height:100%;justify-content:flex-end}
+.colbar{width:100%;border-radius:calc(var(--u)*18) calc(var(--u)*18) 6px 6px;background:var(--c);height:0;transition:height .9s cubic-bezier(.2,.8,.2,1)}
+.col b{font:700 calc(var(--u)*38) var(--hd)}
+.col span{font:700 calc(var(--u)*28) var(--hd)}
+.avgbox{display:flex;align-items:baseline;gap:calc(var(--u)*16)}
+.avg{font:700 calc(var(--u)*130)/1 var(--hd);color:var(--acc);-webkit-text-stroke:calc(var(--u)*2) var(--ink)}
+.ends{display:flex;justify-content:space-between;gap:20px;font-size:calc(var(--u)*21);margin-top:calc(var(--u)*12)}
+.wall{flex:1;display:flex;flex-wrap:wrap;gap:calc(var(--u)*14);align-content:flex-start;margin-top:calc(var(--u)*36);overflow:hidden}
+.chip{padding:calc(var(--u)*14) calc(var(--u)*24);border-radius:99px;font:500 calc(var(--u)*25)/1.2 var(--bd);animation:pop .5s both;max-width:100%;background:var(--c);color:var(--ink)}
 
-/* content blocks */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:44px;flex:1}
-.panel{border-radius:26px;padding:40px 44px}
-.panel h3{margin-bottom:22px}
-.panel ul{margin:0;padding:0;list-style:none;font-size:27px;line-height:1.35}
-.panel li{padding:14px 0;border-top:1px solid rgba(13,58,43,.14)}
+/* content */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*32);margin-top:calc(var(--u)*40);flex:1}
+.panel{border-radius:calc(var(--u)*26);padding:calc(var(--u)*36) calc(var(--u)*40)}
+.panel h3{margin-bottom:calc(var(--u)*18)}
+.panel ul{margin:0;padding:0;list-style:none;font-size:calc(var(--u)*26);line-height:1.35}
+.panel li{padding:calc(var(--u)*13) 0;border-top:1px solid rgba(13,58,43,.15)}
 .p-grey{background:#e7e5dc;color:#5c6460}
-.p-green{background:var(--g);color:var(--paper)}
-.p-green li{border-color:rgba(255,255,255,.16)}
-.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:50px;flex:1}
-.card{border-radius:24px;padding:34px 30px;background:#fff;color:var(--ink);display:flex;flex-direction:column;gap:16px;box-shadow:0 2px 0 rgba(13,58,43,.08)}
-.dark .card{background:var(--g2);color:var(--paper)}
-.card .n{width:56px;height:56px;border-radius:50%;background:var(--sun);color:var(--ink);display:grid;place-items:center;font:700 26px var(--hd)}
-.card h3{font-size:31px}
-.card p{margin:0;font-size:22px;line-height:1.4;opacity:.85}
-.timeline{display:flex;gap:0;margin-top:60px;position:relative}
-.timeline:before{content:"";position:absolute;left:0;right:0;top:19px;height:4px;background:var(--leaf);border-radius:4px}
-.tl{flex:1;position:relative;padding-top:58px;padding-right:18px}
-.tl:before{content:"";position:absolute;top:6px;left:0;width:30px;height:30px;border-radius:50%;background:var(--paper);border:6px solid var(--leaf)}
-.tl.now:before{background:var(--sun);border-color:var(--sun)}
-.tl b{display:block;font:700 26px/1.15 var(--hd)}
-.tl span{font-size:19px;line-height:1.35;display:block;margin-top:8px;opacity:.8}
-.big{font:700 128px/1 var(--hd);color:var(--sun)}
-.story{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin-top:46px;flex:1}
-.beat{border-left:6px solid var(--leaf);padding:6px 0 6px 28px}
-.beat small{font:600 20px var(--bd);color:var(--g2)}
-.dark .beat small{color:var(--leaf2)}
-.beat p{font-size:28px;line-height:1.4;margin:10px 0 0}
-.beat p.todo{opacity:.45;font-style:italic}
-.quote{font:700 78px/1.08 var(--hd);max-width:1300px;text-wrap:balance}
-.roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin-top:40px;flex:1}
-.roles ul{margin:0;padding:0;list-style:none;font-size:24px;line-height:1.4}
-.roles li{margin:8px 0}
-.qa{display:grid;grid-template-columns:1fr 360px;gap:40px;flex:1;margin-top:34px;min-height:0}
-.qlist{display:flex;flex-direction:column;gap:14px;overflow:hidden}
-.qi{display:grid;grid-template-columns:84px 1fr 44px;gap:18px;align-items:center;background:#fff;border-radius:20px;padding:18px 22px;color:var(--ink)}
-.qi .v{font:700 36px var(--hd);text-align:center;color:var(--g2)}
-.qi .v small{display:block;font:500 14px var(--bd);color:var(--mute)}
-.qi p{margin:0;font-size:25px;line-height:1.35}
-.qi button{border:0;background:transparent;font-size:26px;color:#a33;opacity:.4}
-.qi button:hover{opacity:1}
-.qi.pin{outline:4px solid var(--sun)}
-.recap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:40px;flex:1}
-.rc{background:var(--g2);border-radius:22px;padding:26px 28px;display:flex;flex-direction:column;gap:10px}
-.rc small{font-size:18px;color:var(--leaf2)}
-.rc b{font:700 30px/1.15 var(--hd)}
-.rc span{font-size:19px;opacity:.75}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--u)*22);margin-top:calc(var(--u)*44);flex:1}
+.card{border-radius:calc(var(--u)*24);padding:calc(var(--u)*32) calc(var(--u)*28);background:var(--c);color:var(--ink);display:flex;flex-direction:column;gap:calc(var(--u)*14)}
+.card .n{width:calc(var(--u)*54);height:calc(var(--u)*54);border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:700 calc(var(--u)*24) var(--hd)}
+.card h3{font-size:calc(var(--u)*30)}
+.card p{margin:0;font-size:calc(var(--u)*21);line-height:1.4}
+.timeline{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin-top:calc(var(--u)*50);position:relative}
+.timeline:before{content:"";position:absolute;left:0;right:0;top:calc(var(--u)*19);height:calc(var(--u)*5);background:linear-gradient(90deg,var(--coral),var(--sun),var(--leaf),var(--sky),var(--berry));border-radius:4px}
+.tl{position:relative;padding-top:calc(var(--u)*58);padding-right:calc(var(--u)*16)}
+.tl:before{content:"";position:absolute;top:calc(var(--u)*4);left:0;width:calc(var(--u)*32);height:calc(var(--u)*32);border-radius:50%;background:var(--c);border:calc(var(--u)*5) solid var(--g)}
+.tl b{display:block;font:700 calc(var(--u)*25)/1.15 var(--hd)}
+.tl span{font-size:calc(var(--u)*18);line-height:1.35;display:block;margin-top:calc(var(--u)*8);opacity:.85}
+.comm{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*30);margin-top:auto}
+.cbox{border-radius:calc(var(--u)*24);padding:calc(var(--u)*28) calc(var(--u)*32);display:flex;gap:calc(var(--u)*24);align-items:center}
+.cbox .big{font:700 calc(var(--u)*110)/1 var(--hd);flex:none}
+.cbox>div:last-child{flex:1}
+.cbox .yr{font:700 calc(var(--u)*22) var(--hd);display:inline-block;padding:calc(var(--u)*4) calc(var(--u)*14);border-radius:99px;background:rgba(0,0,0,.14);margin-bottom:calc(var(--u)*8)}
+.cbox p{margin:0;font-size:calc(var(--u)*22);line-height:1.35}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--u)*22);margin-top:calc(var(--u)*40);flex:1}
+.stat{border-radius:calc(var(--u)*24);padding:calc(var(--u)*30);background:var(--c);color:var(--ink);display:flex;flex-direction:column;gap:calc(var(--u)*12)}
+.stat b{font:700 calc(var(--u)*92)/1 var(--hd)}
+.stat p{margin:0;font-size:calc(var(--u)*22);line-height:1.38}
+.stat small{margin-top:auto;font-size:calc(var(--u)*15);opacity:.75}
+.tgk{display:grid;grid-template-columns:1.2fr .8fr;gap:calc(var(--u)*40);margin-top:calc(var(--u)*30);flex:1;min-height:0}
+.metric{margin-bottom:calc(var(--u)*24)}
+.metric h4{margin:0 0 calc(var(--u)*10);font:600 calc(var(--u)*21) var(--bd)}
+.yb{display:grid;grid-template-columns:calc(var(--u)*70) 1fr calc(var(--u)*170);gap:calc(var(--u)*14);align-items:center;margin:calc(var(--u)*6) 0;font-size:calc(var(--u)*19)}
+.yb i{display:block;height:calc(var(--u)*30);border-radius:calc(var(--u)*8);background:var(--c);width:0;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.on .yb i{width:var(--w)}
+.yb em{font-style:normal;font-weight:700;text-align:right;white-space:nowrap}
+.prog-list{display:flex;flex-direction:column;gap:calc(var(--u)*16)}
+.pg{border-radius:calc(var(--u)*20);padding:calc(var(--u)*20) calc(var(--u)*24);background:var(--c);color:var(--ink)}
+.pg b{font:700 calc(var(--u)*26)/1.1 var(--hd);display:block}
+.pg span{font-size:calc(var(--u)*18);line-height:1.35;display:block;margin-top:calc(var(--u)*6)}
+.story{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--u)*26);margin-top:calc(var(--u)*44);flex:1}
+.beat{border-radius:calc(var(--u)*22);padding:calc(var(--u)*26);background:var(--c);color:var(--ink)}
+.beat small{font:700 calc(var(--u)*20) var(--hd)}
+.beat p{font-size:calc(var(--u)*26);line-height:1.4;margin:calc(var(--u)*10) 0 0}
+.beat p.todo{opacity:.6;font-style:italic}
+.quote{font:700 calc(var(--u)*80)/1.08 var(--hd);text-wrap:balance}
+.roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--u)*24);margin-top:calc(var(--u)*36);flex:1}
+.qlist{display:flex;flex-direction:column;gap:calc(var(--u)*14);overflow:hidden}
+.qi{display:grid;grid-template-columns:calc(var(--u)*84) 1fr calc(var(--u)*44);gap:calc(var(--u)*18);align-items:center;background:#fff;border-radius:calc(var(--u)*20);padding:calc(var(--u)*18) calc(var(--u)*22);color:var(--ink);border-left:calc(var(--u)*10) solid var(--c)}
+.qi .v{font:700 calc(var(--u)*36) var(--hd);text-align:center}
+.qi .v small{display:block;font:500 calc(var(--u)*14) var(--bd);color:var(--mute)}
+.qi p{margin:0;font-size:calc(var(--u)*25);line-height:1.35}
+.qi button{border:0;background:transparent;font-size:calc(var(--u)*26);color:#a33;opacity:.4}
+.qi.pin{outline:calc(var(--u)*4) solid var(--sun)}
+.recap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--u)*20);margin-top:calc(var(--u)*36);flex:1}
+.rc{background:var(--c);color:var(--ink);border-radius:calc(var(--u)*22);padding:calc(var(--u)*24) calc(var(--u)*26);display:flex;flex-direction:column;gap:calc(var(--u)*8)}
+.rc small{font-size:calc(var(--u)*17)}
+.rc b{font:700 calc(var(--u)*29)/1.15 var(--hd)}
+.rc span{font-size:calc(var(--u)*18);opacity:.75}
+
+/* portrait / phone: stack and scroll */
+@media (orientation:portrait),(max-width:700px){
+  :root{--u:calc(100vw / 760)}
+  .slide{overflow-y:auto;padding:calc(var(--u)*56) calc(var(--u)*48) calc(var(--u)*150)}
+  .light:before{width:calc(var(--u)*12)}
+  h1{font-size:calc(var(--u)*84)} .cover h1{font-size:calc(var(--u)*72)}
+  .cover,.pollgrid,.split,.tgk,.comm{grid-template-columns:1fr}
+  .cover{height:auto}
+  .cover>div:last-child{height:calc(var(--u)*520)}
+  .joinbox{margin-top:calc(var(--u)*30)}
+  .cards,.stats,.recap{grid-template-columns:1fr 1fr}
+  .roles,.story{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr 1fr;row-gap:calc(var(--u)*30)}
+  .timeline:before{display:none}
+  .comm{margin-top:calc(var(--u)*40)}
+  .pollside{flex-direction:row;justify-content:space-between;order:-1}
+  .pollgrid,.split,.tgk,.cards,.stats,.roles,.story,.recap{flex:none;align-content:start}
+  .qrsmall canvas{width:calc(var(--u)*170);height:calc(var(--u)*170)}
+  .pollq{font-size:calc(var(--u)*48)}
+  .bar{grid-template-columns:calc(var(--u)*52) 1fr calc(var(--u)*110)}
+  .lbl{white-space:normal;line-height:1.15}
+  .track{height:calc(var(--u)*78)}
+  .chrome{left:calc(var(--u)*24);right:calc(var(--u)*24)}
+}
 
 /* overlays */
-.ov{position:fixed;inset:0;background:rgba(5,25,18,.92);display:grid;place-items:center;z-index:20}
-.qrbig{background:var(--paper);color:var(--ink);border-radius:28px;padding:40px;text-align:center;max-width:90vw}
-.qrbig h2{font-size:44px;margin-bottom:20px}
-#notes{position:fixed;right:16px;bottom:16px;width:min(520px,44vw);max-height:60vh;overflow:auto;background:#fffbe8;color:#2a2a1f;border-radius:16px;padding:20px 24px;z-index:15;font-size:16px;line-height:1.5;box-shadow:0 20px 50px rgba(0,0,0,.4)}
-#notes h4{margin:0 0 8px;font:700 18px var(--hd)}
+.ov{position:fixed;inset:0;background:rgba(5,25,18,.92);display:grid;place-items:center;z-index:20;padding:16px}
+.qrbig{background:var(--paper);color:var(--ink);border-radius:28px;padding:32px;text-align:center;max-width:92vw;border-top:14px solid var(--coral)}
+.qrbig h2{font-size:clamp(26px,4vw,44px);margin-bottom:16px}
+.qrbig canvas{width:min(70vh,80vw);height:min(70vh,80vw);margin:auto}
+.qrbig .url{font-size:clamp(14px,2vw,24px);margin-top:12px}
+#notes{position:fixed;right:12px;bottom:12px;width:min(520px,92vw);max-height:60vh;overflow:auto;background:#fffbe8;color:#2a2a1f;border-radius:16px;padding:18px 22px;z-index:15;font-size:15px;line-height:1.5;box-shadow:0 20px 50px rgba(0,0,0,.4);border-top:8px solid var(--sun)}
+#notes h4{margin:0 0 8px;font:700 17px var(--hd)}
 #notes ul{padding-left:20px;margin:6px 0}
-#help{position:fixed;right:16px;top:16px;z-index:15;background:rgba(0,0,0,.55);color:#fff;border-radius:12px;padding:12px 16px;font-size:14px;line-height:1.7}
+#help{position:fixed;right:12px;top:12px;z-index:15;background:rgba(0,0,0,.6);color:#fff;border-radius:12px;padding:10px 14px;font-size:13px;line-height:1.7;max-width:92vw}
 #help kbd{background:#fff;color:#000;border-radius:4px;padding:0 6px;font:600 12px var(--bd)}
-.set{background:var(--paper);color:var(--ink);border-radius:20px;padding:30px;width:min(620px,92vw);display:flex;flex-direction:column;gap:14px}
+.set{background:var(--paper);color:var(--ink);border-radius:20px;padding:26px;width:min(620px,92vw);display:flex;flex-direction:column;gap:12px}
 .set label{font-weight:600}
 .set input{font:16px var(--bd);padding:12px;border-radius:10px;border:1px solid #bbb;width:100%}
 .btn{border:0;border-radius:12px;padding:12px 20px;min-height:44px;background:var(--g);color:var(--paper);font-weight:600}
@@ -163,18 +206,19 @@ h3{font-size:34px;line-height:1.15}
 #aud{min-height:100%;display:flex;flex-direction:column;max-width:560px;margin:0 auto;padding:18px 18px 40px}
 .atop{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#a8c7b8}
 .abrand{font:700 20px var(--hd);color:var(--paper)}
+.stripe{height:6px;border-radius:6px;margin-top:12px;background:linear-gradient(90deg,var(--coral),var(--sun),var(--leaf),var(--sky),var(--berry))}
 .acard{background:var(--paper);color:var(--ink);border-radius:24px;padding:24px 20px;margin-top:18px}
-.acard h2{font-size:27px;line-height:1.15;margin-bottom:18px}
+.acard h2{font-size:26px;line-height:1.15;margin-bottom:18px}
 .opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;border:2px solid #d9dcd3;background:#fff;color:var(--ink);border-radius:16px;padding:14px;margin-top:10px;min-height:56px;font-size:16px;transition:transform .15s}
 .opt:active{transform:scale(.98)}
-.opt .k{flex:none;width:34px;height:34px;border-radius:10px;background:#eef0ea;display:grid;place-items:center;font:700 16px var(--hd)}
-.opt.sel{border-color:var(--g2);background:#e6f5ec}
-.opt.sel .k{background:var(--g2);color:#fff}
+.opt .k{flex:none;width:34px;height:34px;border-radius:10px;background:var(--c);display:grid;place-items:center;font:700 16px var(--hd)}
+.opt.sel{border-color:var(--ink);background:color-mix(in srgb,var(--c) 22%,#fff)}
 .scl{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.scl .opt{justify-content:center;font:700 22px var(--hd);padding:0}
+.scl .opt{justify-content:center;font:700 22px var(--hd);padding:0;border-color:var(--c)}
+.scl .opt.sel{background:var(--c)}
 .ends2{display:flex;justify-content:space-between;font-size:13px;color:var(--mute);margin-top:8px;gap:12px}
 .ainput{width:100%;font:16px var(--bd);padding:14px;border-radius:14px;border:2px solid #d9dcd3;resize:vertical}
-.abtn{margin-top:12px;width:100%;border:0;border-radius:14px;background:var(--g);color:var(--paper);font-weight:600;min-height:52px;font-size:16px}
+.abtn{margin-top:12px;width:100%;border:0;border-radius:14px;background:var(--coral);color:var(--ink);font-weight:700;min-height:52px;font-size:16px}
 .abtn:disabled{opacity:.5}
 .ok{margin-top:14px;font-size:14px;color:var(--g2);font-weight:600;min-height:20px}
 .wait{text-align:center;padding:30px 10px}
@@ -182,8 +226,8 @@ h3{font-size:34px;line-height:1.15}
 .aq{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-top:1px solid #e3e5dd}
 .aq p{margin:0;flex:1;font-size:15px}
 .up{flex:none;border:2px solid #d9dcd3;background:#fff;border-radius:12px;min-width:56px;min-height:44px;font-weight:700;color:var(--g2)}
-.up.on{background:var(--g2);color:#fff;border-color:var(--g2)}
-.tabs{display:flex;gap:8px;margin-top:18px}
+.up.on{background:var(--sky);color:var(--ink);border-color:var(--sky)}
+.tabs{display:flex;gap:8px;margin-top:16px}
 .tabs button{flex:1;min-height:44px;border-radius:12px;border:0;background:rgba(255,255,255,.1);color:var(--paper);font-weight:600}
 .tabs button.on{background:var(--sun);color:var(--ink)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -191,24 +235,26 @@ h3{font-size:34px;line-height:1.15}
 </head>
 <body>
 
-<div id="host" class="hidden"><div id="stage"></div></div>
+<div id="host" class="hidden"></div>
 <div id="aud" class="hidden"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 <script>
 {
-/* ============ CONFIG — ganti di sini kalau perlu ============ */
+/* ============ CONFIG ============ */
 const ROOM = new URLSearchParams(location.search).get('room') || 'hrs25-learningculture-odid-7k3q';
 const RELAY = 'https://ntfy.sh/';
 const TV = ROOM + '-v', TS = ROOM + '-s';
+const C = ['#3fb27c','#4aa8ff','#ff6f59','#f5c542','#e0457b','#17b3a3'];
+const SC = ['#ff6f59','#f5c542','#4aa8ff','#17b3a3','#3fb27c'];
 
-/* Cerita dari past company — isi bagian ini (tampil di slide Cerita 1 & 2) */
+/* Cerita pribadi — isi bagian ini (tampil di slide "Cerita dari dalam") */
 const STORIES = {
-  s1: { title: 'Cerita dari past company #1', where: 'Tulis nama perusahaan & konteksnya',
-        beats: ['Situasinya: program training apa yang ramai saat itu?',
-                'Yang terjadi: apa yang (tidak) berubah di pekerjaan sehari-hari?',
-                'Pelajarannya: apa yang kamu sadari soal aktivitas vs budaya belajar?'], todo: true },
-  s2: { title: 'Cerita dari past company #2', where: 'Tulis nama perusahaan & konteksnya',
+  s1: { title: 'Cerita dari dalam #1', where: 'Tulis perusahaan, periode, dan peranmu saat itu',
+        beats: ['Situasinya: program belajar apa yang sedang jalan?',
+                'Momennya: apa yang (tidak) berubah di pekerjaan sehari-hari?',
+                'Pelajarannya: aktivitas vs budaya belajar menurutmu?'], todo: true },
+  s2: { title: 'Cerita dari dalam #2', where: 'Tulis perusahaan, periode, dan peranmu saat itu',
         beats: ['Leader-nya ngapain? (perilaku konkret, bukan slogan)',
                 'Ritual belajarnya seperti apa? (retro, sharing, coaching)',
                 'Apa yang bikin kebiasaan itu bertahan?'], todo: true }
@@ -228,7 +274,8 @@ const L = 'ABCDEFGH';
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ls = {get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const post = body => fetch(RELAY + TV, {method:'POST', body: JSON.stringify(body)});
-const toast = (t) => {const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)};
+const toast = t => {const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)};
+const num = v => v.toLocaleString('id-ID');
 
 function joinUrl(){
   const saved = ls.get('hrs25-join', '');
@@ -241,14 +288,17 @@ function qr(el, size){
   if (window.QRious && /^https?:/.test(u)) { const c=document.createElement('canvas'); new QRious({element:c,value:u,size:size,foreground:'#0d3a2b',level:'M'}); el.appendChild(c); }
 }
 
-const PLANTS = `<svg class="plants" viewBox="0 0 600 720" aria-label="Dua pot tanaman: satu terus tumbuh, satu jalan di tempat">
-  <defs><linearGradient id="pot" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f5c542"/><stop offset="1" stop-color="#d9a72a"/></linearGradient>
-  <g id="lf"><path d="M0 0 C 30 -40, 90 -40, 110 -10 C 80 10, 30 15, 0 0Z" fill="#3fb27c"/><path d="M0 0 C 40 -18, 80 -18, 110 -10" stroke="#8fd9a8" stroke-width="3" fill="none"/></g></defs>
+const PLANTS = `<svg class="plants" viewBox="0 0 600 720" preserveAspectRatio="xMidYMax meet" aria-label="Dua pot: satu tanaman tumbuh berbunga, satu jalan di tempat">
+  <defs><linearGradient id="pot" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ff8a73"/><stop offset="1" stop-color="#e65a43"/></linearGradient>
+  <g id="lf"><path d="M0 0 C 30 -40, 90 -40, 110 -10 C 80 10, 30 15, 0 0Z" fill="#3fb27c"/><path d="M0 0 C 40 -18, 80 -18, 110 -10" stroke="#8fd9a8" stroke-width="3" fill="none"/></g>
+  <g id="fl">${[0,72,144,216,288].map(a=>`<ellipse cx="0" cy="-22" rx="14" ry="24" transform="rotate(${a})"/>`).join('')}</g></defs>
   <ellipse cx="300" cy="690" rx="290" ry="18" fill="#08261c"/>
   <g class="stem"><rect x="176" y="150" width="12" height="450" rx="6" fill="#3fb27c"/></g>
   ${[0,1,2,3,4,5].map(i=>{const y=560-i*75,r=i%2;return `<g transform="translate(${r?188:176} ${y}) scale(${r?1:-1} 1)"><g class="leafg" style="animation-delay:${.5+i*.28}s"><use href="#lf"/></g></g>`}).join('')}
-  <circle cx="182" cy="140" r="16" fill="#f5c542" class="leafg" style="animation-delay:2.3s"/>
-  <path d="M100 590 h164 l-18 96 h-128z" fill="url(#pot)"/><rect x="92" y="578" width="180" height="26" rx="8" fill="#f5c542"/>
+  <g transform="translate(182 140)"><g class="leafg" style="animation-delay:2.3s"><use href="#fl" fill="#f5c542"/><circle r="14" fill="#ff6f59"/></g></g>
+  <g transform="translate(330 250) scale(.55)"><g class="leafg" style="animation-delay:2.6s"><use href="#fl" fill="#4aa8ff"/><circle r="14" fill="#f5c542"/></g></g>
+  <g transform="translate(60 330) scale(.45)"><g class="leafg" style="animation-delay:2.9s"><use href="#fl" fill="#e0457b"/><circle r="14" fill="#f5c542"/></g></g>
+  <path d="M100 590 h164 l-18 96 h-128z" fill="url(#pot)"/><rect x="92" y="578" width="180" height="26" rx="8" fill="#ff8a73"/>
   <rect x="418" y="540" width="10" height="50" rx="5" fill="#6d8f7f"/>
   <g transform="translate(428 552) rotate(25)"><path d="M0 0 C 14 -16, 40 -16, 48 -4 C 34 6, 14 6, 0 0Z" fill="#6d8f7f"/></g>
   <path d="M340 590 h164 l-18 96 h-128z" fill="#b9b7ad"/><rect x="332" y="578" width="180" height="26" rx="8" fill="#d4d2c8"/>
@@ -256,127 +306,151 @@ const PLANTS = `<svg class="plants" viewBox="0 0 600 720" aria-label="Dua pot ta
   <text x="422" y="716" text-anchor="middle" font-family="Inter" font-size="22" font-weight="600" fill="#a8c7b8">jalan di tempat</text>
 </svg>`;
 
+const SRC_TGK = 'Sumber: PT Tigaraksa Satria Tbk, Laporan Keberlanjutan 2022 dan Laporan Tahunan 2022 (dokumen publik).';
+const section = (n, time, title, cls) => ({cls, html:()=>`<div style="margin:auto 0"><div class="seg" style="color:inherit">Segmen ${n} · ${time}</div><h1>${title}</h1></div>`});
+const ybars = (rows, max, col, fmt) => rows.map(([y,v])=>`<div class="yb" style="--c:${col}"><span>${y}</span><i style="--w:${(v/max*100).toFixed(1)}%"></i><em>${fmt(v)}</em></div>`).join('');
+
 /* ============ SLIDES ============ */
 const S = [
- {cls:'dark',seg:'',html:()=>`<div class="cover"><div style="display:flex;flex-direction:column">
-   <div class="seg">HR Stories Meetup #25 × Circle HR ITB · Kamis, 26 November 2026</div>
+ {cls:'dark a-coral',html:()=>`<div class="cover"><div style="display:flex;flex-direction:column">
+   <div class="seg">HR Stories Meetup #25 × Circle HR ITB · 26 November 2026</div>
    <h1>Learning Culture: why some teams keep growing and others stall</h1>
-   <div class="speakers"><div><b>Erdo Deshiant Garnaby</b>OD & Culture Practitioner · Founder OD.ID & Circle HR ITB</div>
-   <div><b>Sapto Ashardianto</b>HC Division Head, Hasnur Group</div><div><b>Khalid Nurf</b>Host · Founder & CEO HR Stories</div></div>
-   <div class="joinbox"><div data-qr="170"></div><div><b>Scan dan ikut voting</b><div class="url" data-url></div><div class="mute" style="margin-top:6px;font-size:18px">Nggak perlu login, cukup buka di HP</div></div></div>
+   <div class="who"><b>Erdo Deshiant Garnaby</b>OD & Culture Practitioner · Founder OD.ID & Circle HR ITB</div>
+   <div class="joinbox"><div data-qr="220"></div><div><b>Scan dan ikut voting</b><div class="url" data-url></div><div class="mute small" style="margin-top:6px">Nggak perlu login, cukup buka di HP</div></div></div>
   </div><div>${PLANTS}</div></div>`,
-  notes:`<h4>Pembuka (Segmen 0)</h4>Kalimat positioning 1 kalimat, misalnya: "Saya orang OD yang percaya budaya belajar itu kelihatan di Senin pagi, bukan di sertifikat." Minta audiens scan QR sekarang, polling pertama langsung jalan.`},
- {poll:'p1',cls:'light',seg:'Ice-breaker', notes:`<h4>Ice-breaker</h4>Biarkan 30–45 detik. Komentari jawaban teratas. Kalau "Atasan/rekan" atau "tugas baru" menang: jembatan bagus, belajar paling banyak justru terjadi di pekerjaan, bukan di kelas.`},
- {cls:'dark',seg:'Kenalan dulu',html:()=>`<h2>Dari lab, ke lantai pabrik, ke OD</h2>
+  notes:`<h4>Pembuka</h4>Kalimat positioning: "Saya orang OD yang percaya budaya belajar itu kelihatan di Senin pagi, bukan di sertifikat." Minta audiens scan QR sekarang.`},
+ {poll:'p1',cls:'light a-sun',seg:'Ice-breaker',notes:`<h4>Ice-breaker</h4>Biarkan 30–45 detik. Kalau "Atasan/rekan" atau "tugas baru" menang: belajar paling banyak justru terjadi di pekerjaan, bukan di kelas.`},
+ {cls:'dark a-leaf',seg:'Kenalan dulu',html:()=>`<h2>Dari lab, ke lantai pabrik, ke OD</h2>
   <div class="timeline">
-   <div class="tl"><b>Farmasi ITB</b><span>Awal mula</span></div>
-   <div class="tl"><b>Pharos & Nestlé</b><span>Lab dan pabrik, termasuk pabrik Cikupa</span></div>
-   <div class="tl"><b>Master Engineering ITB</b><span>Mau beresin masalah di lantai produksi</span></div>
-   <div class="tl"><b>FMC</b><span>Konsultan: job evaluation, workload, PMS</span></div>
-   <div class="tl"><b>Dwidaya & Tigaraksa</b><span>Pindah ke HR in-house</span></div>
-   <div class="tl now"><b>ALTO Network</b><span>Organization Development</span></div>
+   <div class="tl" style="--c:var(--coral)"><b>Farmasi ITB</b><span>Awal mula</span></div>
+   <div class="tl" style="--c:var(--sun)"><b>Pharos & Nestlé</b><span>Lab dan pabrik, termasuk pabrik Cikupa</span></div>
+   <div class="tl" style="--c:var(--leaf)"><b>Master Engineering ITB</b><span>Mau beresin masalah di lantai produksi</span></div>
+   <div class="tl" style="--c:var(--teal)"><b>FMC</b><span>Konsultan: job evaluation, workload, PMS</span></div>
+   <div class="tl" style="--c:var(--sky)"><b>Dwidaya & Tigaraksa</b><span>HR in-house</span></div>
+   <div class="tl" style="--c:var(--berry)"><b>ALTO Network</b><span>Organization Development</span></div>
   </div>
-  <div class="row" style="margin-top:auto;align-items:flex-end"><div class="grow"><div class="big">1.024</div><div class="lead">anggota grup WhatsApp OD.ID yang saya mulai tahun 2020, dan sekarang jadi komunitas belajar lintas perusahaan</div></div>
-  <div class="pill">Founder OD.ID · Circle HR ITB</div></div>`,
-  notes:`<h4>Perkenalan</h4>Singkat saja (±1 menit). Highlight: banyak pindah dunia, dan di tiap tempat pertanyaannya sama — kenapa orang di satu tim cepat jago, di tim lain nggak.`},
- {cls:'sun',seg:'Segmen 1',html:()=>`<div style="margin:auto 0"><div class="seg">Segmen 1 · 19.45–20.05</div><h1 style="font-size:120px">Training banyak,<br>kok nggak berubah?</h1></div>`,notes:`Transisi dari host. Langsung lempar polling berikutnya.`},
- {poll:'p2',cls:'light',seg:'Segmen 1 · Training banyak, kok nggak berubah?',notes:`<h4>Metafora farmasi</h4>Pakai background Farmasi: vitamin vs obat vs nutrisi. Kalau "Kewajiban" atau "Obat" tinggi, itu tanda training masih diperlakukan sebagai event, bukan bagian dari kerja.`},
- {cls:'light',seg:'Segmen 1 · Aktivitas belajar vs budaya belajar',html:()=>`<h2>Training itu dosis. Budaya belajar itu absorpsi.</h2>
+  <div class="comm">
+   <div class="cbox" style="background:var(--sun);color:var(--ink)"><div class="big">1.024</div><div><span class="yr">Mulai 2020</span><p><b>OD.ID</b> — grup WhatsApp praktisi OD yang sekarang jadi komunitas belajar lintas perusahaan</p></div></div>
+   <div class="cbox step" style="background:var(--sky);color:var(--ink)"><div class="big">586</div><div><span class="yr">Mulai 2021</span><p><b>Circle HR ITB</b> — ruang belajar dan berbagi bareng sesama praktisi HR</p></div></div>
+  </div>`,
+  notes:`<h4>Perkenalan</h4>Singkat (±1 menit). Tekan → sekali lagi untuk memunculkan Circle HR ITB (mulai 2021, sekarang 586 anggota). Pesan: dua komunitas ini adalah eksperimen budaya belajar di luar kantor — orang belajar karena ada ruang rutin untuk saling cerita.`},
+ section(1,'19.45–20.05','Training banyak,<br>kok nggak berubah?','coral'),
+ {poll:'p2',cls:'light a-coral',seg:'Segmen 1 · Training banyak, kok nggak berubah?',notes:`<h4>Metafora farmasi</h4>Vitamin vs obat vs nutrisi. Kalau "Kewajiban" atau "Obat" tinggi, training masih diperlakukan sebagai event, bukan bagian dari kerja.`},
+ {cls:'light a-coral',seg:'Segmen 1 · Aktivitas belajar vs budaya belajar',html:()=>`<h2>Training itu dosis. Budaya belajar itu absorpsi.</h2>
   <div class="split"><div class="panel p-grey"><h3>Aktivitas belajar</h3><ul><li>Jam training per orang</li><li>Jumlah peserta dan sertifikat</li><li>Budget yang terserap</li><li>Laporan L&D yang rapi</li></ul></div>
-  <div class="panel p-green"><h3>Budaya belajar</h3><ul><li>Orang berani nanya dan bilang "belum bisa"</li><li>Kesalahan dibahas, bukan disembunyikan</li><li>Ilmu dari satu orang nyebar ke tim</li><li>Cara kerja berubah di Senin pagi</li></ul></div></div>`,
-  notes:`<h4>Jawab pertanyaan TOR Segmen 1</h4><b>"Apa bedanya tim yang sibuk training dengan tim yang punya budaya belajar? Gejalanya?"</b><ul><li>Obat sebagus apa pun nggak ngefek kalau nggak diserap. Training = dosis, budaya = absorpsi.</li><li>Aktivitas itu input (jam, peserta). Budaya itu perilaku sehari-hari setelahnya.</li><li>Tes sederhana: tanya "apa yang kamu lakukan berbeda sejak training kemarin?" — kalau bingung jawab, itu aktivitas.</li></ul>`},
- {poll:'p3',cls:'light',seg:'Segmen 1 · Gejala tim yang jalan di tempat',notes:`Bacakan gejala teratas, lalu masuk cerita past company.`},
- {story:'s1',cls:'dark',seg:'Segmen 1 · Cerita',notes:`<h4>Cerita #1</h4>Struktur 90 detik: situasi → momen → pelajaran. Tutup dengan satu kalimat yang nyambung ke gejala di polling sebelumnya.`},
- {cls:'sun',seg:'Segmen 2',html:()=>`<div style="margin:auto 0"><div class="seg">Segmen 2 · 20.05–20.40</div><h1 style="font-size:120px">Apa yang dilakukan<br>tim yang terus tumbuh?</h1></div>`,notes:`Sub-A: peran leader dan rasa aman (20 menit).`},
- {poll:'p4',cls:'light',seg:'Segmen 2 · Rasa aman untuk salah dan bertanya',notes:`Kalau rata-rata di bawah 3: "Ini bukan soal materi training. Ini soal apa yang terjadi kalau orang ngaku belum bisa."`},
- {cls:'light',seg:'Segmen 2 · Perilaku leader yang kelihatan sehari-hari',html:()=>`<h2>Leader yang bikin tim berani bilang "belum bisa"</h2>
+  <div class="panel" style="background:var(--coral);color:var(--ink)"><h3>Budaya belajar</h3><ul><li>Orang berani nanya dan bilang "belum bisa"</li><li>Kesalahan dibahas, bukan disembunyikan</li><li>Ilmu dari satu orang nyebar ke tim</li><li>Cara kerja berubah di Senin pagi</li></ul></div></div>`,
+  notes:`<h4>Jawab: apa bedanya tim sibuk training dengan tim yang punya budaya belajar?</h4><ul><li>Obat sebagus apa pun nggak ngefek kalau nggak diserap. Training = dosis, budaya = absorpsi.</li><li>Aktivitas itu input (jam, peserta). Budaya itu perilaku sehari-hari setelahnya.</li><li>Tes sederhana: "apa yang kamu lakukan berbeda sejak training kemarin?"</li></ul>`},
+ {cls:'light a-coral',seg:'Segmen 1 · Apa kata riset',html:()=>`<h2>Bukan cuma di kantormu</h2>
+  <div class="stats">
+   <div class="stat step" style="--c:var(--coral)"><b>72%</b><p>organisasi kekurangan orang dan waktu untuk menjaga budaya belajar</p><small>ATD Research, 2025</small></div>
+   <div class="stat step" style="--c:var(--sun)"><b>62%</b><p>memberi waktu belajar khusus; median 40 jam per tahun</p><small>ATD Research, 2025</small></div>
+   <div class="stat step" style="--c:var(--sky)"><b>36%</b><p>organisasi yang program pengembangan kariernya benar-benar matang secara global; Asia Tenggara 43%</p><small>LinkedIn Workplace Learning Report 2025</small></div>
+   <div class="stat step" style="--c:var(--leaf)"><b>88%</b><p>lebih mungkin pakai project-based learning ("gigs") di organisasi yang matang itu</p><small>LinkedIn Workplace Learning Report 2025</small></div>
+  </div>
+  <div class="src">ATD, Creating a Culture of Learning (2025). LinkedIn Workplace Learning Report 2025.</div>`,
+  notes:`<h4>Riset (tekan → untuk memunculkan satu per satu)</h4><ul><li><b>ATD 2025</b>: 72% organisasi kekurangan staf & waktu untuk budaya belajar; 62% beri jam belajar khusus (median 40 jam/tahun); 68% punya mentorship; 63% pakai pengakuan publik untuk yang belajar.</li><li><b>LinkedIn WLR 2025</b>: hanya 36% "career development champions" (Asia Tenggara 43%). Mereka 88% lebih mungkin pakai project-based learning.</li><li>Benang merah: masalahnya jarang di materi, lebih sering di waktu, manajer, dan apakah belajar terhubung dengan kerja nyata.</li></ul>`},
+ {poll:'p3',cls:'light a-coral',seg:'Segmen 1 · Gejala tim yang jalan di tempat',notes:`Bacakan gejala teratas, lalu masuk data Tigaraksa.`},
+ {cls:'light a-sky',seg:'Segmen 1 · Dari past company: Tigaraksa Satria',html:()=>`<h2>Aktivitas belajar naik 5×. Pertanyaannya: apa yang bikin nempel?</h2>
+  <div class="tgk"><div>
+   <div class="metric"><h4>Peserta pengembangan kompetensi</h4>${ybars([['2020',215],['2021',692],['2022',1067]],1067,'var(--sky)',num)}</div>
+   <div class="metric"><h4>Total jam pelatihan</h4>${ybars([['2020',4730],['2021',14260],['2022',27050]],27050,'var(--coral)',v=>num(v)+' jam')}</div>
+   <div class="metric"><h4>Biaya pengembangan kompetensi</h4>${ybars([['2020',1545],['2021',1800],['2022',1588]],1800,'var(--sun)',v=>'Rp'+num(v)+' jt')}</div>
+  </div>
+  <div class="prog-list">
+   <div class="pg" style="--c:var(--leaf)"><b>TrOli</b><span>Training Online saat pandemi, supaya lebih hemat biaya dan waktu</span></div>
+   <div class="pg" style="--c:var(--sky)"><b>BLENDER</b><span>Blended Learning & Gamification lewat aplikasi, termasuk pelatihan lapangan</span></div>
+   <div class="pg" style="--c:var(--berry)"><b>3D</b><span>3rd Layer Successor Development: menyiapkan penerus layer 2 dari layer 3</span></div>
+  </div></div>
+  <div class="src">${SRC_TGK}</div>`,
+  notes:`<h4>Data publik Tigaraksa (Laporan Keberlanjutan & Tahunan 2022)</h4><ul><li>Peserta 215 → 692 → 1.067; jam pelatihan 4.730 → 14.260 → 27.050 (2020–2022). Biaya relatif datar: Rp1,55 M → Rp1,80 M → Rp1,59 M.</li><li>Program 2022: TrOli (Training Online), BLENDER (Blended Learning & Gamification), 3D (successor development), ANORGANIC (kapabilitas digital, e-commerce, cold chain).</li><li>Pengakuan: Stellar Workplace Recognition in Employee Commitment & Satisfaction 2022 (Kontan × GML); profil JobStreet mencantumkan "Indonesia Best Companies in Creating Leaders from Within 2025".</li><li>Jembatan ke cerita: angka aktivitas naik tajam dengan biaya hampir sama. Apa yang membuat itu jadi kebiasaan, bukan cuma angka laporan? Ceritakan peranmu sendiri — jangan klaim program yang bukan kamu pegang.</li></ul>`},
+ {story:'s1',cls:'dark a-sun',seg:'Segmen 1 · Cerita dari dalam',notes:`<h4>Cerita #1</h4>Struktur 90 detik: situasi → momen → pelajaran (tekan → untuk memunculkan tiap bagian).`},
+ section(2,'20.05–20.40','Apa yang dilakukan<br>tim yang terus tumbuh?','sky'),
+ {poll:'p4',cls:'light a-sky',seg:'Segmen 2 · Rasa aman untuk salah dan bertanya',notes:`Kalau rata-rata di bawah 3: "Ini bukan soal materi training. Ini soal apa yang terjadi kalau orang ngaku belum bisa."`},
+ {cls:'light a-sky',seg:'Segmen 2 · Perilaku leader yang kelihatan sehari-hari',html:()=>`<h2>Leader yang bikin tim berani bilang "belum bisa"</h2>
   <div class="cards">
-   <div class="card"><div class="n">1</div><h3>Duluan bilang "saya belum tahu"</h3><p>Ketidaktahuan jadi hal normal karena leader-nya mencontohkan.</p></div>
-   <div class="card"><div class="n">2</div><h3>Nanya "minggu ini belajar apa?"</h3><p>Di 1:1, bukan cuma "targetnya gimana?".</p></div>
-   <div class="card"><div class="n">3</div><h3>Bahas salah tanpa nyari siapa</h3><p>Fokus ke apa yang terjadi dan apa yang diubah.</p></div>
-   <div class="card"><div class="n">4</div><h3>Ikut duduk, bukan cuma ngirim</h3><p>Hadir di retro dan sharing, ikut cerita kesalahannya sendiri.</p></div>
+   <div class="card step" style="--c:var(--sun)"><div class="n">1</div><h3>Duluan bilang "saya belum tahu"</h3><p>Ketidaktahuan jadi normal karena leader-nya mencontohkan.</p></div>
+   <div class="card step" style="--c:var(--coral)"><div class="n">2</div><h3>Nanya "minggu ini belajar apa?"</h3><p>Di 1:1, bukan cuma "targetnya gimana?".</p></div>
+   <div class="card step" style="--c:var(--sky)"><div class="n">3</div><h3>Bahas salah tanpa nyari siapa</h3><p>Fokus ke apa yang terjadi dan apa yang diubah.</p></div>
+   <div class="card step" style="--c:var(--leaf)"><div class="n">4</div><h3>Ikut duduk, bukan cuma ngirim</h3><p>Hadir di retro dan sharing, ikut cerita kesalahannya sendiri.</p></div>
   </div>`,
-  notes:`<h4>Jawab pertanyaan TOR Sub-A</h4><b>"Apa yang dilakukan leader sehingga anggotanya berani bilang 'saya belum bisa'?"</b><ul><li>Perilaku konkret, bukan nilai di dinding.</li><li>Respons pertama leader saat ada yang salah menentukan apakah orang akan jujur lagi besok.</li><li>Sambungkan ke cerita #2.</li></ul>`},
- {story:'s2',cls:'dark',seg:'Segmen 2 · Cerita',notes:`<h4>Cerita #2</h4>Fokus ke satu perilaku leader dan satu ritual yang bertahan.`},
- {poll:'p5',cls:'light',seg:'Segmen 2 · Waktu belajar',notes:`Sub-B dibuka Pak Sapto (waktu belajar). Polling ini jadi bahan pembuka beliau.`},
- {cls:'dark',seg:'Segmen 2 · Belajar dari pekerjaan',html:()=>`<h2>Retro yang nggak berakhir jadi formalitas</h2>
-  <div class="split"><div class="panel" style="background:var(--paper);color:var(--ink)"><h3>Cukup 3 pertanyaan</h3><ul>
+  notes:`<h4>Jawab: apa yang dilakukan leader sehingga anggotanya berani bilang "saya belum bisa"?</h4><ul><li>Perilaku konkret, bukan nilai di dinding. Tekan → untuk memunculkan satu per satu.</li><li>Respons pertama leader saat ada yang salah menentukan apakah orang akan jujur lagi besok.</li><li>ATD 2025: pekerja dan praktisi TD sama-sama melihat rasa aman untuk komunikasi terbuka dan dukungan manajer sebagai bagian inti budaya belajar.</li></ul>`},
+ {story:'s2',cls:'dark a-sky',seg:'Segmen 2 · Cerita dari dalam',notes:`<h4>Cerita #2</h4>Fokus ke satu perilaku leader dan satu ritual yang bertahan.`},
+ {poll:'p5',cls:'light a-sky',seg:'Segmen 2 · Waktu belajar',notes:`Bandingkan dengan ATD: 62% organisasi memberi waktu belajar khusus, median 40 jam/tahun — kira-kira 45 menit per minggu.`},
+ {cls:'dark a-sky',seg:'Segmen 2 · Belajar dari pekerjaan',html:()=>`<h2>Retro yang nggak berakhir jadi formalitas</h2>
+  <div class="split"><div class="panel" style="background:var(--sun);color:var(--ink)"><h3>Cukup 3 pertanyaan</h3><ul>
    <li><b>Apa yang jalan?</b> Pertahankan.</li><li><b>Apa yang bikin kaget?</b> Di sini belajarnya.</li><li><b>Satu hal apa yang kita ubah?</b> Satu, bukan sepuluh.</li></ul></div>
-  <div class="panel" style="background:var(--g2)"><h3>Biar jadi kebiasaan</h3><ul>
+  <div class="panel" style="background:var(--sky);color:var(--ink)"><h3>Biar jadi kebiasaan</h3><ul>
    <li>30 menit, tiap 2 minggu, masuk kalender</li><li>Fasilitator digilir, bukan leader terus</li><li>Satu aksi, satu PIC, satu tanggal</li><li>Retro berikutnya dibuka dengan cek aksi kemarin</li></ul></div></div>`,
-  notes:`<h4>Jawab pertanyaan TOR Sub-B</h4><b>"Bagaimana retro/sharing session dijalankan supaya jadi kebiasaan, bukan rutinitas yang ditinggalkan?"</b><ul><li>Kenapa ritual mati: nggak ada aksi yang ditindaklanjuti, jadi orang merasa buang waktu.</li><li>Kunci: kecil, rutin, ada follow-up yang kelihatan.</li><li>Komunitas OD.ID juga begitu: belajar karena ada ruang rutin untuk saling cerita.</li></ul>`},
- {poll:'p6',cls:'light',seg:'Segmen 2 · Retro dan sharing session',notes:`Kalau "Pernah ada, lalu hilang" tinggi: tanya siapa yang mau cerita kenapa hilang (bawa ke Open Floor).`},
- {cls:'sun',seg:'Segmen 3',html:()=>`<div style="margin:auto 0"><div class="seg">Segmen 3 · 20.40–20.50</div><h1 style="font-size:120px">Mulai dari mana,<br>kalau budget terbatas?</h1></div>`,notes:``},
- {cls:'light',seg:'Segmen 3 · Langkah pertama',html:()=>`<h2>Satu ritual. 30 menit. Tiap 2 minggu.</h2>
+  notes:`<h4>Jawab: bagaimana retro/sharing session jadi kebiasaan, bukan rutinitas yang ditinggalkan?</h4><ul><li>Ritual mati karena aksinya nggak ditindaklanjuti, jadi orang merasa buang waktu.</li><li>Kunci: kecil, rutin, ada follow-up yang kelihatan.</li><li>OD.ID dan Circle HR ITB juga begitu: orang belajar karena ada ruang rutin untuk saling cerita.</li></ul>`},
+ {poll:'p6',cls:'light a-sky',seg:'Segmen 2 · Retro dan sharing session',notes:`Kalau "Pernah ada, lalu hilang" tinggi: tanya siapa yang mau cerita kenapa hilang (bawa ke Open Floor).`},
+ section(3,'20.40–20.50','Mulai dari mana,<br>kalau budget terbatas?','sunb'),
+ {cls:'light a-sun',seg:'Segmen 3 · Langkah pertama',html:()=>`<h2>Satu ritual. 30 menit. Tiap 2 minggu.</h2>
   <div class="roles">
-   <div class="panel p-green"><h3>Peran leader</h3><ul><li>Pegang jadwal dan lindungi waktunya</li><li>Jadi yang pertama cerita kesalahan</li><li>Follow up satu aksi sampai selesai</li></ul></div>
-   <div class="panel" style="background:#fff"><h3>Peran HR</h3><ul><li>Siapkan format dan template sederhana</li><li>Latih fasilitator dari dalam tim</li><li>Kumpulkan cerita dan sebarkan ke tim lain</li></ul></div>
-   <div class="panel" style="background:#e7e5dc"><h3>Tanda budayanya terbentuk</h3><ul><li>Ritualnya tetap jalan saat sibuk</li><li>Aksi dari retro benar-benar selesai</li><li>Yang sharing bukan orang itu-itu aja</li></ul></div>
+   <div class="panel" style="background:var(--leaf);color:var(--ink)"><h3>Peran leader</h3><ul><li>Pegang jadwal dan lindungi waktunya</li><li>Jadi yang pertama cerita kesalahan</li><li>Follow up satu aksi sampai selesai</li></ul></div>
+   <div class="panel" style="background:var(--sky);color:var(--ink)"><h3>Peran HR</h3><ul><li>Siapkan format dan template sederhana</li><li>Latih fasilitator dari dalam tim</li><li>Kumpulkan cerita dan sebarkan ke tim lain</li></ul></div>
+   <div class="panel" style="background:var(--berry);color:#fff"><h3>Tanda budayanya terbentuk</h3><ul><li>Ritualnya tetap jalan saat sibuk</li><li>Aksi dari retro benar-benar selesai</li><li>Yang sharing bukan orang itu-itu aja</li></ul></div>
   </div>`,
-  notes:`<h4>Jawab pertanyaan TOR Segmen 3</h4><b>"Kalau mulai dari nol dan budget terbatas, langkah pertama apa? Pembagian peran HR dan leader?"</b><ul><li>Jangan mulai dari program. Mulai dari satu ritual di satu tim yang leader-nya mau.</li><li>HR = arsitek dan penyebar cerita. Leader = pemilik ritual.</li><li>Kolom ketiga melengkapi jawaban Pak Sapto soal indikator.</li></ul>`},
- {poll:'p7',cls:'dark',seg:'Segmen 3 · Komitmen kecil',notes:`Bacakan 3–4 jawaban yang menarik. Ini jadi jembatan ke Open Floor.`},
- {qa:true,cls:'light',seg:'Segmen 4 · Open Floor',notes:`<h4>Open Floor (20.50–21.15)</h4>Pertanyaan dari HP audiens muncul di sini, urut vote terbanyak. Klik pertanyaan untuk menandai yang sedang dibahas, × untuk menyembunyikan.`},
- {recap:true,cls:'dark',seg:'Segmen 5 · Closing',notes:`<h4>Closing statement</h4>1–2 kalimat yang bisa dikutip. Contoh arah: "Budaya belajar nggak dibangun di ruang training. Dia dibangun di 30 menit yang kita lindungi tiap dua minggu."`},
- {cls:'sun',seg:'',html:()=>`<div style="margin:auto 0"><div class="quote">Budaya belajar kelihatan di Senin pagi, bukan di sertifikat.</div>
-  <div class="row" style="margin-top:60px;align-items:center"><div class="lead grow">Terima kasih. Lanjut ngobrol dan belajar bareng di <b>OD.ID</b> (orgdev.id) dan <b>Circle HR ITB</b>.</div><div class="pill">HR Stories Meetup #25</div></div></div>`,
+  notes:`<h4>Jawab: langkah pertama kalau budget terbatas, dan pembagian peran HR vs leader</h4><ul><li>Jangan mulai dari program. Mulai dari satu ritual di satu tim yang leader-nya mau.</li><li>HR = arsitek dan penyebar cerita. Leader = pemilik ritual.</li><li>Indikator tanpa survei besar: ritual tetap jalan saat sibuk, aksi selesai, presenter bergilir.</li></ul>`},
+ {poll:'p7',cls:'dark a-berry',seg:'Segmen 3 · Komitmen kecil',notes:`Bacakan 3–4 jawaban yang menarik. Ini jembatan ke Open Floor.`},
+ {qa:true,cls:'light a-berry',seg:'Segmen 4 · Open Floor',notes:`<h4>Open Floor</h4>Pertanyaan dari HP audiens muncul di sini, urut vote terbanyak. Klik pertanyaan untuk menandai yang sedang dibahas, × untuk menyembunyikan.`},
+ {recap:true,cls:'dark a-leaf',seg:'Segmen 5 · Closing',notes:`<h4>Closing statement</h4>1–2 kalimat yang bisa dikutip. Contoh: "Budaya belajar nggak dibangun di ruang training. Dia dibangun di 30 menit yang kita lindungi tiap dua minggu."`},
+ {cls:'leafb',html:()=>`<div style="margin:auto 0"><div class="quote">Budaya belajar kelihatan di Senin pagi, bukan di sertifikat.</div>
+  <div class="lead" style="margin-top:calc(var(--u)*50)">Terima kasih. Lanjut ngobrol dan belajar bareng di <b>OD.ID</b> (orgdev.id) dan <b>Circle HR ITB</b>.</div>
+  <div class="small" style="margin-top:calc(var(--u)*30);opacity:.75">Data: ATD Research (2025), LinkedIn Workplace Learning Report 2025, PT Tigaraksa Satria Tbk Laporan Tahunan & Keberlanjutan 2022.</div></div>`,
   notes:`Foto bersama, promosi komunitas.`}
 ];
 
 /* ============ HOST ============ */
 function host(){
-  document.getElementById('host').classList.remove('hidden');
-  const stage = document.getElementById('stage');
-  let idx = Math.min(ls.get('hrs25-idx',0), S.length-1), manual = false, showNotes = false, showHelp = true, conn = 'off';
-  const V = {}; PID.forEach(p=>V[p]={});           // V[p][voter] = {a,t}
-  const M = ls.get('hrs25-manual', {});             // M[p][i] = count
-  const R = ls.get('hrs25-reset', {});              // R[p] = unix sec
+  const root = document.getElementById('host'); root.classList.remove('hidden');
+  let idx = Math.min(ls.get('hrs25-idx',0), S.length-1), stepN = 0, manual = false, showNotes = false;
+  const V = {}; PID.forEach(p=>V[p]={});
+  const M = ls.get('hrs25-manual', {}), R = ls.get('hrs25-reset', {});
   const hiddenQ = new Set(ls.get('hrs25-hiddenq', []));
-  let pinQ = null; const Q = {}, U = {};           // Q[qid]={t,time}; U[qid]=Set(voter)
+  let pinQ = null; const Q = {}, U = {};
 
-  stage.innerHTML = S.map((s,i)=>`<section class="slide ${s.cls}" id="s${i}">${s.seg?`<div class="seg">${esc(s.seg)}</div>`:''}${body(s)}</section>`).join('') +
-    `<div class="chrome"><span class="pill"><span class="dot" id="cdot"></span><span id="ctext">Menghubungkan…</span></span><span id="cpage"></span></div><div class="prog" id="prog"></div>`;
-  stage.querySelectorAll('[data-qr]').forEach(el=>qr(el,+el.dataset.qr));
-  stage.querySelectorAll('[data-url]').forEach(el=>el.textContent=joinUrl().replace(/^https?:\/\//,''));
+  root.innerHTML = S.map((s,i)=>`<section class="slide ${s.cls}" id="s${i}">${s.seg?`<div class="seg">${esc(s.seg)}</div>`:''}${body(s)}</section>`).join('') +
+    `<div class="chrome"><span><span class="dot" id="cdot"></span><span id="ctext">Menghubungkan…</span></span><span id="cpage"></span></div><div class="prog" id="prog"></div>`;
+  root.querySelectorAll('[data-qr]').forEach(el=>qr(el,+el.dataset.qr));
+  root.querySelectorAll('[data-url]').forEach(el=>el.textContent=joinUrl().replace(/^https?:\/\//,''));
 
   function body(s){
     if (s.html) return s.html();
-    if (s.story){ const st=STORIES[s.story]; return `<h2>${esc(st.title)}</h2><div class="lead mute" style="margin-top:14px">${esc(st.where)}</div>
-      <div class="story">${['Situasi','Momen','Pelajaran'].map((h,i)=>`<div class="beat"><small>${h}</small><p class="${st.todo?'todo':''}">${esc(st.beats[i]||'')}</p></div>`).join('')}</div>`; }
-    if (s.qa) return `<h2>Pertanyaan dari kamu</h2><div class="qa"><div class="qlist" id="qlist"></div><div class="pollside"><div class="qrsmall" data-qr="220"></div><div class="lead" style="font-size:22px">Kirim pertanyaan lewat HP, lalu vote pertanyaan orang lain</div></div></div>`;
+    if (s.story){ const st=STORIES[s.story]; return `<h2>${esc(st.title)}</h2><div class="lead mute" style="margin-top:calc(var(--u)*12)">${esc(st.where)}</div>
+      <div class="story">${['Situasi','Momen','Pelajaran'].map((h,i)=>`<div class="beat step" style="--c:${['var(--sun)','var(--coral)','var(--sky)'][i]}"><small>${h}</small><p class="${st.todo?'todo':''}">${esc(st.beats[i]||'')}</p></div>`).join('')}</div>`; }
+    if (s.qa) return `<h2>Pertanyaan dari kamu</h2><div class="pollgrid" style="margin-top:calc(var(--u)*30)"><div class="qlist" id="qlist"></div><div class="pollside"><div class="qrsmall" data-qr="240"></div><div class="lead" style="font-size:calc(var(--u)*21)">Kirim pertanyaan lewat HP, lalu vote pertanyaan orang lain</div></div></div>`;
     if (s.recap) return `<h2>Yang kita pelajari malam ini, dari jawaban kalian</h2><div class="recap" id="recap"></div>`;
-    const P = POLLS[s.poll];
-    let inner;
-    if (P.type==='choice') inner = `<div class="bars" data-bars="${s.poll}">${P.opts.map((o,i)=>`<div class="bar" data-i="${i}"><div class="k">${L[i]}</div><div class="track"><div class="fill"></div><div class="lbl">${esc(o)}</div></div><div class="pct">0%<small>0</small></div></div>`).join('')}</div>`;
-    else if (P.type==='scale') inner = `<div class="row" style="flex:1;align-items:flex-end"><div style="width:320px"><div class="avg" data-avg="${s.poll}">–</div><div class="lead mute" style="font-size:24px">rata-rata dari 5</div></div>
-      <div class="grow"><div class="scaleWrap" data-scale="${s.poll}">${P.opts.map((o,i)=>`<div class="col" data-i="${i}"><b>0</b><div class="colbar"></div><div style="font:700 30px var(--hd)">${o}</div></div>`).join('')}</div><div class="ends"><span>1 = ${esc(P.lo)}</span><span>5 = ${esc(P.hi)}</span></div></div></div>`;
+    const P = POLLS[s.poll]; let inner;
+    if (P.type==='choice') inner = `<div class="bars" data-bars="${s.poll}">${P.opts.map((o,i)=>`<div class="bar" data-i="${i}" style="--c:${C[i]}"><div class="k">${L[i]}</div><div class="track"><div class="fill"></div><div class="lbl">${esc(o)}</div></div><div class="pct">0%<small>0</small></div></div>`).join('')}</div>`;
+    else if (P.type==='scale') inner = `<div class="avgbox" style="margin-top:calc(var(--u)*20)"><div class="avg" data-avg="${s.poll}">–</div><div class="lead mute">rata-rata dari 5</div></div>
+      <div class="scaleWrap" data-scale="${s.poll}">${P.opts.map((o,i)=>`<div class="col" data-i="${i}" style="--c:${SC[i]}"><b>0</b><div class="colbar"></div><span>${o}</span></div>`).join('')}</div><div class="ends"><span>1 = ${esc(P.lo)}</span><span style="text-align:right">5 = ${esc(P.hi)}</span></div>`;
     else inner = `<div class="wall" data-wall="${s.poll}"></div>`;
-    return `<div class="row" style="flex:1;min-height:0"><div class="grow" style="display:flex;flex-direction:column;min-height:0"><div class="pollq">${esc(P.q)}</div>${inner}</div>
-      <div class="pollside"><div class="qrsmall" data-qr="220"></div><div class="count" data-count="${s.poll}">0</div><div class="mute" style="font-size:22px">jawaban masuk</div></div></div>`;
+    return `<div class="pollgrid"><div style="display:flex;flex-direction:column;min-height:0"><div class="pollq">${esc(P.q)}</div>${inner}</div>
+      <div class="pollside"><div class="qrsmall" data-qr="240"></div><div><div class="count" data-count="${s.poll}">0</div><div class="mute small">jawaban masuk</div></div></div></div>`;
   }
 
   function tally(p){
-    const P = POLLS[p], n = P.opts ? P.opts.length : 0, c = new Array(n).fill(0); let list = [];
+    const P = POLLS[p], n = P.opts ? P.opts.length : 0, c = new Array(n).fill(0), list = [];
     for (const v of Object.values(V[p])) { if (v.t < (R[p]||0)) continue; if (P.type==='text') list.push(v); else if (v.a>=0 && v.a<n) c[v.a]++; }
-    (M[p]||[]).forEach((m,i)=>{ if(i<n) c[i]+=m; });
+    (M[p]||[]).forEach((m,i)=>{ if(i<n) c[i]+=m||0; });
     return {c, list, total: P.type==='text' ? list.length : c.reduce((a,b)=>a+b,0)};
   }
   function renderPoll(p){
-    const P = POLLS[p], {c,list,total} = tally(p);
-    stage.querySelectorAll(`[data-count="${p}"]`).forEach(e=>e.textContent=total);
-    const max = Math.max(...c, 0);
-    stage.querySelectorAll(`[data-bars="${p}"] .bar`).forEach(b=>{const i=+b.dataset.i, pc= total? Math.round(c[i]/total*100):0;
+    const {c,list,total} = tally(p), max = Math.max(...c, 0);
+    root.querySelectorAll(`[data-count="${p}"]`).forEach(e=>e.textContent=total);
+    root.querySelectorAll(`[data-bars="${p}"] .bar`).forEach(b=>{const i=+b.dataset.i, pc= total? Math.round(c[i]/total*100):0;
       b.querySelector('.fill').style.width = pc+'%'; b.querySelector('.pct').innerHTML = `${pc}%<small>${c[i]} orang</small>`; b.classList.toggle('top', max>0 && c[i]===max);});
-    stage.querySelectorAll(`[data-scale="${p}"] .col`).forEach(b=>{const i=+b.dataset.i; b.querySelector('.colbar').style.height = (max? c[i]/max*300:0)+'px'; b.querySelector('b').textContent=c[i]; b.classList.toggle('top', max>0&&c[i]===max);});
-    stage.querySelectorAll(`[data-avg="${p}"]`).forEach(e=>{const s=c.reduce((a,v,i)=>a+v*(i+1),0); e.textContent = total ? (s/total).toFixed(1).replace('.',',') : '–';});
-    stage.querySelectorAll(`[data-wall="${p}"]`).forEach(w=>{ const items = list.sort((a,b)=>b.t-a.t).slice(0,40);
+    root.querySelectorAll(`[data-scale="${p}"] .col`).forEach(b=>{const i=+b.dataset.i; b.querySelector('.colbar').style.height = (max? c[i]/max*75:0)+'%'; b.querySelector('b').textContent=c[i];});
+    root.querySelectorAll(`[data-avg="${p}"]`).forEach(e=>{const s=c.reduce((a,v,i)=>a+v*(i+1),0); e.textContent = total ? (s/total).toFixed(1).replace('.',',') : '–';});
+    root.querySelectorAll(`[data-wall="${p}"]`).forEach(w=>{ const items = list.sort((a,b)=>b.t-a.t).slice(0,40);
       const key = items.map(x=>x.t+x.a).join('|'); if (w.dataset.key===key) return; w.dataset.key=key; w.innerHTML='';
-      items.forEach(x=>{const d=document.createElement('div');d.className='chip';d.textContent=x.a;w.appendChild(d)}); });
+      items.forEach((x,i)=>{const d=document.createElement('div');d.className='chip';d.style.setProperty('--c',C[i%C.length]);d.textContent=x.a;w.appendChild(d)}); });
   }
   function renderQA(){
     const el = document.getElementById('qlist'); if(!el) return;
     const qs = Object.entries(Q).filter(([id])=>!hiddenQ.has(id)).map(([id,q])=>({id,...q,n:(U[id]?U[id].size:0)})).sort((a,b)=>b.n-a.n||a.time-b.time).slice(0,6);
     el.innerHTML = qs.length ? '' : '<div class="lead mute">Belum ada pertanyaan. Scan QR dan kirim dari HP kamu.</div>';
-    qs.forEach(q=>{const d=document.createElement('div');d.className='qi'+(pinQ===q.id?' pin':'');
+    qs.forEach((q,i)=>{const d=document.createElement('div');d.className='qi'+(pinQ===q.id?' pin':'');d.style.setProperty('--c',C[i%C.length]);
       d.innerHTML=`<div class="v">${q.n}<small>vote</small></div><p></p><button title="Sembunyikan" aria-label="Sembunyikan">×</button>`;
       d.querySelector('p').textContent=q.t; d.onclick=()=>{pinQ = pinQ===q.id?null:q.id; renderQA();};
       d.querySelector('button').onclick=e=>{e.stopPropagation();hiddenQ.add(q.id);ls.set('hrs25-hiddenq',[...hiddenQ]);renderQA();};
@@ -384,10 +458,10 @@ function host(){
   }
   function renderRecap(){
     const el = document.getElementById('recap'); if(!el) return;
-    el.innerHTML = ['p1','p2','p3','p4','p5','p6'].map(p=>{const P=POLLS[p],{c,total}=tally(p);
-      if(P.type==='scale'){const s=c.reduce((a,v,i)=>a+v*(i+1),0);return `<div class="rc"><small>${esc(P.q)}</small><b>${total?(s/total).toFixed(1).replace('.',','):'–'} dari 5</b><span>${total} jawaban</span></div>`}
+    el.innerHTML = ['p1','p2','p3','p4','p5','p6'].map((p,k)=>{const P=POLLS[p],{c,total}=tally(p), col=`style="--c:${C[k]}"`;
+      if(P.type==='scale'){const s=c.reduce((a,v,i)=>a+v*(i+1),0);return `<div class="rc" ${col}><small>${esc(P.q)}</small><b>${total?(s/total).toFixed(1).replace('.',','):'–'} dari 5</b><span>${total} jawaban</span></div>`}
       const m=Math.max(...c), i=c.indexOf(m);
-      return `<div class="rc"><small>${esc(P.q)}</small><b>${total?esc(P.opts[i]):'Belum ada jawaban'}</b><span>${total?Math.round(m/total*100)+'% dari '+total+' jawaban':''}</span></div>`}).join('');
+      return `<div class="rc" ${col}><small>${esc(P.q)}</small><b>${total?esc(P.opts[i]):'Belum ada jawaban'}</b><span>${total?Math.round(m/total*100)+'% dari '+total+' jawaban':''}</span></div>`}).join('');
   }
   let raf=0; const renderAll=()=>{ if(raf) return; raf=requestAnimationFrame(()=>{raf=0; PID.forEach(renderPoll); renderQA(); renderRecap();}); };
 
@@ -398,12 +472,11 @@ function host(){
     else if (d.k==='u' && typeof d.qid==='string') { (U[d.qid] ||= new Set()); d.on===false ? U[d.qid].delete(d.id) : U[d.qid].add(d.id); }
     renderAll();
   }
-  function setConn(s){ conn=s; const dot=document.getElementById('cdot'), t=document.getElementById('ctext');
-    dot.className='dot '+(s==='live'?'live':s==='err'?'err':''); t.textContent = s==='live' ? 'Live voting aktif' : s==='err' ? 'Offline · pakai tally manual (M)' : 'Menghubungkan…'; }
+  function setConn(s){ const dot=document.getElementById('cdot'), t=document.getElementById('ctext');
+    dot.className='dot '+(s==='live'?'live':s==='err'?'err':''); t.textContent = s==='live' ? 'Live voting aktif' : s==='err' ? 'Offline · tally manual (M)' : 'Menghubungkan…'; }
   try {
     const es = new EventSource(RELAY + TV + '/sse?since=all');
-    es.onopen = ()=>setConn('live');
-    es.onerror = ()=>setConn('err');
+    es.onopen = ()=>setConn('live'); es.onerror = ()=>setConn('err');
     es.onmessage = e => { try { const m=JSON.parse(e.data); if (m.event!=='message') return; ingest(JSON.parse(m.message), m.time); } catch(x){} };
   } catch(e){ setConn('err'); }
 
@@ -411,74 +484,80 @@ function host(){
   function publish(){ clearTimeout(pubT); pubT=setTimeout(()=>{ const s=S[idx];
     fetch(RELAY+TS,{method:'POST',body:JSON.stringify({slide:idx,poll:s.poll||null,qa:!!s.qa})}).catch(()=>{}); },500); }
 
-  function go(i){
+  const stepsOf = i => [...document.getElementById('s'+i).querySelectorAll('.step')];
+  function showSteps(){ stepsOf(idx).forEach((el,j)=>el.classList.toggle('shown', j<stepN)); }
+  function go(i, atEnd){
     idx = Math.max(0, Math.min(S.length-1, i)); ls.set('hrs25-idx', idx);
-    stage.querySelectorAll('.slide').forEach((el,j)=>el.classList.toggle('on', j===idx));
+    stepN = atEnd ? stepsOf(idx).length : 0;
+    root.querySelectorAll('.slide').forEach((el,j)=>{ el.classList.toggle('on', j===idx); if(j===idx) el.scrollTop=0; });
+    showSteps();
     document.getElementById('prog').style.width = ((idx+1)/S.length*100)+'%';
     document.getElementById('cpage').textContent = `${idx+1} / ${S.length}`;
-    stage.classList.toggle('manual', manual);
+    root.classList.toggle('manual', manual);
     renderNotes(); renderAll(); publish();
   }
+  function next(){ if (stepN < stepsOf(idx).length){ stepN++; showSteps(); } else go(idx+1); }
+  function prev(){ if (stepN > 0){ stepN--; showSteps(); } else go(idx-1, true); }
+
   const notesEl = document.createElement('div'); notesEl.id='notes'; notesEl.className='hidden'; document.body.appendChild(notesEl);
-  function renderNotes(){ notesEl.classList.toggle('hidden', !showNotes); notesEl.innerHTML = `<div class="mute" style="font-size:13px;margin-bottom:6px">Catatan pembicara · slide ${idx+1}</div>` + (S[idx].notes||'Tidak ada catatan.'); }
+  function renderNotes(){ notesEl.classList.toggle('hidden', !showNotes); notesEl.innerHTML = `<div class="mute" style="font-size:12px;margin-bottom:6px">Catatan pembicara · slide ${idx+1}</div>` + (S[idx].notes||'Tidak ada catatan.'); }
   const help = document.createElement('div'); help.id='help';
-  help.innerHTML = `<kbd>→</kbd> <kbd>←</kbd> pindah slide · <kbd>N</kbd> catatan · <kbd>Q</kbd> QR besar · <kbd>F</kbd> layar penuh<br><kbd>M</kbd> tally manual (klik opsi +1, Shift+klik −1) · <kbd>R</kbd> reset polling ini · <kbd>S</kbd> setelan · <kbd>H</kbd> sembunyikan bantuan`;
-  document.body.appendChild(help); setTimeout(()=>{showHelp=false;help.classList.add('hidden')},12000);
+  help.innerHTML = `<kbd>→</kbd> <kbd>←</kbd> pindah / munculkan · <kbd>N</kbd> catatan · <kbd>Q</kbd> QR besar · <kbd>F</kbd> layar penuh<br><kbd>M</kbd> tally manual (klik opsi +1, Shift+klik −1) · <kbd>R</kbd> reset polling · <kbd>S</kbd> setelan · <kbd>H</kbd> bantuan`;
+  document.body.appendChild(help); setTimeout(()=>help.classList.add('hidden'),12000);
 
   function overlay(html, onMount){ const o=document.createElement('div'); o.className='ov'; o.innerHTML=html; o.onclick=e=>{ if(e.target===o) o.remove(); }; document.body.appendChild(o); onMount&&onMount(o); return o; }
-  function bigQR(){ overlay(`<div class="qrbig"><h2>Scan untuk ikut voting</h2><div data-qr="520"></div><div class="url" style="font-size:26px;margin-top:16px"></div></div>`, o=>{ qr(o.querySelector('[data-qr]'),520); o.querySelector('.url').textContent=joinUrl(); }); }
-  function settings(){ overlay(`<form class="set"><h3 style="font-size:28px">Setelan</h3>
+  function bigQR(){ overlay(`<div class="qrbig"><h2>Scan untuk ikut voting</h2><div data-qr="640"></div><div class="url"></div></div>`, o=>{ qr(o.querySelector('[data-qr]'),640); o.querySelector('.url').textContent=joinUrl(); }); }
+  function settings(){ overlay(`<form class="set"><h3 style="font-size:26px">Setelan</h3>
     <label for="ju">URL untuk audiens (yang di-encode di QR)</label><input id="ju" type="url" placeholder="https://…">
     <div class="mute" style="font-size:14px">Kosongkan untuk memakai alamat halaman ini. Room relay: ${esc(ROOM)}</div>
-    <div class="row" style="gap:10px;justify-content:flex-end"><button type="button" class="btn alt" id="rs">Reset semua polling</button><button class="btn">Simpan</button></div></form>`, o=>{
+    <div class="row" style="gap:10px;justify-content:flex-end;flex-wrap:wrap"><button type="button" class="btn alt" id="rs">Reset semua polling</button><button class="btn">Simpan</button></div></form>`, o=>{
       const f=o.querySelector('form'), inp=o.querySelector('#ju'); inp.value=ls.get('hrs25-join','');
       f.onsubmit=e=>{e.preventDefault(); ls.set('hrs25-join', inp.value.trim()); location.reload();};
       o.querySelector('#rs').onclick=()=>{ const now=Date.now()/1000; PID.forEach(p=>{R[p]=now;M[p]=[]}); ls.set('hrs25-reset',R); ls.set('hrs25-manual',M); toast('Semua polling di-reset'); o.remove(); renderAll(); };
     }); }
-  function confirmReset(p){ overlay(`<div class="set"><h3 style="font-size:26px">Reset polling ini?</h3><div>Jawaban sebelumnya diabaikan, audiens bisa vote ulang.</div><div class="row" style="gap:10px;justify-content:flex-end"><button class="btn alt" id="no">Batal</button><button class="btn" id="yes">Reset</button></div></div>`, o=>{
+  function confirmReset(p){ overlay(`<div class="set"><h3 style="font-size:24px">Reset polling ini?</h3><div>Jawaban sebelumnya diabaikan, audiens bisa vote ulang.</div><div class="row" style="gap:10px;justify-content:flex-end"><button class="btn alt" id="no">Batal</button><button class="btn" id="yes">Reset</button></div></div>`, o=>{
     o.querySelector('#no').onclick=()=>o.remove(); o.querySelector('#yes').onclick=()=>{R[p]=Date.now()/1000; M[p]=[]; ls.set('hrs25-reset',R); ls.set('hrs25-manual',M); o.remove(); renderAll(); toast('Polling di-reset');}; }); }
 
-  stage.addEventListener('click', e=>{
+  root.addEventListener('click', e=>{
     const b = e.target.closest('.bar,.col'); if (!manual || !b) return;
     const p = S[idx].poll; if(!p) return; const i=+b.dataset.i; M[p] ||= []; M[p][i] = Math.max(0,(M[p][i]||0) + (e.shiftKey?-1:1)); ls.set('hrs25-manual',M); renderAll();
   });
   document.addEventListener('keydown', e=>{
     if (e.target.closest('input,textarea')) return;
     const k = e.key.toLowerCase();
-    if (['arrowright','pagedown',' ','enter'].includes(k)) { e.preventDefault(); go(idx+1); }
-    else if (['arrowleft','pageup','backspace'].includes(k)) { e.preventDefault(); go(idx-1); }
+    if (['arrowright','pagedown',' ','enter'].includes(k)) { e.preventDefault(); next(); }
+    else if (['arrowleft','pageup','backspace'].includes(k)) { e.preventDefault(); prev(); }
     else if (k==='home') go(0); else if (k==='end') go(S.length-1);
     else if (k==='n') { showNotes=!showNotes; renderNotes(); }
-    else if (k==='h') { showHelp=!showHelp; help.classList.toggle('hidden',!showHelp); }
-    else if (k==='m') { manual=!manual; stage.classList.toggle('manual',manual); toast(manual?'Tally manual ON: klik opsi untuk +1':'Tally manual OFF'); }
+    else if (k==='h') help.classList.toggle('hidden');
+    else if (k==='m') { manual=!manual; root.classList.toggle('manual',manual); toast(manual?'Tally manual ON: klik opsi untuk +1':'Tally manual OFF'); }
     else if (k==='r' && S[idx].poll) confirmReset(S[idx].poll);
     else if (k==='q') { const o=document.querySelector('.ov'); o?o.remove():bigQR(); }
     else if (k==='s') settings();
     else if (k==='escape') document.querySelector('.ov')?.remove();
     else if (k==='f') { try{ document.fullscreenElement? document.exitFullscreen() : document.documentElement.requestFullscreen().catch(()=>{}); }catch(x){} }
   });
-  let tx=0; stage.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
-  stage.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx; if(Math.abs(d)>50) go(idx+(d<0?1:-1));});
-  const fit=()=>{ const s=Math.min(innerWidth/1600, innerHeight/900); stage.style.transform=`scale(${s})`; };
-  addEventListener('resize', fit); fit(); setConn('off'); go(idx);
-  setInterval(publish, 20000); // late joiners: re-announce current slide
+  let tx=0, ty=0; root.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+  root.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty; if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)) (dx<0?next:prev)();});
+  setConn('off'); go(idx);
+  setInterval(publish, 20000);
 }
 
 /* ============ AUDIENCE ============ */
 function audience(){
   const root = document.getElementById('aud'); root.classList.remove('hidden');
   let me = ls.get('hrs25-me',''); if(!me){ me = Math.random().toString(36).slice(2)+Date.now().toString(36); ls.set('hrs25-me',me); }
-  const mine = ls.get('hrs25-mine',{}), myUps = new Set(ls.get('hrs25-ups',[])), myQs = ls.get('hrs25-myqs',[]);
+  const mine = ls.get('hrs25-mine',{}), myUps = new Set(ls.get('hrs25-ups',[]));
   let cur = {poll:null}, tab='poll', busy=false, ok='';
   const Q = {}, U = {};
-  root.innerHTML = `<div class="atop"><span class="abrand">HR Stories #25</span><span id="ast">Menghubungkan…</span></div>
-    <div class="tabs"><button data-t="poll" class="on">Voting</button><button data-t="qa">Tanya speaker</button></div><div id="abody"></div>`;
-  root.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t; root.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b)); draw();});
+  root.innerHTML = `<div class="atop"><span class="abrand">Learning Culture · Erdo</span><span id="ast">Menghubungkan…</span></div><div class="stripe"></div>
+    <div class="tabs"><button data-t="poll" class="on">Voting</button><button data-t="qa">Tanya Erdo</button></div><div id="abody"></div>`;
+  root.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t; ok=''; root.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b)); draw();});
   const B = ()=>document.getElementById('abody');
 
-  async function send(body, done){
+  async function send(body){
     if (busy) return; busy=true; draw();
-    try { const r = await post(body); if(!r.ok) throw 0; done&&done(); ok='Tercatat. Lihat hasilnya di layar.'; }
+    try { const r = await post(body); if(!r.ok) throw 0; ok='Tercatat. Lihat hasilnya di layar.'; }
     catch(e){ ok='Gagal terkirim, coba lagi sebentar.'; }
     setTimeout(()=>{busy=false; draw();}, 1200); draw();
   }
@@ -486,41 +565,40 @@ function audience(){
     const b = B();
     if (tab==='qa') return drawQA(b);
     const p = cur.poll, P = POLLS[p];
-    if (!P) { b.innerHTML = `<div class="acard wait"><svg viewBox="0 0 120 120"><rect x="56" y="40" width="8" height="50" rx="4" fill="#3fb27c"/><path d="M60 60 C70 44 92 44 98 54 C86 62 70 64 60 60Z" fill="#3fb27c"/><path d="M60 72 C50 56 28 56 22 66 C34 74 50 76 60 72Z" fill="#8fd9a8"/><path d="M34 90h52l-6 26H40z" fill="#f5c542"/></svg>
-      <h2>Dengerin dulu, ya</h2><p class="mute">Pertanyaan voting akan muncul di sini otomatis saat speaker membukanya. Sambil nunggu, kamu bisa kirim pertanyaan di tab "Tanya speaker".</p></div>`; return; }
+    if (!P) { b.innerHTML = `<div class="acard wait"><svg viewBox="0 0 120 120"><rect x="56" y="40" width="8" height="50" rx="4" fill="#3fb27c"/><path d="M60 60 C70 44 92 44 98 54 C86 62 70 64 60 60Z" fill="#3fb27c"/><path d="M60 72 C50 56 28 56 22 66 C34 74 50 76 60 72Z" fill="#8fd9a8"/><circle cx="60" cy="34" r="10" fill="#f5c542"/><path d="M34 90h52l-6 26H40z" fill="#ff6f59"/></svg>
+      <h2>Dengerin dulu, ya</h2><p class="mute">Pertanyaan voting akan muncul di sini otomatis saat dibuka. Sambil nunggu, kamu bisa kirim pertanyaan di tab "Tanya Erdo".</p></div>`; return; }
     let html = `<div class="acard"><h2></h2>`;
-    if (P.type==='choice') html += P.opts.map((o,i)=>`<button class="opt ${mine[p]===i?'sel':''}" data-i="${i}" ${busy?'disabled':''}><span class="k">${L[i]}</span><span></span></button>`).join('');
-    else if (P.type==='scale') html += `<div class="scl">${P.opts.map((o,i)=>`<button class="opt ${mine[p]===i?'sel':''}" data-i="${i}" ${busy?'disabled':''}>${o}</button>`).join('')}</div><div class="ends2"><span>1 = ${esc(P.lo)}</span><span style="text-align:right">5 = ${esc(P.hi)}</span></div>`;
+    if (P.type==='choice') html += P.opts.map((o,i)=>`<button class="opt ${mine[p]===i?'sel':''}" data-i="${i}" style="--c:${C[i]}" ${busy?'disabled':''}><span class="k">${L[i]}</span><span></span></button>`).join('');
+    else if (P.type==='scale') html += `<div class="scl">${P.opts.map((o,i)=>`<button class="opt ${mine[p]===i?'sel':''}" data-i="${i}" style="--c:${SC[i]}" ${busy?'disabled':''}>${o}</button>`).join('')}</div><div class="ends2"><span>1 = ${esc(P.lo)}</span><span style="text-align:right">5 = ${esc(P.hi)}</span></div>`;
     else html += `<input class="ainput" id="wt" maxlength="60" placeholder="Contoh: retro 30 menit tiap Jumat" value="${esc(mine[p]||'')}"><button class="abtn" id="ws" ${busy?'disabled':''}>Kirim</button>`;
     html += `<div class="ok">${esc(ok)}</div></div>`;
     b.innerHTML = html; b.querySelector('h2').textContent = P.q;
-    if (P.opts) b.querySelectorAll('.opt').forEach(o=>{ const i=+o.dataset.i; const sp=o.querySelector('span:last-child'); if(P.type==='choice') sp.textContent=P.opts[i];
+    if (P.opts) b.querySelectorAll('.opt').forEach(o=>{ const i=+o.dataset.i; if(P.type==='choice') o.querySelector('span:last-child').textContent=P.opts[i];
       o.onclick=()=>{ mine[p]=i; ls.set('hrs25-mine',mine); send({k:'v',p,a:i,id:me}); }; });
     else { const inp=b.querySelector('#wt'); b.querySelector('#ws').onclick=()=>{ const v=inp.value.trim(); if(!v) return; mine[p]=v; ls.set('hrs25-mine',mine); send({k:'w',p,a:v,id:me}); }; }
   }
   function drawQA(b){
     const qs = Object.entries(Q).map(([id,q])=>({id,...q,n:U[id]?U[id].size:0})).sort((a,b)=>b.n-a.n||b.time-a.time).slice(0,30);
-    b.innerHTML = `<div class="acard"><h2>Punya pertanyaan untuk speaker?</h2><textarea class="ainput" id="qt" rows="3" maxlength="220" placeholder="Tulis pertanyaanmu…"></textarea><button class="abtn" id="qs" ${busy?'disabled':''}>Kirim pertanyaan</button><div class="ok">${esc(ok)}</div></div>
+    b.innerHTML = `<div class="acard"><h2>Punya pertanyaan untuk Erdo?</h2><textarea class="ainput" id="qt" rows="3" maxlength="220" placeholder="Tulis pertanyaanmu…"></textarea><button class="abtn" id="qs" ${busy?'disabled':''}>Kirim pertanyaan</button><div class="ok">${esc(ok)}</div></div>
       <div class="acard"><h2 style="font-size:20px">Vote pertanyaan yang kamu mau dibahas</h2><div id="ql">${qs.length?'':'<p class="mute">Belum ada pertanyaan.</p>'}</div></div>`;
     const ql = b.querySelector('#ql');
     qs.forEach(q=>{ const d=document.createElement('div'); d.className='aq'; d.innerHTML=`<p></p><button class="up ${myUps.has(q.id)?'on':''}">+${q.n}</button>`; d.querySelector('p').textContent=q.t;
       d.querySelector('button').onclick=()=>{ const on=!myUps.has(q.id); on?myUps.add(q.id):myUps.delete(q.id); ls.set('hrs25-ups',[...myUps]);
         (U[q.id] ||= new Set()); on?U[q.id].add(me):U[q.id].delete(me); post({k:'u',qid:q.id,on,id:me}).catch(()=>{}); drawQA(b); };
       ql.appendChild(d); });
-    b.querySelector('#qs').onclick=()=>{ const t=b.querySelector('#qt').value.trim(); if(!t) return; const qid=Math.random().toString(36).slice(2,10);
-      send({k:'q',qid,t,id:me}, ()=>{ myQs.push(qid); ls.set('hrs25-myqs',myQs); }); };
+    b.querySelector('#qs').onclick=()=>{ const t=b.querySelector('#qt').value.trim(); if(!t) return; const qid=Math.random().toString(36).slice(2,10); send({k:'q',qid,t,id:me}); };
   }
   const st = document.getElementById('ast');
   try {
     const es = new EventSource(RELAY + TS + '/sse?since=30m');
     es.onopen=()=>st.textContent='Terhubung'; es.onerror=()=>st.textContent='Menyambung ulang…';
     es.onmessage=e=>{ try{ const m=JSON.parse(e.data); if(m.event!=='message') return; const d=JSON.parse(m.message);
-      const np = POLLS[d.poll] ? d.poll : null; if (np!==cur.poll){ cur={poll:np}; ok=''; if(np && tab==='qa'){} if(!document.querySelector('#qt:focus')) draw(); } if (d.qa && tab!=='qa' && !np) { } }catch(x){} };
+      const np = POLLS[d.poll] ? d.poll : null; if (np!==cur.poll){ cur={poll:np}; ok=''; if(tab==='poll') draw(); } }catch(x){} };
     const ev = new EventSource(RELAY + TV + '/sse?since=all');
     ev.onmessage=e=>{ try{ const m=JSON.parse(e.data); if(m.event!=='message') return; const d=JSON.parse(m.message);
       if(d.k==='q'&&typeof d.qid==='string') Q[d.qid]={t:String(d.t).slice(0,220),time:m.time};
       else if(d.k==='u'&&typeof d.qid==='string'){ (U[d.qid] ||= new Set()); d.on===false?U[d.qid].delete(d.id):U[d.qid].add(d.id); } else return;
-      if(tab==='qa' && !document.querySelector('#qt:focus') && !document.querySelector('#qt')?.value) drawQA(B()); }catch(x){} };
+      if(tab==='qa' && !document.querySelector('#qt')?.value && document.activeElement?.id!=='qt') drawQA(B()); }catch(x){} };
   } catch(e){ st.textContent='Offline'; }
   draw();
 }

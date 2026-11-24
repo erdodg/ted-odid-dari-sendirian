@@ -194,6 +194,24 @@ h3{font-size:calc(var(--u)*30);line-height:1.2;font-weight:700}
 .qi button{border:0;background:transparent;font-size:calc(var(--u)*24);color:#a33;opacity:.4}
 .qi.pin{outline:calc(var(--u)*4) solid var(--amber)}
 
+.tr .fact b{font-size:calc(var(--u)*80)}
+.tr .fact .what{font-size:calc(var(--u)*21)}
+.tr .fact blockquote{font-size:calc(var(--u)*17)}
+.eco{display:grid;grid-template-columns:1fr 1.05fr;gap:calc(var(--u)*40);margin-top:calc(var(--u)*28);flex:1;min-height:0}
+.gap{display:flex;flex-direction:column;gap:calc(var(--u)*16)}
+.gp{background:#fff;border-radius:calc(var(--u)*22);padding:calc(var(--u)*20) calc(var(--u)*26);border-left:calc(var(--u)*10) solid var(--c)}
+.gp .n{font:800 calc(var(--u)*46)/1 var(--hd);color:var(--navy)}
+.gp .n s{text-decoration:none;color:var(--coral)}
+.gp p{margin:calc(var(--u)*6) 0 0;font:600 calc(var(--u)*20)/1.35 var(--hd)}
+.gp cite{display:block;margin-top:calc(var(--u)*6);font:500 calc(var(--u)*14)/1.4 var(--bd);opacity:.7;font-style:normal}
+.tsys{background:var(--blue);color:#fff;border-radius:calc(var(--u)*28);padding:calc(var(--u)*32);display:flex;flex-direction:column;gap:calc(var(--u)*14);align-self:start}
+.tsys .hd{display:flex;align-items:center;gap:calc(var(--u)*16)}
+.tsys .hd img{height:calc(var(--u)*54);background:#fff;border-radius:calc(var(--u)*10);padding:calc(var(--u)*6)}
+.tsys h3{margin:0;font:800 calc(var(--u)*32)/1.15 var(--hd)}
+.tsys .row{display:grid;grid-template-columns:calc(var(--u)*150) 1fr;gap:calc(var(--u)*14);padding-top:calc(var(--u)*12);border-top:1px solid rgba(255,255,255,.2);font-size:calc(var(--u)*20);line-height:1.4}
+.tsys .row b{color:var(--amber);font-family:var(--hd)}
+.tsys .q{font:700 calc(var(--u)*24)/1.3 var(--hd);color:var(--gold)}
+.port .eco{grid-template-columns:1fr;flex:none}
 /* ---------- STACKED LAYOUT (.port: HP/portrait host + mirror di HP peserta) ---------- */
 #host.port{--u:calc(100vw / 760)}
 .port .slide{overflow-y:auto;padding:calc(var(--u)*56) calc(var(--u)*40) calc(var(--u)*150)}
@@ -343,7 +361,7 @@ const PLANTS = `<svg class="plants" viewBox="0 0 600 720" preserveAspectRatio="x
 const ybars = (rows, max, col, fmt) => rows.map(([y,v])=>`<div class="yb" style="--c:${col}"><span>${y}</span><i style="--w:${(v/max*100).toFixed(1)}%"></i><em>${fmt(v)}</em></div>`).join('');
 const lg = (f, alt) => `<div class="lg"><img src="${IMG}${f}" alt="${esc(alt)}"></div>`;
 
-/* ============ 10 SLIDES ============ */
+/* ============ 13 SLIDES ============ */
 const S = [
  /* 1 */ {cls:'',html:()=>`<div class="ribbon">Learning Fest <span>2026</span></div><div class="cover"><div style="display:flex;flex-direction:column">
    <div class="brand">hrstories <span class="tag">MEETUP-25</span> <span style="font-weight:600;opacity:.8">×</span> CIRCLE HR ITB</div>
@@ -402,6 +420,43 @@ const S = [
    <li><b>Learning culture:</b> orang berani nanya, salah dibahas bareng, ilmu nyebar ke tim, cara kerja berubah Senin pagi</li></ul></div>
   </div>`,
   notes:`<h4>Data publik + ceritamu</h4><ul><li>2020–2022: peserta 215 → 692 → 1.067; jam pelatihan 4.730 → 14.260 → 27.050; biaya Rp1,55 M → Rp1,80 M → Rp1,59 M.</li><li>Program: TrOli, BLENDER, 3D.</li><li>Tekan → untuk memunculkan kotak "dosis". Masuk ke ceritamu: perjalanan dari OD & Field Development sampai CoE Head, apa yang bikin training benar-benar dipakai di lapangan.</li></ul>`},
+
+ /* 6b */ {cls:'',kick:'Tren 2027 · Kenapa orang bertahan',html:()=>`<h2>Di 2027, learning adalah strategi retensi</h2>
+  <div class="facts tr">
+   <div class="fact step" style="--c:var(--amber)"><span class="tagx">Stay</span><b>65%</b><p class="what">of workers would stay in their job if it offered learning and development</p>
+    <blockquote><cite>Korn Ferry, Talent Trends 2027 (Workforce 2026 survey)</cite></blockquote></div>
+   <div class="fact step" style="--c:var(--sky)"><span class="tagx">Stay, again</span><b>73%</b><p class="what">of employees say L&D makes them more likely to stay</p>
+    <blockquote>"Nearly three-quarters (73%) of employees say learning and development opportunities would make them more likely to stay with their employer."<br><cite>SkillPath, Learning Trends 2027</cite></blockquote></div>
+   <div class="fact step" style="--c:var(--mint)"><span class="tagx">Top skill 2027</span><b>#1</b><p class="what">Adaptability. Learning agility and AI fluency also make the top 7</p>
+    <blockquote>"…making continuous learning, adaptability and effective communication essential for long-term career success."<br><cite>QS World Future Skills Index 2027; skill ranking from Korn Ferry, Talent Trends 2027</cite></blockquote></div>
+  </div>`,
+  notes:`<h4>Tren 2027 (tekan → satu per satu)</h4><ul><li>Korn Ferry: 65% pekerja mau bertahan kalau ada kesempatan belajar.</li><li>SkillPath: angka serupa, 73%.</li><li>Skill nomor satu 2027 menurut Korn Ferry: adaptability. QS juga bilang continuous learning jadi syarat karier jangka panjang.</li><li>Pesannya: learning culture bukan lagi urusan L&D saja, ini urusan retensi.</li></ul>`},
+
+ /* 6c */ {cls:'mist',kick:'Tren 2027 · Manager',html:()=>`<h2>Kunci learning culture ada di manager. Dan mereka sedang kehabisan tenaga.</h2>
+  <div class="facts tr">
+   <div class="fact step" style="--c:var(--coral)"><span class="tagx">Engagement</span><b>22%</b><p class="what">manager engagement in 2025, down from 30% and 27%</p>
+    <blockquote>"Manager engagement fell from 30% to 27% in 2024, and to 22% in 2025, the steepest decline among employee groups."<br><cite>SkillPath, Learning Trends 2027, citing Gallup</cite></blockquote></div>
+   <div class="fact step" style="--c:var(--amber)"><span class="tagx">Time</span><b>13%</b><p class="what">of manager time goes to developing employees</p>
+    <blockquote>"…only 13% of manager time is devoted to developing employees."<br><cite>SkillPath, Learning Trends 2027, citing Deloitte</cite></blockquote></div>
+   <div class="fact step" style="--c:var(--sky)"><span class="tagx">AI readiness</span><b>6%</b><p class="what">say senior leaders are fully prepared to guide AI-driven transformation</p>
+    <blockquote><cite>Korn Ferry, Talent Trends 2027 (1,300+ talent and senior leaders, 75+ countries)</cite></blockquote></div>
+  </div>`,
+  notes:`<h4>Manager (tekan → satu per satu)</h4><ul><li>Gallup: engagement manager turun 30% → 27% → 22%, paling tajam dibanding kelompok lain.</li><li>Deloitte: cuma 13% waktu manager dipakai untuk mengembangkan orang.</li><li>Korn Ferry: hanya 6% yang yakin leader-nya siap memimpin transformasi AI. Manager diminta lebih banyak membimbing tim lewat perubahan, dan "saya belum tahu" harus jadi jawaban yang boleh.</li><li>Jembatan ke cerita Tigaraksa: kalau manager-nya nggak ikut, training sebanyak apa pun berhenti di kelas.</li></ul>`},
+
+ /* 6d */ {cls:'mist',kick:'Tren 2027 · Dari program ke sistem',html:()=>`<h2>Banyak program, sedikit sistem</h2>
+  <div class="eco"><div class="gap">
+   <div class="gp step" style="--c:var(--blue)"><div class="n">61% <s>vs 34%</s></div><p>bilang program pengembangannya efektif per individu, tapi cuma 34% punya strategi yang nyambung se-perusahaan</p><cite>Simitri Group, Learning Trends Report 2027</cite></div>
+   <div class="gp step" style="--c:var(--coral)"><div class="n">88% <s>vs 7%</s></div><p>leader bilang mengatur orang dan pekerjaan itu penting, cuma 7% merasa sudah ada kemajuan berarti</p><cite>Simitri Group, Learning Trends Report 2027, citing Deloitte</cite></div>
+   <div class="gp step" style="--c:var(--mint)"><div class="n">69%</div><p>setuju HR, talent acquisition, L&D, dan workforce planning akan jadi satu fungsi terintegrasi</p><cite>Korn Ferry, Talent Trends 2027</cite></div>
+  </div>
+  <div class="tsys step"><div class="hd"><img src="${IMG}logo_tigaraksa.png" alt="Tigaraksa Satria"><h3>Di Tigaraksa Satria: programnya disambung</h3></div>
+   <div class="row"><b>TrOli</b><span>Training online, bisa diikuti dari mana saja</span></div>
+   <div class="row"><b>BLENDER</b><span>Blended learning dan gamification, belajar sambil praktik</span></div>
+   <div class="row"><b>3D</b><span>Successor development, belajar terhubung ke jenjang karier</span></div>
+   <div class="row"><b>Peran saya</b><span>OD & Field Development → HR Development Head → OD & HRBP → CoE Head: learning makin dekat ke OD dan bisnis</span></div>
+   <div class="q">"Many organisations have excellent programmes. Few have an integrated system."<br><span style="font:500 calc(var(--u)*14) var(--bd);color:#fff;opacity:.75">Simitri Group, Learning Trends Report 2027</span></div>
+  </div></div>`,
+  notes:`<h4>Tren → Tigaraksa (tekan → satu per satu)</h4><ul><li>Simitri: 61% bilang programnya efektif per orang, cuma 34% punya sistem yang nyambung.</li><li>Deloitte (via Simitri): 88% vs 7%.</li><li>Korn Ferry: 69% melihat HR, TA, L&D, dan workforce planning bakal menyatu.</li><li>Tekan → terakhir: kotak Tigaraksa. Ceritakan bagaimana TrOli, BLENDER, dan 3D saling nyambung, dan bagaimana peranmu bergeser dari Field Development ke CoE Head. Contoh konkret: satu program yang kelihatan dampaknya di lapangan.</li></ul>`},
 
  /* 7 */ {poll:'s1',cls:'',kick:'Segmen 2 · Rasa aman buat salah dan bertanya',
   notes:`Kalau rata-rata di bawah 3: "Ini bukan soal materi. Ini soal apa yang terjadi kalau orang ngaku belum bisa." Lanjut ke apa yang dilakukan leader.`},

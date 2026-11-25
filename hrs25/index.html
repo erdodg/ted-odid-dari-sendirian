@@ -212,6 +212,137 @@ h3{font-size:calc(var(--u)*30);line-height:1.2;font-weight:700}
 .tsys .row b{color:var(--amber);font-family:var(--hd)}
 .tsys .q{font:700 calc(var(--u)*24)/1.3 var(--hd);color:var(--gold)}
 .port .eco{grid-template-columns:1fr;flex:none}
+
+/* ---------- MOTION: animated background + smooth transitions ---------- */
+.slide{transform:translateX(3%) scale(.985);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.slide.on{transform:none}
+.slide.past{transform:translateX(-3%) scale(.985)}
+.slide::before{content:'';position:absolute;inset:-30%;z-index:0;pointer-events:none;
+ background:radial-gradient(circle at 18% 28%,rgba(247,168,35,.26),transparent 22%),radial-gradient(circle at 82% 18%,rgba(95,211,196,.22),transparent 24%),radial-gradient(circle at 70% 82%,rgba(143,162,255,.32),transparent 26%),radial-gradient(circle at 30% 85%,rgba(242,107,58,.16),transparent 20%);
+ animation:drift 26s ease-in-out infinite alternate}
+.mist::before{opacity:.75}.amber::before{opacity:.5}
+@keyframes drift{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(5%,-4%) rotate(9deg)}100%{transform:translate(-4%,5%) rotate(-7deg)}}
+.slide>.waves{animation:wavy 16s ease-in-out infinite alternate;transform-origin:50% 100%}
+@keyframes wavy{from{transform:translateX(-2%) scaleY(1)}to{transform:translateX(2%) scaleY(1.08)}}
+.slide.on>:is(.kick,h1,h2){animation:fadeUp .8s cubic-bezier(.2,.8,.2,1) both}
+.slide.on>h2{animation-delay:.12s}
+.slide.on>:is(.cover,.pollgrid,.facts,.tgk,.grow2,.closing,.career,.commz,.build,.tiles):not(.step){animation:fadeUp .9s .25s cubic-bezier(.2,.8,.2,1) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(calc(var(--u)*36))}}
+@keyframes popIn{from{opacity:0;transform:translateY(calc(var(--u)*24)) scale(.9)}}
+@keyframes grow{from{width:0}}
+@media (prefers-reduced-motion:reduce){.slide,.slide::before,.slide>.waves,.slide.on *{animation:none!important;transition:opacity .3s!important;transform:none}}
+
+/* ---------- KENALAN: photo + career flow ---------- */
+.career{display:grid;grid-template-columns:calc(var(--u)*320) 1fr;gap:calc(var(--u)*48);flex:1;min-height:0;margin-top:calc(var(--u)*22)}
+.me{position:relative;align-self:start}
+.me img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:calc(var(--u)*28);position:relative;z-index:1}
+.me img{box-shadow:calc(var(--u)*16) calc(var(--u)*16) 0 var(--amber)}
+.me figcaption{margin-top:calc(var(--u)*32);font:700 calc(var(--u)*22)/1.25 var(--hd)}
+.me figcaption span{display:block;font:500 calc(var(--u)*16) var(--bd);opacity:.8}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--u)*30) calc(var(--u)*34);align-content:start}
+.cn{position:relative;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:calc(var(--u)*20);padding:calc(var(--u)*14) calc(var(--u)*16);display:flex;flex-direction:column;gap:calc(var(--u)*6)}
+.slide.on .cn{animation:popIn .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d)*.22s + .4s)}
+.cn:not(.end)::after{content:'→';position:absolute;right:calc(var(--u)*-29);top:50%;translate:0 -50%;font:800 calc(var(--u)*24) var(--hd);color:var(--amber)}
+.cn .no{position:absolute;top:calc(var(--u)*-12);left:calc(var(--u)*-10);width:calc(var(--u)*30);height:calc(var(--u)*30);border-radius:50%;background:var(--amber);color:var(--navy);display:grid;place-items:center;font:800 calc(var(--u)*15) var(--hd)}
+.cn .lgs{display:flex;gap:calc(var(--u)*6);height:calc(var(--u)*54)}
+.cn .lgs .lg{padding:calc(var(--u)*6)}.cn .lgs .lg img{max-height:calc(var(--u)*42)}
+.cn b{font:700 calc(var(--u)*19)/1.2 var(--hd)}
+.cn span{font-size:calc(var(--u)*15);line-height:1.3;opacity:.85}
+.cn.tgx{grid-column:span 2}
+.cn.alto{background:var(--amber);color:var(--navy);border:none}.cn.alto .no{background:var(--navy);color:var(--amber)}
+.mini{display:flex;flex-direction:column;gap:calc(var(--u)*5);margin-top:calc(var(--u)*2)}
+.mini div{display:flex;align-items:center;gap:calc(var(--u)*8);font:600 calc(var(--u)*15)/1.2 var(--hd);background:rgba(255,255,255,.12);border-radius:calc(var(--u)*8);padding:calc(var(--u)*6) calc(var(--u)*10);margin-left:calc(var(--u)*var(--i)*18)}
+.slide.on .mini div{animation:popIn .5s both;animation-delay:calc(var(--i)*.18s + 1.9s)}
+.mini div::before{content:'';width:calc(var(--u)*8);height:calc(var(--u)*8);border-radius:50%;background:var(--amber);flex:none}
+.mini div:last-child{background:var(--amber);color:var(--navy)}.mini div:last-child::before{background:var(--navy)}
+.edu{display:flex;flex-wrap:wrap;gap:calc(var(--u)*14);margin-top:calc(var(--u)*26);align-items:center}
+.edu .bd{background:#fff;color:var(--ink);border-radius:99px;padding:calc(var(--u)*10) calc(var(--u)*22);font:700 calc(var(--u)*18) var(--hd)}
+.edu .bd i{font-style:normal;color:var(--coral)}
+.edu .bridge{margin-left:auto;font:700 calc(var(--u)*20) var(--hd);color:var(--amber)}
+.slide.on .edu{animation:fadeUp .8s 2.6s both}
+
+/* ---------- KOMUNITAS ---------- */
+.commz{display:grid;grid-template-columns:1.25fr 1fr;gap:calc(var(--u)*30);margin-top:calc(var(--u)*20);flex:1;min-height:0;align-items:start}
+.cc{background:#fff;color:var(--ink);border-radius:calc(var(--u)*30);padding:calc(var(--u)*30) calc(var(--u)*34);display:flex;flex-direction:column;gap:calc(var(--u)*14)}
+.cc .top{display:flex;align-items:center;gap:calc(var(--u)*22)}
+.cc .top img{height:calc(var(--u)*80);width:auto;flex:none}.cc.hr .top img{height:calc(var(--u)*120)}
+.cc .ct{font:800 calc(var(--u)*120)/1 var(--hd);color:var(--blue);font-variant-numeric:tabular-nums}
+.cc .ct small{display:block;font:700 calc(var(--u)*20) var(--hd);color:var(--mute);margin-top:calc(var(--u)*6)}
+.cc p{margin:0;font:600 calc(var(--u)*21)/1.35 var(--hd)}
+.sis{display:flex;flex-wrap:wrap;gap:calc(var(--u)*10)}
+.sis span{border-radius:99px;padding:calc(var(--u)*8) calc(var(--u)*16);font:700 calc(var(--u)*17) var(--hd);background:var(--c);color:var(--ink)}
+.slide.on .sis span{animation:popIn .5s both;animation-delay:calc(var(--i)*.12s + 1.2s)}
+.jn{display:flex;align-items:center;gap:calc(var(--u)*16);border-top:2px dashed #d7dbea;padding-top:calc(var(--u)*14)}
+.jn .qrw{padding:0;--q:calc(var(--u)*120)}
+.jn b{font:800 calc(var(--u)*28) var(--hd);color:var(--blue)}
+.cc.hr .ct{color:var(--coral)}
+.pz{position:absolute!important;z-index:4!important;background:#fff;padding:calc(var(--u)*14) calc(var(--u)*14) calc(var(--u)*10);border-radius:calc(var(--u)*10);box-shadow:0 30px 80px rgba(0,0,0,.5);color:var(--ink);width:calc(var(--u)*760)}
+.pz img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:calc(var(--u)*6)}
+.pz figcaption{font:700 calc(var(--u)*20)/1.3 var(--hd);padding-top:calc(var(--u)*10)}
+.pz figcaption span{display:block;font:500 calc(var(--u)*15) var(--bd);color:var(--mute)}
+.pza{left:calc(var(--u)*120);top:calc(var(--u)*150);rotate:-3deg}
+.pzb{right:calc(var(--u)*110);top:calc(var(--u)*230);rotate:3deg}
+.step.pz{transform:translateY(calc(var(--u)*30)) scale(.92)}.step.pz.shown{transform:none}
+
+/* ---------- TIGARAKSA + IDP ---------- */
+.progs{display:flex;gap:calc(var(--u)*10);flex-wrap:wrap;margin-top:calc(var(--u)*10)}
+.progs span{background:#fff;border-radius:calc(var(--u)*12);padding:calc(var(--u)*8) calc(var(--u)*14);font-size:calc(var(--u)*16);color:var(--ink)}
+.progs b{color:var(--blue);font-family:var(--hd)}
+.idp{background:var(--blue);color:#fff;border-radius:calc(var(--u)*28);padding:calc(var(--u)*30) calc(var(--u)*32);display:flex;flex-direction:column;gap:calc(var(--u)*14);align-self:start}
+.idp h3{margin:0;font:800 calc(var(--u)*34)/1.15 var(--hd)}
+.idp h3 em{font-style:normal;color:var(--amber)}
+.stack{display:flex;height:calc(var(--u)*30);border-radius:99px;overflow:hidden;background:rgba(255,255,255,.12)}
+.stack i{display:block;height:100%;background:var(--c)}
+.idp.shown .stack i{animation:grow 1.1s cubic-bezier(.2,.8,.2,1) both}
+.idp .r{display:grid;grid-template-columns:calc(var(--u)*92) 1fr;gap:calc(var(--u)*14);align-items:center;padding-top:calc(var(--u)*10);border-top:1px solid rgba(255,255,255,.2)}
+.idp .r b{font:800 calc(var(--u)*44)/1 var(--hd);color:var(--c)}
+.idp .r div{font-size:calc(var(--u)*18);line-height:1.35}
+.idp .r strong{display:block;font:700 calc(var(--u)*21)/1.25 var(--hd)}
+.idp .q{font:700 calc(var(--u)*20)/1.3 var(--hd);color:var(--gold)}
+
+/* ---------- MANFAAT & CARA ---------- */
+.build{display:grid;grid-template-columns:1fr 1.15fr;gap:calc(var(--u)*34);margin-top:calc(var(--u)*20);flex:1;min-height:0;align-items:start}
+.why,.how{border-radius:calc(var(--u)*28);padding:calc(var(--u)*28) calc(var(--u)*30);display:flex;flex-direction:column;gap:calc(var(--u)*12)}
+.why{background:#fff;color:var(--ink)}.how{background:var(--blue);color:#fff}
+.why h3,.how h3{margin:0;font:800 calc(var(--u)*30)/1.15 var(--hd)}
+.bens{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*10)}
+.bens div{background:var(--mist);border-radius:calc(var(--u)*14);padding:calc(var(--u)*12) calc(var(--u)*14);font:600 calc(var(--u)*18)/1.3 var(--hd);border-left:calc(var(--u)*6) solid var(--c)}
+.hook2{display:flex;gap:calc(var(--u)*16);align-items:center;background:var(--navy);color:#fff;border-radius:calc(var(--u)*16);padding:calc(var(--u)*14) calc(var(--u)*18)}
+.hook2 b{font:800 calc(var(--u)*46)/1 var(--hd);color:var(--amber);flex:none}
+.hook2 span{font-size:calc(var(--u)*17);line-height:1.35}
+.how ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:calc(var(--u)*8);counter-reset:h}
+.how li{counter-increment:h;display:grid;grid-template-columns:calc(var(--u)*40) 1fr;gap:calc(var(--u)*12);align-items:start;font-size:calc(var(--u)*18);line-height:1.35;padding-bottom:calc(var(--u)*8);border-bottom:1px solid rgba(255,255,255,.16)}
+.how li::before{content:counter(h);width:calc(var(--u)*36);height:calc(var(--u)*36);border-radius:50%;background:var(--amber);color:var(--navy);display:grid;place-items:center;font:800 calc(var(--u)*17) var(--hd)}
+.how li b{display:block;font:700 calc(var(--u)*20)/1.25 var(--hd)}
+.how.shown li{animation:popIn .5s both;animation-delay:calc(var(--i)*.12s)}
+.srcs{font-size:calc(var(--u)*14);opacity:.7;margin-top:calc(var(--u)*4)}
+
+/* ---------- TREND TILES ---------- */
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--u)*18);margin-top:calc(var(--u)*24)}
+.tiles .row{display:contents}
+.tl{border-radius:calc(var(--u)*22);padding:calc(var(--u)*20) calc(var(--u)*22);background:var(--c);color:var(--ink);display:flex;flex-direction:column;gap:calc(var(--u)*8)}
+.tl b{font:800 calc(var(--u)*58)/1 var(--hd)}
+.tl p{margin:0;font:600 calc(var(--u)*17)/1.35 var(--hd)}
+.tl cite{margin-top:auto;font:500 calc(var(--u)*13)/1.35 var(--bd);opacity:.75;font-style:normal}
+.tiles .step{transition-delay:calc(var(--i)*.08s)}
+
+/* ---------- CLOSING ---------- */
+.punch{font:800 calc(var(--u)*66)/1.05 var(--hd);text-wrap:balance}
+.punch .hl2{color:var(--amber)}
+.wrap3{display:flex;flex-wrap:wrap;gap:calc(var(--u)*10)}
+.wrap3 span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:99px;padding:calc(var(--u)*8) calc(var(--u)*16);font:600 calc(var(--u)*17) var(--hd)}
+.slide.on .wrap3 span{animation:popIn .5s both;animation-delay:calc(var(--i)*.15s + .8s)}
+
+.mirror .slide::before{inset:0}
+#mirror{overflow-x:clip}
+.port .career,.port .commz,.port .build{grid-template-columns:1fr;flex:none}
+.port .me{max-width:calc(var(--u)*360)}
+.port .flow{grid-template-columns:1fr 1fr}
+.port .cn::after{display:none}
+.port .tiles{grid-template-columns:1fr 1fr}
+.port .pz{position:relative!important;left:auto;right:auto;top:auto;width:auto;rotate:0deg;margin-top:calc(var(--u)*24)}
+.port .bens{grid-template-columns:1fr}
+
 /* ---------- STACKED LAYOUT (.port: HP/portrait host + mirror di HP peserta) ---------- */
 #host.port{--u:calc(100vw / 760)}
 .port .slide{overflow-y:auto;padding:calc(var(--u)*56) calc(var(--u)*40) calc(var(--u)*150)}
@@ -314,7 +445,8 @@ const IMG = 'img/';
 const POLLS = {
   g1:{type:'choice',q:'Berapa persen karyawan yang benar-benar menerapkan skill dari training di pekerjaannya?',opts:['Sekitar 12%','Sekitar 30%','Sekitar 50%','Sekitar 70%']},
   t1:{type:'choice',q:'Di kantormu, training itu lebih mirip…',opts:['Vitamin: rutin, tapi efeknya nggak kerasa','Obat: baru dikasih kalau ada masalah','Reward: buat yang performanya bagus','Kewajiban: ikut biar absen aman','Makan siang: bagian dari kerja sehari-hari']},
-  s1:{type:'scale',q:'Seberapa aman di timmu bilang "saya belum bisa"?',opts:['1','2','3','4','5'],lo:'Bisa jadi bahan omongan',hi:'Santai aja, malah dibantu'},
+  x1:{type:'choice',q:'Dari 10-20-70, mana yang paling jarang jalan di kantormu?',opts:['10: training formal','20: belajar dari rekan (sharing, coaching, CoP)','70: belajar lewat project dan tugas nyata','Semuanya sudah jalan']},
+  r1:{type:'choice',q:'Kalau ada yang salah di tim, reaksi pertama atasan biasanya…',opts:['Cari siapa yang salah','Langsung ambil alih: "sini, saya aja"','Diam, tapi dibahas di belakang','Tanya: "apa yang bisa kita pelajari?"']},
   w1:{type:'text',q:'Satu hal kecil yang mau kamu mulai minggu depan?'}
 };
 const PID = Object.keys(POLLS);
@@ -361,7 +493,7 @@ const PLANTS = `<svg class="plants" viewBox="0 0 600 720" preserveAspectRatio="x
 const ybars = (rows, max, col, fmt) => rows.map(([y,v])=>`<div class="yb" style="--c:${col}"><span>${y}</span><i style="--w:${(v/max*100).toFixed(1)}%"></i><em>${fmt(v)}</em></div>`).join('');
 const lg = (f, alt) => `<div class="lg"><img src="${IMG}${f}" alt="${esc(alt)}"></div>`;
 
-/* ============ 13 SLIDES ============ */
+/* ============ 15 SLIDES ============ */
 const S = [
  /* 1 */ {cls:'',html:()=>`<div class="ribbon">Learning Fest <span>2026</span></div><div class="cover"><div style="display:flex;flex-direction:column">
    <div class="brand">hrstories <span class="tag">MEETUP-25</span> <span style="font-weight:600;opacity:.8">×</span> CIRCLE HR ITB</div>
@@ -388,38 +520,59 @@ const S = [
   notes:`<h4>Three facts (tekan → satu per satu)</h4><ul><li>Kita cepat lupa kalau ilmunya nggak dipakai. Jadi masalahnya ada di apa yang terjadi setelah kelas.</li><li>ATD 2025: 72% organisasi kekurangan orang dan waktu untuk menjaga learning culture.</li><li>LinkedIn 2024: learning culture yang kuat terhubung dengan retensi +57% dan internal mobility +23%.</li></ul>`},
 
  /* 4 */ {cls:'',kick:'Kenalan dulu',html:()=>`<h2>Dari lab, ke lantai pabrik, ke OD</h2>
-  <div class="tline">
-   <div class="node"><div class="logos">${lg('logo_itb.png','ITB')}</div><b>ITB</b><span>Farmasi, lalu Master Engineering</span></div>
-   <div class="node"><div class="logos">${lg('logo_pharos.png','Pharos')}${lg('logo_nestle.png','Nestlé')}</div><b>Pharos & Nestlé</b><span>Lab dan pabrik, termasuk pabrik Cikupa</span></div>
-   <div class="node"><div class="logos">${lg('logo_fmc.png','FMC')}</div><b>FMC</b><span>Konsultan: job evaluation, workload, PMS</span></div>
-   <div class="node"><div class="logos">${lg('logo_dwidaya.png','Dwidaya')}</div><b>Dwidaya</b><span>HR in-house</span></div>
-   <div class="node wide"><div class="logos">${lg('logo_tigaraksa.png','Tigaraksa Satria')}</div><b>Tigaraksa Satria</b>
-    <div class="ladder">${['OD & Field Development','HR Development Head','OD & HRBP','CoE Head'].map((r,i)=>`<div class="rung" style="--i:${i}"><i>${i+1}</i>${r}</div>`).join('')}</div></div>
-   <div class="node"><div class="logos">${lg('logo_alto.png','ALTO Network')}</div><b>ALTO Network</b><span>Organization Development</span></div>
+  <div class="career">
+   <figure class="me" style="margin:0"><img src="${IMG}erdo.jpg" alt="Erdo Deshiant Garnaby"><figcaption>Erdo Deshiant Garnaby<span>OD Head, ALTO Network</span></figcaption></figure>
+   <div style="display:flex;flex-direction:column;min-height:0">
+    <div class="flow">
+     <div class="cn" style="--d:0"><i class="no">1</i><div class="lgs">${lg('logo_itb.png','ITB')}</div><b>ITB</b><span>Bachelor of Science, Farmasi</span></div>
+     <div class="cn" style="--d:1"><i class="no">2</i><div class="lgs">${lg('logo_pharos.png','Pharos')}${lg('logo_nestle.png','Nestlé')}</div><b>Pharos & Nestlé</b><span>Lab dan pabrik</span></div>
+     <div class="cn" style="--d:2"><i class="no">3</i><div class="lgs">${lg('logo_itb.png','ITB')}</div><b>ITB</b><span>Master Engineering</span></div>
+     <div class="cn end" style="--d:3"><i class="no">4</i><div class="lgs">${lg('logo_fmc.png','FMC')}</div><b>FMC</b><span>Consultant</span></div>
+     <div class="cn" style="--d:4"><i class="no">5</i><div class="lgs">${lg('logo_dwidaya.png','Dwidaya')}</div><b>Dwidaya</b><span>OD Manager</span></div>
+     <div class="cn tgx" style="--d:5"><i class="no">6</i><div class="lgs" style="max-width:50%">${lg('logo_tigaraksa.png','Tigaraksa Satria')}</div><b>Tigaraksa Satria Tbk</b>
+      <div class="mini">${['OD & Field Development Head','HR Development Head (OD, TD)','OD & HRBP BU','CoE Head (OD, TM)'].map((r,i)=>`<div style="--i:${i}">${r}</div>`).join('')}</div></div>
+     <div class="cn alto end" style="--d:6"><i class="no">7</i><div class="lgs">${lg('logo_alto.png','ALTO Network')}</div><b>ALTO Network</b><span>OD Head (OD, IR, TM)</span></div>
+    </div>
+    <div class="edu"><span class="bd"><i>●</i> MBA Candidate, FEB UGM</span><span class="bd"><i>●</i> TNYI Scholarship</span><span class="bridge">From Organization Development to Community Development →</span></div>
+   </div>
+  </div>`,
+  notes:`<h4>Perkenalan (±2 menit)</h4><ul><li>Alur karier muncul otomatis satu per satu: ITB (S1 Farmasi) → Pharos & Nestlé → ITB (Master Engineering) → FMC → Dwidaya (OD Manager) → Tigaraksa (OD & Field Development Head → HR Development Head → OD & HRBP BU → CoE Head) → ALTO (OD Head).</li><li>Sekarang MBA candidate di FEB UGM, penerima TNYI Scholarship.</li><li>Jembatan ke slide berikut: dari Organization Development ke Community Development.</li></ul>`},
+
+ /* 5 */ {cls:'mist',kick:'From Organization Development to Community Development',html:()=>`<h2>Belajar paling awet itu bareng komunitas</h2>
+  <div class="commz">
+   <div class="cc"><div class="top"><img src="${IMG}logo_odid.png" alt="OD.ID"><div class="ct"><span data-to="1024">1.024</span><small>anggota, mulai 2020</small></div></div>
+    <p>Dari grup WhatsApp praktisi OD jadi komunitas belajar lintas perusahaan. Sekarang punya sister communities:</p>
+    <div class="sis">${[['PD.ID','var(--amber)'],['TM.ID','var(--sky)'],['CB.ID','var(--mint)'],['IR.ID','var(--coral)'],['Industrial Sector & Chapter','var(--gold)']].map(([t,c],i)=>`<span style="--c:${c};--i:${i}">${t}</span>`).join('')}</div>
+    <div class="jn">${qrBox(240, ORGDEV)}<div><div class="small" style="color:var(--mute)">Join lewat</div><b>orgdev.id</b></div></div></div>
+   <div class="cc hr step"><div class="top"><img src="${IMG}logo_hritb.png" alt="Circle HR ITB"><div class="ct"><span data-to="586">586</span><small>anggota, mulai 2021</small></div></div>
+    <p><b>Circle HR ITB</b>: sesama praktisi HR alumni ITB, saling belajar dan berbagi.</p></div>
   </div>
-  <div class="comm">
-   <div class="cbox"><img class="clogo" src="${IMG}logo_odid.png" alt="OD.ID"><div class="big">1.024</div><div><span class="yr">Mulai 2020</span><p>Dari grup WhatsApp praktisi OD jadi komunitas belajar lintas perusahaan</p></div></div>
-   <div class="cbox step"><img class="clogo" style="width:calc(var(--u)*86)" src="${IMG}logo_hritb.png" alt="Circle HR ITB"><div class="big">586</div><div><span class="yr">Mulai 2021</span><p><b>Circle HR ITB</b>: tempat sesama praktisi HR saling belajar dan berbagi</p></div></div>
-  </div>
-  <figure class="polaroid pol1 step"><img src="${IMG}odsummit2026_group.jpg" alt="Foto bersama peserta OD Summit 2026 di bioskop"><figcaption>OD Summit 2026 · The Grand Voyage<span>Agustus 2026, 200+ peserta</span></figcaption></figure>
-  <figure class="polaroid pol2 step"><img src="${IMG}nobar_dilan1997.jpg" alt="Nonton bareng Dilan 1997 bersama HR ITB di bioskop"><figcaption>Nobar Dilan 1997 bareng HR ITB<span>Belajar nggak selalu di ruang kelas</span></figcaption></figure>`,
-  notes:`<h4>Perkenalan (±1–2 menit)</h4><ul><li>Tekan → 1: Circle HR ITB (mulai 2021, 586 anggota).</li><li>Tekan → 2: pop-up OD Summit 2026 (Agustus).</li><li>Tekan → 3: pop-up nobar Dilan 1997 bareng HR ITB.</li><li>Di Tigaraksa: OD & Field Development → HR Development Head → OD & HRBP → CoE Head.</li><li>Pesannya: dua komunitas ini jalan tanpa budget training. Orang tetap belajar karena ada ruang rutin buat saling cerita.</li></ul>`},
+  <figure class="pz pza step"><img src="${IMG}odsummit2026_land.jpg" alt="Foto bersama peserta OD Summit 2026"><figcaption>OD Summit 2026 · The Grand Voyage<span>Agustus 2026, 200+ peserta</span></figcaption></figure>
+  <figure class="pz pzb step"><img src="${IMG}nobar_dilan1997_land.jpg" alt="Nonton bareng Dilan 1997 bersama HR ITB di bioskop"><figcaption>Nobar Dilan 1997 bareng HR ITB<span>Belajar nggak selalu di ruang kelas</span></figcaption></figure>`,
+  notes:`<h4>Komunitas (tekan → satu per satu)</h4><ul><li>Angka OD.ID naik otomatis ke 1.024. Sebut sister communities: PD.ID, TM.ID, CB.ID, IR.ID, plus Industrial Sector & Chapter. Semua join lewat orgdev.id.</li><li>Tekan → 1: Circle HR ITB, angka naik ke 586.</li><li>Tekan → 2: foto OD Summit 2026. Tekan → 3: foto nobar Dilan 1997.</li><li>Pesannya: dua komunitas ini jalan tanpa budget training. Orang tetap belajar karena ada ruang rutin untuk saling cerita.</li></ul>`},
 
  /* 5 */ {poll:'t1',cls:'mist',kick:'Segmen 1 · Training banyak, kok nggak berubah?',
   notes:`<h4>Polling</h4>Kalau "Kewajiban" atau "Obat" banyak dipilih: training masih dianggap event, belum jadi bagian dari kerja. Bandingkan dengan "Makan siang": rutin, kecil, dan nggak perlu disuruh.`},
 
- /* 6 */ {cls:'mist',kick:'Dari past company: Tigaraksa Satria',html:()=>`<h2>Peserta training naik 5×. Biayanya hampir sama.</h2>
+ /* 6 */ {cls:'mist',kick:'Dari past company: Tigaraksa Satria Tbk',html:()=>`<h2>Peserta training naik 5×. Biayanya hampir sama.</h2>
   <div class="tgk"><div>
    <div class="metric"><h4>Peserta pengembangan kompetensi</h4>${ybars([['2020',215],['2021',692],['2022',1067]],1067,'var(--blue)',num)}</div>
    <div class="metric"><h4>Total jam pelatihan</h4>${ybars([['2020',4730],['2021',14260],['2022',27050]],27050,'var(--amber)',v=>num(v)+' jam')}</div>
    <div class="metric"><h4>Biaya pengembangan kompetensi</h4>${ybars([['2020',1545],['2021',1800],['2022',1588]],1800,'var(--sky)',v=>'Rp'+num(v)+' jt')}</div>
-   <div class="src">Sumber: PT Tigaraksa Satria Tbk, Laporan Keberlanjutan & Laporan Tahunan 2022. Program: TrOli (training online), BLENDER (blended learning & gamification), 3D (successor development).</div>
+   <div class="progs"><span><b>TrOli</b> training online</span><span><b>BLENDER</b> blended learning & gamification</span><span><b>3D</b> successor development</span></div>
+   <div class="src">Sumber: PT Tigaraksa Satria Tbk, Laporan Keberlanjutan & Laporan Tahunan 2022.</div>
   </div>
-  <div class="dose step"><div class="q">Training itu dosis. Yang bikin beda: dipakai atau nggak.</div>
-   <ul><li><b>Aktivitas belajar:</b> jam training, jumlah peserta, sertifikat, budget terserap</li>
-   <li><b>Learning culture:</b> orang berani nanya, salah dibahas bareng, ilmu nyebar ke tim, cara kerja berubah Senin pagi</li></ul></div>
-  </div>`,
-  notes:`<h4>Data publik + ceritamu</h4><ul><li>2020–2022: peserta 215 → 692 → 1.067; jam pelatihan 4.730 → 14.260 → 27.050; biaya Rp1,55 M → Rp1,80 M → Rp1,59 M.</li><li>Program: TrOli, BLENDER, 3D.</li><li>Tekan → untuk memunculkan kotak "dosis". Masuk ke ceritamu: perjalanan dari OD & Field Development sampai CoE Head, apa yang bikin training benar-benar dipakai di lapangan.</li></ul>`},
+  <div class="idp step"><div style="display:flex;align-items:center;gap:calc(var(--u)*14)"><img src="${IMG}logo_tigaraksa.png" alt="Tigaraksa Satria" style="height:calc(var(--u)*52);background:#fff;border-radius:calc(var(--u)*10);padding:calc(var(--u)*5)"><h3>Tiap training masuk <em>IDP 10-20-70</em></h3></div>
+   <div class="stack"><i style="--c:var(--sky);width:10%"></i><i style="--c:var(--mint);width:20%"></i><i style="--c:var(--amber);width:70%"></i></div>
+   <div class="r" style="--c:var(--sky)"><b>10</b><div><strong>Training</strong>Kelas, TrOli, BLENDER</div></div>
+   <div class="r" style="--c:var(--mint)"><b>20</b><div><strong>Community of Practice / sharing session</strong>Belajar dari rekan, bahas kasus nyata</div></div>
+   <div class="r" style="--c:var(--amber)"><b>70</b><div><strong>Project assignment</strong>Ilmunya langsung dipakai di kerjaan, terhubung ke 3D</div></div>
+   <div class="q">Training itu dosis. Yang bikin beda: dipakai atau nggak.</div>
+  </div></div>`,
+  notes:`<h4>Data publik + ceritamu</h4><ul><li>2020–2022: peserta 215 → 692 → 1.067; jam pelatihan 4.730 → 14.260 → 27.050; biaya Rp1,55 M → Rp1,80 M → Rp1,59 M.</li><li>Program: TrOli, BLENDER, 3D.</li><li>Tekan → untuk memunculkan IDP 10-20-70: setiap training masuk IDP. 10 training, 20 Community of Practice / sharing session, 70 project assignment.</li><li>Ceritakan satu contoh project assignment yang dampaknya kelihatan di lapangan.</li></ul>`},
+
+ /* 6x */ {poll:'x1',cls:'',kick:'Polling · 10-20-70',
+  notes:`Kalau "70" paling banyak dipilih: training sudah ada, tapi belum ada project yang memaksa ilmunya dipakai. Kalau "20": orang belajar sendirian, belum ada ruang sharing.`},
 
  /* 6b */ {cls:'',kick:'Tren 2027 · Kenapa orang bertahan',html:()=>`<h2>Di 2027, learning adalah strategi retensi</h2>
   <div class="facts tr">
@@ -432,34 +585,36 @@ const S = [
   </div>`,
   notes:`<h4>Tren 2027 (tekan → satu per satu)</h4><ul><li>Korn Ferry: 65% pekerja mau bertahan kalau ada kesempatan belajar.</li><li>SkillPath: angka serupa, 73%.</li><li>Skill nomor satu 2027 menurut Korn Ferry: adaptability. QS juga bilang continuous learning jadi syarat karier jangka panjang.</li><li>Pesannya: learning culture bukan lagi urusan L&D saja, ini urusan retensi.</li></ul>`},
 
- /* 6c */ {cls:'mist',kick:'Tren 2027 · Manager',html:()=>`<h2>Kunci learning culture ada di manager. Dan mereka sedang kehabisan tenaga.</h2>
-  <div class="facts tr">
-   <div class="fact step" style="--c:var(--coral)"><span class="tagx">Engagement</span><b>22%</b><p class="what">manager engagement in 2025, down from 30% and 27%</p>
-    <blockquote>"Manager engagement fell from 30% to 27% in 2024, and to 22% in 2025, the steepest decline among employee groups."<br><cite>SkillPath, Learning Trends 2027, citing Gallup</cite></blockquote></div>
-   <div class="fact step" style="--c:var(--amber)"><span class="tagx">Time</span><b>13%</b><p class="what">of manager time goes to developing employees</p>
-    <blockquote>"…only 13% of manager time is devoted to developing employees."<br><cite>SkillPath, Learning Trends 2027, citing Deloitte</cite></blockquote></div>
-   <div class="fact step" style="--c:var(--sky)"><span class="tagx">AI readiness</span><b>6%</b><p class="what">say senior leaders are fully prepared to guide AI-driven transformation</p>
-    <blockquote><cite>Korn Ferry, Talent Trends 2027 (1,300+ talent and senior leaders, 75+ countries)</cite></blockquote></div>
+ /* 6c */ {cls:'mist',kick:'Manfaat & cara membangun',html:()=>`<h2>Kenapa perlu, dan mulai dari mana</h2>
+  <div class="build">
+   <div class="why step"><h3>Manfaat learning culture</h3>
+    <div class="hook2"><b>&lt;20%</b><span>of training transfers to the workplace when there's no learning culture around it.<br><small style="opacity:.75">ATD, "Developing a Learning Culture in Organizations" (Stephen J. Gill, 2015)</small></span></div>
+    <div class="bens">${[['Engagement dan morale naik','var(--amber)'],['Turnover turun','var(--coral)'],['Upskilling & reskilling jalan','var(--sky)'],['Produktivitas naik','var(--mint)'],['Tim lebih agile','var(--gold)'],['Talent ter-recruit dan bertahan','var(--blue)']].map(([t,c])=>`<div style="--c:${c}">${t}</div>`).join('')}</div>
+   </div>
+   <div class="how step"><h3>Cara membangunnya</h3>
+    <ol>${[['Leader jadi contoh','Leader ikut belajar dan dimintai tanggung jawab untuk perilaku belajar timnya.'],['Sambungkan belajar ke kerjaan','Setiap training punya project atau tugas nyata (10-20-70).'],['Mulai dari hari pertama','Onboarding sudah mengajarkan cara belajar di sini.'],['Apresiasi rasa penasaran','Yang bertanya dan mencoba hal baru diberi ruang, bukan dicap lambat.'],['Jadikan active learners champion','Orang yang rajin belajar diajak membagikan ke tim.'],['Investasi di leader dulu, baru di library','Konten banyak nggak ada gunanya kalau atasan nggak mendukung.']].map(([b,t],i)=>`<li style="--i:${i}"><div><b>${b}</b>${t}</div></li>`).join('')}</ol>
+    <div class="srcs">Diolah dari ATD (Gill, 2015) dan AIHR, "9 Tips to Create a Learning Culture" (2022). AIHR: membangun learning culture masuk 3 tantangan terbesar bagi 42% manager.</div>
+   </div>
   </div>`,
-  notes:`<h4>Manager (tekan → satu per satu)</h4><ul><li>Gallup: engagement manager turun 30% → 27% → 22%, paling tajam dibanding kelompok lain.</li><li>Deloitte: cuma 13% waktu manager dipakai untuk mengembangkan orang.</li><li>Korn Ferry: hanya 6% yang yakin leader-nya siap memimpin transformasi AI. Manager diminta lebih banyak membimbing tim lewat perubahan, dan "saya belum tahu" harus jadi jawaban yang boleh.</li><li>Jembatan ke cerita Tigaraksa: kalau manager-nya nggak ikut, training sebanyak apa pun berhenti di kelas.</li></ul>`},
+  notes:`<h4>Manfaat & cara (tekan → dua kali)</h4><ul><li>Tekan → 1: manfaat. ATD: kurang dari 20% training benar-benar terbawa ke kerjaan.</li><li>Tekan → 2: enam cara membangun. Tekankan nomor 1 dan 6: leader dulu, baru konten.</li><li>Referensi video: AIHR, "9 Tips to Create a Learning Culture" (YouTube, 2022).</li></ul>`},
 
- /* 6d */ {cls:'mist',kick:'Tren 2027 · Dari program ke sistem',html:()=>`<h2>Banyak program, sedikit sistem</h2>
-  <div class="eco"><div class="gap">
-   <div class="gp step" style="--c:var(--blue)"><div class="n">61% <s>vs 34%</s></div><p>bilang program pengembangannya efektif per individu, tapi cuma 34% punya strategi yang nyambung se-perusahaan</p><cite>Simitri Group, Learning Trends Report 2027</cite></div>
-   <div class="gp step" style="--c:var(--coral)"><div class="n">88% <s>vs 7%</s></div><p>leader bilang mengatur orang dan pekerjaan itu penting, cuma 7% merasa sudah ada kemajuan berarti</p><cite>Simitri Group, Learning Trends Report 2027, citing Deloitte</cite></div>
-   <div class="gp step" style="--c:var(--mint)"><div class="n">69%</div><p>setuju HR, talent acquisition, L&D, dan workforce planning akan jadi satu fungsi terintegrasi</p><cite>Korn Ferry, Talent Trends 2027</cite></div>
-  </div>
-  <div class="tsys step"><div class="hd"><img src="${IMG}logo_tigaraksa.png" alt="Tigaraksa Satria"><h3>Di Tigaraksa Satria: programnya disambung</h3></div>
-   <div class="row"><b>TrOli</b><span>Training online, bisa diikuti dari mana saja</span></div>
-   <div class="row"><b>BLENDER</b><span>Blended learning dan gamification, belajar sambil praktik</span></div>
-   <div class="row"><b>3D</b><span>Successor development, belajar terhubung ke jenjang karier</span></div>
-   <div class="row"><b>Peran saya</b><span>OD & Field Development → HR Development Head → OD & HRBP → CoE Head: learning makin dekat ke OD dan bisnis</span></div>
-   <div class="q">"Many organisations have excellent programmes. Few have an integrated system."<br><span style="font:500 calc(var(--u)*14) var(--bd);color:#fff;opacity:.75">Simitri Group, Learning Trends Report 2027</span></div>
-  </div></div>`,
-  notes:`<h4>Tren → Tigaraksa (tekan → satu per satu)</h4><ul><li>Simitri: 61% bilang programnya efektif per orang, cuma 34% punya sistem yang nyambung.</li><li>Deloitte (via Simitri): 88% vs 7%.</li><li>Korn Ferry: 69% melihat HR, TA, L&D, dan workforce planning bakal menyatu.</li><li>Tekan → terakhir: kotak Tigaraksa. Ceritakan bagaimana TrOli, BLENDER, dan 3D saling nyambung, dan bagaimana peranmu bergeser dari Field Development ke CoE Head. Contoh konkret: satu program yang kelihatan dampaknya di lapangan.</li></ul>`},
+ /* 6d */ {cls:'',kick:'Tren 2027 · Yang perlu HR tahu',html:()=>`<h2>AI makin cepat. Manusianya harus ikut belajar.</h2>
+  <div class="tiles">
+   <div class="row step">${[
+    ['8.7×','Employees whose managers actively champion AI are 8.7× more likely to say it has transformed how they work','Gallup 2026, via Simitri Learning Trends Report 2027','var(--amber)'],
+    ['22%','Manager engagement in 2025, down from 30%: the steepest drop of any employee group','Gallup, via SkillPath Learning Trends 2027','var(--coral)'],
+    ['13%','of manager time goes to developing employees','Deloitte, via SkillPath Learning Trends 2027','var(--sky)'],
+    ['6%','say senior leaders are fully prepared to guide AI-driven transformation','Korn Ferry, Talent Trends 2027','var(--mint)']].map(([b,p,c,col],i)=>`<div class="tl" style="--c:${col};--i:${i}"><b>${b}</b><p>${p}</p><cite>${c}</cite></div>`).join('')}</div>
+   <div class="row step">${[
+    ['7×','increase in demand for "the ability to use and manage AI tools" in US job postings in two years','SkillPath, Learning Trends 2027','var(--gold)'],
+    ['21%','of companies have already stopped hiring entry-level employees because of AI','Resume.org 2026, via Simitri Learning Trends Report 2027','var(--sky)'],
+    ['50%','of companies that cut headcount because of AI will rehire for similar functions by 2027','Gartner 2026, via Simitri Learning Trends Report 2027','var(--amber)'],
+    ['61% vs 34%','say development works for individuals, but only 34% have a connected, company-wide strategy','Simitri Group, Learning Trends Report 2027','var(--mint)']].map(([b,p,c,col],i)=>`<div class="tl" style="--c:${col};--i:${i}"><b>${b}</b><p>${p}</p><cite>${c}</cite></div>`).join('')}</div>
+  </div>`,
+  notes:`<h4>Tren 2027 (tekan → dua kali, satu baris per tekan)</h4><ul><li>Baris 1, manager: tim yang manager-nya mendukung AI 8,7× lebih mungkin merasakan perubahan. Tapi engagement manager turun ke 22%, waktu untuk develop orang cuma 13%, dan cuma 6% leader yang siap.</li><li>Baris 2, skill dan sistem: permintaan skill AI naik 7×, 21% perusahaan berhenti rekrut entry-level, separuh yang PHK karena AI akan rekrut lagi. Dan 61% vs 34%: banyak program, sedikit sistem.</li><li>Pesannya: learning culture adalah cara menyiapkan orang untuk perubahan yang belum kelihatan.</li></ul>`},
 
- /* 7 */ {poll:'s1',cls:'',kick:'Segmen 2 · Rasa aman buat salah dan bertanya',
-  notes:`Kalau rata-rata di bawah 3: "Ini bukan soal materi. Ini soal apa yang terjadi kalau orang ngaku belum bisa." Lanjut ke apa yang dilakukan leader.`},
+ /* 7 */ {poll:'r1',cls:'',kick:'Segmen 2 · Rasa aman buat salah dan bertanya',
+  notes:`Kalau "Cari siapa yang salah" atau "Dibahas di belakang" banyak: "Ini bukan soal materi. Ini soal apa yang terjadi kalau orang ngaku belum bisa." Lanjut ke apa yang dilakukan leader.`},
 
  /* 8 */ {cls:'mist',kick:'Segmen 2 & 3 · Apa yang dilakukan tim yang terus tumbuh',html:()=>`<h2>Mulai dari leader, jalan lewat ritual kecil</h2>
   <div class="grow2"><div class="cards">
@@ -479,13 +634,14 @@ const S = [
   notes:`Tunggu jawaban masuk, lalu bacakan 3–4 yang menarik. Ini jembatan ke Open Floor.`},
 
  /* 10 */ {qa:true,cls:'',kick:'Open Floor & Closing',
-  notes:`<h4>Open Floor + penutup</h4>Pertanyaan dari HP audiens muncul di kanan, urut vote terbanyak. Klik pertanyaan untuk menandai yang sedang dibahas, × untuk menyembunyikan. Tutup dengan kalimat di kiri, lalu ajak scan: orgdev.id (pilih OD.ID atau PD.ID) atau grup Telegram umum.`}
+  notes:`<h4>Open Floor + penutup</h4>Pertanyaan dari HP audiens muncul di kanan, urut vote terbanyak. Klik pertanyaan untuk menandai yang sedang dibahas, × untuk menyembunyikan. Tutup dengan punchline: "Training itu event. Learning culture itu kebiasaan." Bacakan empat poin wrap-up, lalu ajak scan: orgdev.id (pilih OD.ID atau PD.ID) atau grup Telegram umum.`}
 ];
 
 function slideBody(s){
   if (s.html) return s.html();
-  if (s.qa) return `<div class="closing"><div><div class="quote">Learning culture itu kelihatan di <span class="hl">Senin pagi</span>, bukan di sertifikat.</div>
-    <div class="lead">Terima kasih. Yuk lanjut belajar bareng.</div>
+  if (s.qa) return `<div class="closing"><div><div class="punch">Training itu event.<br><span class="hl2">Learning culture itu kebiasaan.</span></div>
+    <div class="lead">Kelihatannya di Senin pagi, bukan di sertifikat.</div>
+    <div class="wrap3">${['Leader duluan bilang "saya belum tahu"','Salah dibahas, bukan dihukum','Tiap training masuk 10-20-70','Mulai dari satu ritual kecil'].map((t,i)=>`<span style="--i:${i}">${t}</span>`).join('')}</div>
     <div class="joins">
      <div class="jcard">${qrBox(400, ORGDEV)}<div><b>Gabung komunitas</b><div class="jlogos"><img src="${IMG}logo_odid.png" alt="OD.ID"><img src="${IMG}logo_pdid.png" alt="PD.ID"></div><div class="lk">orgdev.id</div><p>Pilih OD.ID atau PD.ID</p></div></div>
      <div class="jcard">${qrBox(400, TELEGRAM)}<div><b>Grup Telegram umum</b><div class="lk">t.me/learningOD</div><p>Terbuka untuk siapa saja</p></div></div>
@@ -500,6 +656,11 @@ function slideBody(s){
     <div class="pollside">${qrBox(600)}<div><div class="count" data-count="${s.poll}">0</div><div class="small soft">jawaban masuk</div></div></div></div>`;
 }
 const slideHTML = i => { const s=S[i]; return `<section class="slide ${s.cls}" data-i="${i}">${WAVES(s.cls==='mist'||s.cls==='amber')}${s.kick?`<div class="kick">${esc(s.kick)}</div>`:''}${slideBody(s)}${s.extra?s.extra():''}</section>`; };
+function countUp(root){ root.querySelectorAll('[data-to]').forEach(el=>{
+  if (el.dataset.done==='1' || el.closest('.step:not(.shown)')) return; el.dataset.done='1';
+  const to=+el.dataset.to, t0=performance.now(), d=2000;
+  const f=t=>{ const p=Math.min(1,(t-t0)/d), e=1-Math.pow(1-p,3); el.textContent=num(Math.round(to*e)); if(p<1) requestAnimationFrame(f); };
+  requestAnimationFrame(f); }); }
 function hydrate(el){ el.querySelectorAll('[data-qr]').forEach(qrInto); el.querySelectorAll('[data-short]').forEach(e=>e.textContent=shortLabel()); }
 
 /* ============ SHARED TALLY ENGINE ============ */
@@ -577,11 +738,12 @@ function host(){
     post(TS, {slide:idx, step:stepN, poll:s.poll||null, R:E.R, M:E.M, hid:[...E.hid].slice(-50), pin:E.pin}).catch(()=>{}); },400); }
 
   const stepsOf = i => [...slides[i].querySelectorAll('.step')];
-  function showSteps(){ stepsOf(idx).forEach((el,j)=>el.classList.toggle('shown', j<stepN)); }
+  function showSteps(){ stepsOf(idx).forEach((el,j)=>el.classList.toggle('shown', j<stepN)); setTimeout(()=>countUp(slides[idx]), 500); }
   function go(i, atEnd){
     idx = Math.max(0, Math.min(S.length-1, i)); ls.set('hrs25-idx', idx);
     stepN = atEnd ? stepsOf(idx).length : 0;
-    slides.forEach((el,j)=>{ el.classList.toggle('on', j===idx); if(j===idx) el.scrollTop=0; });
+    slides.forEach((el,j)=>{ el.classList.toggle('on', j===idx); el.classList.toggle('past', j<idx); if(j===idx) el.scrollTop=0; });
+    slides[idx].querySelectorAll('[data-to]').forEach(e=>{ e.dataset.done=''; e.textContent='0'; });
     showSteps();
     document.getElementById('prog').style.width = ((idx+1)/S.length*100)+'%';
     document.getElementById('cpage').textContent = `${idx+1} / ${S.length}`;

@@ -384,6 +384,18 @@ h3{font-size:calc(var(--u)*30);line-height:1.2;font-weight:700}
 .pp span{font:600 calc(var(--u)*13)/1.2 var(--hd);text-align:center;margin-top:calc(var(--u)*4);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .kudos{display:flex;flex-wrap:wrap;gap:calc(var(--u)*10);margin-top:calc(var(--u)*14);align-content:flex-start;overflow:hidden;flex:1;min-height:0}
 .kudos .chip{font-size:calc(var(--u)*18);padding:calc(var(--u)*10) calc(var(--u)*16)}
+.reacts{display:flex;flex-wrap:wrap;gap:calc(var(--u)*10);margin-top:calc(var(--u)*8)}
+.reacts button{border:0;cursor:pointer;background:#fff;border-radius:calc(var(--u)*18);width:calc(var(--u)*84);height:calc(var(--u)*72);font-size:calc(var(--u)*38);line-height:1;box-shadow:0 calc(var(--u)*6) 0 rgba(20,31,110,.22);transition:transform .12s}
+.reacts button:active{transform:translateY(calc(var(--u)*4)) scale(.94)}
+.reacts button.pop{animation:rpop .35s}
+@keyframes rpop{50%{transform:scale(1.22) rotate(-8deg)}}
+.rtally{display:flex;flex-wrap:wrap;gap:calc(var(--u)*8);font:700 calc(var(--u)*18) var(--hd);color:var(--gold);margin-top:calc(var(--u)*10)}
+.rtally span{background:rgba(255,255,255,.12);border-radius:999px;padding:calc(var(--u)*4) calc(var(--u)*14)}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:55;overflow:hidden}
+#fx i{position:absolute;bottom:-90px;animation:fxup var(--d,3s) ease-out forwards}
+#fx b{position:absolute;top:-20px;animation:fxfall var(--d,3s) linear forwards}
+@keyframes fxup{to{transform:translate(var(--dx),-110vh) rotate(var(--r));opacity:0}}
+@keyframes fxfall{to{transform:translate(var(--dx),110vh) rotate(900deg)}}
 .ecount{font:800 calc(var(--u)*20) var(--hd);color:var(--gold);margin-bottom:calc(var(--u)*10)}
 /* audience game */
 .me-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:99px;padding:4px 12px 4px 4px;font:600 13px var(--hd)}
@@ -797,6 +809,9 @@ const S = [
    <div style="display:flex;flex-direction:column;min-height:0">
     <div class="ecount"><span data-ecount>0</span> learners ikut main malam ini</div>
     <div class="everyone" data-everyone></div>
+    <div class="ecount" style="margin:calc(var(--u)*14) 0 0">👏 Tepuk tangan dari HP</div>
+    <div class="reacts" data-reacts>${['👏','🎉','🔥','💛','🙌','🤩'].map(e=>`<button type="button" data-em="${e}" aria-label="Kirim ${e}">${e}</button>`).join('')}</div>
+    <div class="rtally" data-rtally></div>
     <div class="ecount" style="margin:calc(var(--u)*14) 0 0">💛 Kolom apresiasi · kirim dari HP</div>
     <div class="kudos" data-kudos="k1"></div>
    </div></div>`,
@@ -934,6 +949,29 @@ function host(){
   hydrate(root);
   const slides = [...root.querySelectorAll('.slide')];
 
+  /* Animasi meriah di presenter: confetti terus turun di slide apresiasi,
+     dan setiap reaksi HP memicu ledakan emoji + confetti. */
+  const FX = document.createElement('div'); FX.id = 'fx'; document.body.appendChild(FX);
+  const rc = {}, rand = (a,b) => a + Math.random()*(b-a);
+  const CC = ['#ffc23d','#5fd3c4','#f26b3a','#8fa2ff','#ffffff','#1f2f9e'];
+  const FX_MAX = 180;
+  function emojiPiece(em, big){ if (FX.childElementCount > FX_MAX) return; const el = document.createElement('i'); el.textContent = em;
+    el.style.left = rand(4,94)+'vw'; el.style.setProperty('--dx', rand(-10,10)+'vw'); el.style.setProperty('--r', rand(-45,45)+'deg');
+    el.style.setProperty('--d', rand(2.6,4.2)+'s'); el.style.fontSize = (big ? rand(64,96) : rand(30,50))+'px';
+    FX.appendChild(el); setTimeout(()=>el.remove(), 4600); }
+  function confetti(){ if (FX.childElementCount > FX_MAX) return; const el = document.createElement('b');
+    el.style.left = rand(0,100)+'vw'; el.style.background = CC[Math.random()*CC.length|0];
+    el.style.width = rand(7,12)+'px'; el.style.height = rand(11,19)+'px';
+    el.style.setProperty('--dx', rand(-8,8)+'vw'); el.style.setProperty('--d', rand(2.8,4.6)+'s');
+    FX.appendChild(el); setTimeout(()=>el.remove(), 4800); }
+  function burst(em){ for (let i=0;i<8;i++) emojiPiece(em,false); for (let i=0;i<16;i++) confetti(); }
+  let ambT = 0;
+  function ambient(on){ clearInterval(ambT); ambT = on ? setInterval(confetti, 230) : 0; }
+  function paintTally(){ const t = root.querySelector('[data-rtally]'); if (!t) return;
+    t.innerHTML = Object.entries(rc).map(([e,n])=>`<span>${e} ${n}</span>`).join('') || '<span>Belum ada reaksi</span>'; }
+  function reactIn(em){ rc[em] = (rc[em]||0) + 1; paintTally(); burst(em);
+    const tot = Object.values(rc).reduce((a,b)=>a+b, 0); if (tot % 10 === 0) emojiPiece(em, true); }
+
   function setConn(s){ const dot=document.getElementById('cdot'), t=document.getElementById('ctext');
     dot.className='dot '+(s==='live'?'live':s==='err'?'err':''); t.textContent = s==='live' ? 'Live voting aktif' : s==='err' ? 'Offline · tally manual (M)' : 'Menghubungkan…'; }
   /* Presenter = pusat data. Jawaban masuk lewat T_EV, disimpan lokal, lalu snapshot dikirim balik ke semua HP. */
@@ -941,7 +979,7 @@ function host(){
   let snapT=0, saveT=0;
   function snapSoon(){ clearTimeout(snapT); snapT=setTimeout(()=>Bus.pub(T_SNAP, {v:DECK_V, ...E.dump()}, true), 900); }
   function saveSoon(){ clearTimeout(saveT); saveT=setTimeout(()=>ls.set('data', E.dump()), 700); }
-  Bus.on(T_EV, d=>{ if (E.ingest(d, Date.now()/1000)){ E.render(); saveSoon(); snapSoon(); } });
+  Bus.on(T_EV, d=>{ if (d && d.k==='e'){ reactIn(d.em); return; } if (E.ingest(d, Date.now()/1000)){ E.render(); saveSoon(); snapSoon(); } });
   Bus.status((n,tot)=>{ setConn(n>0?'live':'err'); const t=document.getElementById('ctext'); if(t) t.textContent = n>0 ? `Live · relay ${n}/${tot} terhubung` : 'Relay terputus · tally manual (M)'; if(n>0){ sendState(); snapSoon(); } });
   Bus.start([T_EV]);
 
@@ -972,7 +1010,7 @@ function host(){
     document.getElementById('prog').style.width = ((idx+1)/S.length*100)+'%';
     document.getElementById('cpage').textContent = `${idx+1} / ${S.length}`;
     root.classList.toggle('manual', manual);
-    renderNotes(); E.render(); publish();
+    renderNotes(); E.render(); publish(); ambient(S[idx].key === 'k1');
   }
   function next(){ if (stepN < stepsOf(idx).length){ stepN++; showSteps(); publish(); } else go(idx+1); }
   function prev(){ if (stepN > 0){ stepN--; showSteps(); publish(); } else go(idx-1, true); }
@@ -1104,6 +1142,12 @@ function audience(){
     b.querySelector('#qs').onclick=()=>{ const t=b.querySelector('#qt').value.trim(); if(!t) return; const qid=Math.random().toString(36).slice(2,10); b.querySelector('#qt').value=''; send({k:'q',qid,t,id:me}); };
   }
   const stEl = $('ast');
+  /* Tombol emoji apresiasi: kirim lewat T_EV, presenter menampilkan ledakannya. */
+  let lastEm = 0;
+  $('mirror').addEventListener('click', e=>{ const b=e.target.closest('[data-em]'); if(!b) return;
+    const now=Date.now(); if (now-lastEm < 350) return; lastEm = now;
+    b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
+    Bus.pub(T_EV, {k:'e', em:b.dataset.em, id:me}); });
   /* Posisi slide dari presenter (retained) + snapshot data (retained). */
   let lastNav=0, pendSt=null, drawT=0, qT=0, follow=true, hostSt=null;
   const unlocked = {};

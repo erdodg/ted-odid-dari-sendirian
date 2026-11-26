@@ -567,7 +567,7 @@ const POLLS = {
   g1:{type:'choice',ans:0,q:'Berapa persen karyawan yang benar-benar menerapkan skill dari training di pekerjaannya?',opts:['Sekitar 12%','Sekitar 30%','Sekitar 50%','Sekitar 70%']},
   q2:{type:'choice',ans:2,q:'Kalau nggak dipakai, berapa banyak materi training yang hilang dari ingatan dalam 6 hari?',opts:['Sekitar 25%','Sekitar 50%','Sekitar 75%','Hampir 100%']},
   q3:{type:'choice',ans:2,q:'Di model 70-20-10, angka 70 itu untuk apa?',opts:['Training formal di kelas','Belajar dari rekan dan atasan','Pengalaman dan tugas nyata','Belajar online mandiri']},
-  q4:{type:'choice',ans:2,q:'Karyawan yang manager-nya aktif mendukung AI, berapa kali lebih mungkin bilang cara kerjanya berubah?',opts:['1,5×','3×','8,7×','15×']},
+  q4:{type:'choice',ans:2,q:'Participant satisfaction is 4.8/5 and the average post-test score is 90. Three months later, managers see no change in on-the-job behavior. Which Kirkpatrick level failed?',opts:['Level 1: Reaction','Level 2: Learning','Level 3: Behavior','Level 4: Results']},
   t1:{type:'choice',q:'Di kantormu, training itu lebih mirip…',opts:['Vitamin: rutin, tapi efeknya nggak kerasa','Obat: baru dikasih kalau ada masalah','Reward: buat yang performanya bagus','Kewajiban: ikut biar absen aman','Makan siang: bagian dari kerja sehari-hari']},
   x1:{type:'choice',q:'Dari 10-20-70, mana yang paling jarang jalan di kantormu?',opts:['10: training formal','20: belajar dari rekan (sharing, coaching, CoP)','70: belajar lewat project dan tugas nyata','Semuanya sudah jalan']},
   r1:{type:'choice',q:'Kalau ada yang salah di tim, reaksi pertama atasan biasanya…',opts:['Cari siapa yang salah','Langsung ambil alih: "sini, saya aja"','Diam, tapi dibahas di belakang','Tanya: "apa yang bisa kita pelajari?"']},
@@ -761,18 +761,18 @@ const S = [
    </div></div>`,
   notes:`<h4>Flywheel budaya (tekan → lima kali)</h4><ol><li>Leader behavior: semua mulai dari apa yang leader lakukan, bukan yang leader katakan.</li><li>Practices & rituals: perilaku itu dibuat rutin, misalnya IDP 10-20-70 dan retro.</li><li>Shared experience: orang merasakan hasilnya bareng-bareng.</li><li>Beliefs & norms: lama-lama jadi keyakinan, "di sini belajar itu biasa".</li><li>Hasilnya: engagement, retensi, agility. Lingkaran berputar lagi, dan makin kuat setiap putaran.</li></ol>`},
 
- /* 6cq */ {poll:'q4',cls:'',kick:'Quiz · AI & manager',
-  notes:`<h4>Quiz</h4>Jawaban: 8,7× (Gallup 2026, via Simitri). Buka dengan →, lalu masuk ke slide tren.`},
+ /* 6cq */ {poll:'q4',cls:'',kick:'Quiz · Kirkpatrick',
+  notes:`<h4>Quiz</h4>Jawaban: Level 3 Behavior. Level 1 (kepuasan 4,8/5) dan Level 2 (post-test 90) sudah lolos, tapi perilaku di kerja tidak berubah. Biasanya penyebabnya bukan materi, tapi dukungan di tempat kerja: atasan, kesempatan praktik, dan reinforcement. Buka dengan →, lalu masuk ke slide tren AI.`},
 
  /* 6d */ {cls:'',kick:'Tren 2027 · Angka yang paling bikin kaget',html:()=>`<h2>AI makin cepat. Manusianya harus ikut belajar.</h2>
   <div class="tiles five">${[
-    ['6%','of respondents say their senior leaders are fully prepared to guide AI-driven transformation','Korn Ferry, Talent Trends 2027','var(--mint)'],
+    ['87%','of L&D teams already use AI for training. Only 2% have no plan to adopt it','Synthesia, AI in L&D Report 2026','var(--mint)'],
+    ['83%','of L&D leaders call AI their #1 workforce priority, yet only 29% have mature AI capabilities','edX, State of Enterprise Learning 2026','var(--sky)'],
+    ['64%','of employees say their company supports AI learning, versus 83% of HR managers who think it does','TalentLMS, L&D Report 2026','var(--coral)'],
     ['8.7×','Employees whose managers actively champion AI are 8.7× more likely to say it has transformed how they work','Gallup 2026, via Simitri Learning Trends Report 2027','var(--amber)'],
-    ['13%','of manager time goes to developing employees','Deloitte, via SkillPath Learning Trends 2027','var(--sky)'],
-    ['21%','of companies have already stopped hiring entry-level employees because of AI','Resume.org 2026, via Simitri Learning Trends Report 2027','var(--coral)'],
     ['50%','of companies that cut headcount because of AI will rehire for similar functions by 2027','Gartner 2026, via Simitri Learning Trends Report 2027','var(--gold)']].map(([b,p,c,col],i)=>`<div class="tl step" style="--c:${col}"><b>${b}</b><p>${p}</p><cite>${c}</cite></div>`).join('')}
   </div>`,
-  notes:`<h4>Lima angka (tekan → satu per satu)</h4><ul><li>6%: hampir nggak ada leader yang merasa siap.</li><li>8,7×: padahal manager yang mendukung bikin beda besar.</li><li>13%: tapi waktu manager untuk develop orang cuma segini.</li><li>21%: entry-level mulai hilang, padahal di situ orang belajar judgement.</li><li>50%: dan separuh yang PHK karena AI akan rekrut lagi. Manusia tetap dibutuhkan, jadi harus terus belajar.</li></ul>`},
+  notes:`<h4>Lima angka (tekan → satu per satu)</h4><ul><li>87%: hampir semua tim L&D sudah pakai AI, tapi kebanyakan untuk bikin konten lebih cepat.</li><li>83% vs 29%: AI jadi prioritas nomor satu, tapi yang kemampuannya sudah matang cuma sedikit.</li><li>64%: 83% HR merasa sudah mendukung belajar AI, tapi hanya 64% karyawan yang setuju. Gap persepsi ini yang perlu dijembatani.</li><li>8,7×: manager yang mendukung bikin beda besar.</li><li>50%: separuh yang PHK karena AI akan rekrut lagi. Manusia tetap dibutuhkan, jadi harus terus belajar.</li></ul>`},
 
  /* 7 */ {poll:'r1',cls:'',kick:'Segmen 2 · Rasa aman buat salah dan bertanya',
   notes:`Kalau "Cari siapa yang salah" atau "Dibahas di belakang" banyak: "Ini bukan soal materi. Ini soal apa yang terjadi kalau orang ngaku belum bisa." Lanjut ke apa yang dilakukan leader.`},

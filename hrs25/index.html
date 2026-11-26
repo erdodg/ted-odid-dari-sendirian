@@ -431,6 +431,12 @@ h3{font-size:calc(var(--u)*30);line-height:1.2;font-weight:700}
 .port .qres{position:relative!important;right:auto;top:auto;width:auto;margin-top:calc(var(--u)*20)}
 .port .awards{grid-template-columns:1fr 1fr 1fr}
 
+/* ---------- SYNC ---------- */
+#syncbtn{pointer-events:auto;border:0;border-radius:99px;padding:calc(var(--u)*8) calc(var(--u)*16);font:700 calc(var(--u)*15) var(--hd);background:rgba(16,23,63,.85);color:#fff;display:inline-flex;gap:calc(var(--u)*8);align-items:center;margin-left:calc(var(--u)*10)}
+#syncbtn.ok i{background:var(--mint)}#syncbtn.bad i{background:var(--coral)}#syncbtn i{width:calc(var(--u)*10);height:calc(var(--u)*10);border-radius:50%;background:#aaa}
+.vbanner{margin:12px 16px 0;background:var(--coral);color:#fff;border-radius:14px;padding:12px 14px;font:600 14px var(--hd);display:flex;gap:10px;align-items:center;justify-content:space-between}
+.vbanner button{border:0;border-radius:10px;padding:8px 12px;font-weight:700;background:#fff;color:var(--ink)}
+.livetag .ago{font-weight:500;opacity:.7;margin-left:6px}
 /* ---------- STACKED LAYOUT (.port: HP/portrait host + mirror di HP peserta) ---------- */
 #host.port{--u:calc(100vw / 760)}
 .port .slide{overflow-y:auto;padding:calc(var(--u)*56) calc(var(--u)*40) calc(var(--u)*150)}
@@ -523,6 +529,7 @@ h3{font-size:calc(var(--u)*30);line-height:1.2;font-weight:700}
 const ROOM = new URLSearchParams(location.search).get('room') || 'hrs25-learningculture-odid-7k3q';
 const RELAY = 'https://ntfy.sh/';
 const TV = ROOM + '-v', TS = ROOM + '-s';
+const DECK_V = '2026-11-26c';
 /* Link pendek yang tampil di slide. Buat dulu di s.id (atau shortener lain) yang mengarah ke URL GitHub Pages deck ini. */
 const SHORT_LINK = 's.id/HRS25-LearningCulture';
 const ORGDEV = 'https://orgdev.id', TELEGRAM = 'https://t.me/learningOD';
@@ -759,6 +766,7 @@ const S = [
   notes:`<h4>Appreciation</h4><ul><li>Semua avatar dan nama yang ikut main muncul di kanan.</li><li>Umumkan tiga award: Fastest (paling sering jawab benar paling cepat), Most active (paling banyak vote, tanya, dan upvote), Most accurate (paling banyak quiz benar).</li><li>Ajak peserta mengisi kolom apresiasi dari HP. Kalimatnya muncul di kanan bawah bersama avatarnya.</li><li>Skor: benar 100 poin, bonus kecepatan 10–50 poin, setiap partisipasi 10 poin.</li></ul>`}
 ];
 
+S.forEach(s=>{ s.key = s.poll || s.kick || 'cover'; });
 function slideBody(s){
   if (s.html) return s.html();
   if (s.qa) return `<div class="closing"><div><div class="punch">Training is an event.<br><span class="hl2">Learning culture is a habit.</span></div>
@@ -883,7 +891,7 @@ function host(){
   E.M = ls.get('hrs25-manual', {}); E.R = ls.get('hrs25-reset', {}); E.hid = new Set(ls.get('hrs25-hiddenq', []));
 
   root.innerHTML = S.map((s,i)=>slideHTML(i)).join('') +
-    `<div class="chrome"><span><span class="dot" id="cdot"></span><span id="ctext">Menghubungkan…</span></span><span id="cpage"></span></div><div class="prog" id="prog"></div>`;
+    `<div class="chrome"><span><span class="dot" id="cdot"></span><span id="ctext">Menghubungkan…</span></span><span><span id="cpage"></span><button id="syncbtn" title="Kirim ulang posisi slide ke HP peserta (P)"><i></i><span>HP peserta: menyambung…</span></button></span></div><div class="prog" id="prog"></div>`;
   hydrate(root);
   const slides = [...root.querySelectorAll('.slide')];
 
@@ -891,9 +899,21 @@ function host(){
     dot.className='dot '+(s==='live'?'live':s==='err'?'err':''); t.textContent = s==='live' ? 'Live voting aktif' : s==='err' ? 'Offline · tally manual (M)' : 'Menghubungkan…'; }
   subscribe(TV, 'all', (d,t)=>{ if(E.ingest(d,t)) E.render(); }, ()=>setConn('live'), ()=>setConn('err'));
 
-  let pubT=0;
-  function publish(){ clearTimeout(pubT); pubT=setTimeout(()=>{ const s=S[idx];
-    post(TS, {slide:idx, step:stepN, poll:s.poll||null, R:E.R, M:E.M, hid:[...E.hid].slice(-50), pin:E.pin}).catch(()=>{}); },400); }
+  /* Sinkron ke HP: presenter yang pegang kendali. Setiap pindah slide/step langsung dikirim,
+     gagal = dicoba ulang, dan ada heartbeat 30 detik supaya HP yang baru masuk langsung ikut. */
+  let pubT=0, pubBusy=false, pubAgain=false, nav=Date.now(), lastOk=0;
+  const syncBtn = () => document.getElementById('syncbtn');
+  function setSync(ok){ const b=syncBtn(); if(!b) return; b.className = ok?'ok':'bad';
+    b.querySelector('span').textContent = ok ? `HP peserta ikut slide ${idx+1}` : 'HP belum tersinkron, mencoba lagi…'; }
+  function stateMsg(){ const s=S[idx]; return {v:DECK_V, key:s.key, nav, slide:idx, step:stepN, poll:s.poll||null, R:E.R, M:E.M, hid:[...E.hid].slice(-50), pin:E.pin}; }
+  async function sendState(retry=0){
+    if (pubBusy){ pubAgain=true; return; } pubBusy=true; let ok=false;
+    try { const r = await post(TS, stateMsg()); ok = r.ok; } catch(e){}
+    pubBusy=false; setSync(ok); if (ok) lastOk=Date.now();
+    if (pubAgain){ pubAgain=false; return sendState(); }
+    if (!ok){ clearTimeout(pubT); pubT=setTimeout(()=>sendState(retry+1), Math.min(10000, 1500*(retry+1))); }
+  }
+  function publish(){ nav=Date.now(); clearTimeout(pubT); pubT=setTimeout(sendState,120); }
 
   const stepsOf = i => [...slides[i].querySelectorAll('.step')];
   function showSteps(){ stepsOf(idx).forEach((el,j)=>el.classList.toggle('shown', j<stepN)); setTimeout(()=>countUp(slides[idx]), 500); }
@@ -914,7 +934,7 @@ function host(){
   const notesEl = document.createElement('div'); notesEl.id='notes'; notesEl.className='hidden'; document.body.appendChild(notesEl);
   function renderNotes(){ notesEl.classList.toggle('hidden', !showNotes); notesEl.innerHTML = `<div class="soft" style="font-size:12px;margin-bottom:6px">Catatan pembicara · slide ${idx+1}</div>` + (S[idx].notes||'Tidak ada catatan.'); }
   const help = document.createElement('div'); help.id='help';
-  help.innerHTML = `<kbd>→</kbd> <kbd>←</kbd> pindah / munculkan · <kbd>N</kbd> catatan · <kbd>Q</kbd> QR besar · <kbd>F</kbd> layar penuh<br><kbd>M</kbd> tally manual (klik opsi +1, Shift+klik −1) · <kbd>R</kbd> reset polling · <kbd>S</kbd> setelan · <kbd>H</kbd> bantuan`;
+  help.innerHTML = `<kbd>→</kbd> <kbd>←</kbd> pindah / munculkan · <kbd>N</kbd> catatan · <kbd>Q</kbd> QR besar · <kbd>F</kbd> layar penuh<br><kbd>M</kbd> tally manual (klik opsi +1, Shift+klik −1) · <kbd>R</kbd> reset polling · <kbd>S</kbd> setelan · <kbd>P</kbd> sinkron ulang HP · <kbd>H</kbd> bantuan`;
   document.body.appendChild(help); setTimeout(()=>help.classList.add('hidden'),12000);
 
   function overlay(html, onMount){ const o=document.createElement('div'); o.className='ov'; o.innerHTML=html; o.onclick=e=>{ if(e.target===o) o.remove(); }; document.body.appendChild(o); onMount&&onMount(o); return o; }
@@ -947,13 +967,15 @@ function host(){
     else if (k==='r' && S[idx].poll) confirmReset(S[idx].poll);
     else if (k==='q') { const o=document.querySelector('.ov'); o?o.remove():bigQR(); }
     else if (k==='s') settings();
+    else if (k==='p') { sendState(); toast('Posisi slide dikirim ulang ke HP peserta'); }
     else if (k==='escape') document.querySelector('.ov')?.remove();
     else if (k==='f') { try{ document.fullscreenElement? document.exitFullscreen() : document.documentElement.requestFullscreen().catch(()=>{}); }catch(x){} }
   });
   let tx=0, ty=0; root.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
   root.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty; if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)) (dx<0?next:prev)();});
   setConn('off'); go(idx);
-  setInterval(publish, 180000); /* re-announce tiap 3 menit, hemat kuota relay */
+  syncBtn().onclick = e=>{ e.stopPropagation(); sendState(); toast('Posisi slide dikirim ulang ke HP peserta'); };
+  setInterval(()=>sendState(), 30000); /* heartbeat: HP yang baru scan langsung ikut */
 }
 
 /* ============ AUDIENCE ============ */
@@ -965,6 +987,7 @@ function audience(){
   let prof = ls.get('hrs25-prof', null);
   root.innerHTML = `<div class="atop"><span class="abrand">hrstories <span>#25</span> · Learning Culture</span><span id="ast">Menghubungkan…</span></div>
     <div style="padding:10px 16px 0"><button class="me-badge hidden" id="meb"></button></div>
+    <div class="vbanner hidden" id="vb"><span>Slide di HP beda versi dengan presenter.</span><button>Muat ulang</button></div>
     <div id="join"></div>
     <div class="tabs"><button data-t="live" class="on">Live</button><button data-t="qa">Tanya</button></div>
     <div id="vote"></div><div id="qa" class="hidden"></div><div id="live"><div class="livetag">● Slide di layar</div><div class="mirror" id="mirror"></div></div>`;
@@ -1030,16 +1053,45 @@ function audience(){
     b.querySelector('#qs').onclick=()=>{ const t=b.querySelector('#qt').value.trim(); if(!t) return; const qid=Math.random().toString(36).slice(2,10); b.querySelector('#qt').value=''; send({k:'q',qid,t,id:me}); };
   }
   const stEl = $('ast');
-  subscribe(TS, '30m', d=>{
-    if (!d || typeof d.slide!=='number' || !S[d.slide]) return;
-    const pollChanged = !st || st.poll !== (d.poll||null);
+  /* Satu koneksi untuk dua topik (state presenter + vote), lanjut dari pesan terakhir saat reconnect. */
+  let es=null, lastId='', lastMsg=0, lastNav=0, pendSt=null, drawT=0, qT=0;
+  function applyState(d, time){
+    if (!d || typeof d.slide!=='number') return;
+    if (time && time < Date.now()/1000 - 4*3600) return;              /* abaikan sisa latihan lama */
+    if (typeof d.nav==='number'){ if (d.nav < lastNav) return; lastNav = d.nav; } /* tab presenter lama tidak bisa menarik mundur */
+    let i = d.key ? S.findIndex(x=>x.key===d.key) : -1;
+    if (i<0 && d.v===DECK_V && S[d.slide]) i = d.slide;
+    $('vb').classList.toggle('hidden', !d.v || d.v===DECK_V);
+    if (i<0) return;
+    pendSt = {...d, slide:i}; clearTimeout(drawT); drawT = setTimeout(flushState, 60);
+  }
+  function flushState(){ const d=pendSt; if(!d) return; pendSt=null;
+    const pollChanged = !st || st.poll !== (d.poll||null) || st.slide !== d.slide;
     E.R = d.R||{}; E.M = d.M||{}; E.hid = new Set(Array.isArray(d.hid)?d.hid:[]); E.pin = d.pin||null;
     st = {slide:d.slide, step:+d.step||0, poll:POLLS[d.poll]?d.poll:null};
     if (pollChanged) ok='';
     drawMirror(); if (tab==='live' && prof && $('join').dataset.edit!=='1' && (pollChanged || !document.querySelector('#wt:focus'))) drawVote();
-  }, ()=>stEl.textContent='Terhubung', ()=>stEl.textContent='Menyambung ulang…');
+  }
+  function onVote(d,t){ if(!E.ingest(d,t)) return; E.render();
+    if (prof && tab==='live' && st && st.poll && POLLS[st.poll].ans!=null){ clearTimeout(qT); qT=setTimeout(drawVote,300); }
+    if (tab==='qa' && document.activeElement?.id!=='qt' && (d.k==='q'||d.k==='u')) drawQA(); }
+  function connect(){
+    try { es && es.close(); } catch(e){}
+    try {
+      es = new EventSource(RELAY + TS + ',' + TV + '/sse?since=' + (lastId || 'all'));
+      es.onopen = ()=>{ stEl.textContent='Terhubung'; };
+      es.onerror = ()=>{ stEl.textContent='Menyambung ulang…'; };
+      es.onmessage = e => { try { const m=JSON.parse(e.data); lastMsg=Date.now();
+        if (m.event!=='message') return; lastId = m.id || lastId; stEl.textContent='Terhubung';
+        const d=JSON.parse(m.message); if (m.topic===TS) applyState(d, m.time); else onVote(d, m.time); } catch(x){} };
+    } catch(e){ stEl.textContent='Browser tidak mendukung live sync'; }
+  }
+  connect();
+  /* Watchdog: presenter kirim heartbeat tiap 30 detik. Kalau 70 detik sepi, sambung ulang. */
+  setInterval(()=>{ if (document.visibilityState==='visible' && Date.now()-lastMsg > 70000){ lastMsg=Date.now(); connect(); } }, 10000);
+  document.addEventListener('visibilitychange', ()=>{ if (document.visibilityState==='visible' && Date.now()-lastMsg > 15000){ lastMsg=Date.now(); connect(); } });
+  $('vb').querySelector('button').onclick = ()=>{ const u=new URL(location.href); u.searchParams.set('r', Date.now()); location.replace(u.toString()); };
   if (prof) post(TV,{k:'j',id:me,...prof}).catch(()=>{});
-  let qT=0; subscribe(TV, 'all', (d,t)=>{ if(!E.ingest(d,t)) return; E.render(); if(prof && tab==='live' && st && st.poll && POLLS[st.poll].ans!=null){ clearTimeout(qT); qT=setTimeout(drawVote,300); } if(tab==='qa' && document.activeElement?.id!=='qt' && (d.k==='q'||d.k==='u')) drawQA(); });
   drawMirror(); drawTab();
 }
 

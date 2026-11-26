@@ -875,7 +875,7 @@ function Engine(getRoot, opts={}){
   E.scores = () => { const S={}; const g=id=>S[id] ||= {id, correct:0, speed:0, act:0, total:0};
     Object.keys(E.P).forEach(g);
     PID.forEach(p=>{ E.voters(p).forEach(v=>g(v.id).act++); if (POLLS[p].ans!=null) E.fastest(p).forEach((v,r)=>{ const x=g(v.id); x.correct++; x.speed += Math.max(10, 50-r*5); }); });
-    Object.values(E.Q).forEach(q=>q.by && g(q.by).act++); Object.values(E.U).forEach(set=>set.forEach(id=>g(id).act++));
+    Object.values(E.Q).forEach(q=>q.by && !q.nolb && g(q.by).act++); Object.values(E.U).forEach(set=>set.forEach(id=>g(id).act++));
     const L = Object.values(S); L.forEach(x=>x.total = x.correct*100 + x.speed + x.act*10); return L.sort((a,b)=>b.total-a.total); };
   E.questions = () => Object.entries(E.Q).filter(([id])=>!E.hid.has(id)).map(([id,q])=>({id,...q,n:(E.U[id]?E.U[id].size:0)})).sort((a,b)=>b.n-a.n||a.time-b.time);
   function renderPoll(root,p){
@@ -1030,7 +1030,9 @@ function host(){
     <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap"><button type="button" class="btn alt" id="wipe">Mulai bersih (hapus peserta & jawaban)</button><button type="button" class="btn alt" id="rs">Reset semua polling</button><button class="btn">Simpan</button></div></form>`, o=>{
       const f=o.querySelector('form'), ju=o.querySelector('#ju'), sl=o.querySelector('#sl'); ju.value=ls.get('hrs25-join',''); sl.value=ls.get('hrs25-short','');
       f.onsubmit=e=>{e.preventDefault(); ls.set('hrs25-join', ju.value.trim()); ls.set('hrs25-short', sl.value.trim()); location.reload();};
-      o.querySelector('#rs').onclick=()=>{ const now=Date.now()/1000; PID.forEach(p=>{E.R[p]=now;E.M[p]=[]}); ls.set('hrs25-reset',E.R); ls.set('hrs25-manual',E.M); toast('Semua polling di-reset'); o.remove(); E.render(); publish(); };
+      o.querySelector('#rs').onclick=()=>{ const now=Date.now()/1000; PID.forEach(p=>{E.R[p]=now;E.M[p]=[]}); ls.set('hrs25-reset',E.R); ls.set('hrs25-manual',E.M);
+        /* Reset juga mengosongkan poin dari upvote dan pertanyaan lama, pertanyaannya tetap tampil. */
+        E.U = {}; Object.values(E.Q).forEach(q=>q.nolb=true); toast('Semua polling & leaderboard di-reset'); o.remove(); E.render(); snapSoon(); publish(); };
       o.querySelector('#wipe').onclick=()=>{ if(!confirm('Hapus semua peserta, avatar, jawaban, dan pertanyaan?')) return; E.load({}); E.R={}; E.M={}; E.hid=new Set(); E.pin=null; ['data','hrs25-reset','hrs25-manual','hrs25-hiddenq'].forEach(k=>ls.set(k, k==='hrs25-hiddenq'?[]:{})); Bus.pub(T_SNAP,{v:DECK_V, ...E.dump()},true); toast('Data dibersihkan, siap mulai'); o.remove(); E.render(); publish(); };
     }); }
   function confirmReset(p){ overlay(`<div class="set"><h3 style="font-size:22px">Reset polling ini?</h3><div>Jawaban sebelumnya diabaikan, audiens bisa vote ulang.</div><div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn alt" id="no">Batal</button><button class="btn" id="yes">Reset</button></div></div>`, o=>{

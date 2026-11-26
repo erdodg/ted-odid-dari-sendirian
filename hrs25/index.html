@@ -244,8 +244,9 @@ h3{font-size:calc(var(--u)*30);line-height:1.2;font-weight:700}
 .slide.on .cn{animation:popIn .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d)*.22s + .4s)}
 .cn:not(.end)::after{content:'→';position:absolute;right:calc(var(--u)*-29);top:50%;translate:0 -50%;font:800 calc(var(--u)*24) var(--hd);color:var(--amber)}
 .cn .no{position:absolute;top:calc(var(--u)*-12);left:calc(var(--u)*-10);width:calc(var(--u)*30);height:calc(var(--u)*30);border-radius:50%;background:var(--amber);color:var(--navy);display:grid;place-items:center;font:800 calc(var(--u)*15) var(--hd)}
-.cn .lgs{display:flex;gap:calc(var(--u)*6);height:calc(var(--u)*54)}
-.cn .lgs .lg{padding:calc(var(--u)*6)}.cn .lgs .lg img{max-height:calc(var(--u)*42)}
+.cn .lgs{display:flex;gap:calc(var(--u)*8)}
+.cn .lgs .lg{flex:none;width:calc(var(--u)*92);height:calc(var(--u)*92);padding:calc(var(--u)*8)}.cn .lgs .lg img{max-height:calc(var(--u)*76);max-width:100%}
+.r7{display:flex;align-items:center;gap:calc(var(--u)*12)}.r7+.r7{margin-top:calc(var(--u)*4)}.r7 .lg{flex:none;width:calc(var(--u)*58);height:calc(var(--u)*58);padding:calc(var(--u)*5)}.r7 .lg img{max-height:calc(var(--u)*48)}.r7 .lg.nb{padding:0;overflow:hidden}.r7 .lg.nb img{max-height:none;width:100%;height:100%;object-fit:cover}.r7 b{font-size:calc(var(--u)*18)}.r7 span{font:700 calc(var(--u)*16)/1.25 var(--hd);opacity:1}
 .cn b{font:700 calc(var(--u)*19)/1.2 var(--hd)}
 .cn span{font-size:calc(var(--u)*15);line-height:1.3;opacity:.85}
 .cn.tgx{grid-column:span 2}
@@ -282,6 +283,7 @@ h3{font-size:calc(var(--u)*30);line-height:1.2;font-weight:700}
 .pz figcaption span{display:block;font:500 calc(var(--u)*15) var(--bd);color:var(--mute)}
 .pza{left:calc(var(--u)*120);top:calc(var(--u)*150);rotate:-3deg}
 .pzb{right:calc(var(--u)*110);top:calc(var(--u)*230);rotate:3deg}
+.pzc{left:calc(var(--u)*330);top:calc(var(--u)*120);width:calc(var(--u)*940);rotate:-1deg;z-index:6!important}
 .step.pz{transform:translateY(calc(var(--u)*30)) scale(.92)}.step.pz.shown{transform:none}
 
 /* ---------- TIGARAKSA + IDP ---------- */
@@ -342,6 +344,92 @@ h3{font-size:calc(var(--u)*30);line-height:1.2;font-weight:700}
 .port .tiles{grid-template-columns:1fr 1fr}
 .port .pz{position:relative!important;left:auto;right:auto;top:auto;width:auto;rotate:0deg;margin-top:calc(var(--u)*24)}
 .port .bens{grid-template-columns:1fr}
+
+
+/* ---------- GAME: avatars, quiz, leaderboard ---------- */
+.avs{display:flex;flex-wrap:wrap;gap:calc(var(--u)*6);justify-content:center;max-width:calc(var(--u)*330)}
+.av{width:calc(var(--u)*46);height:calc(var(--u)*46);border-radius:50%;background:#fff;display:grid;place-items:center;font-size:calc(var(--u)*28);box-shadow:0 4px 12px rgba(0,0,0,.18);animation:avpop .5s cubic-bezier(.3,1.6,.5,1) both}
+.av.more{font:800 calc(var(--u)*15) var(--hd);color:var(--blue)}
+@keyframes avpop{from{transform:scale(0) translateY(calc(var(--u)*20))}}
+.qz{font:700 calc(var(--u)*16) var(--hd);background:var(--coral);color:#fff;border-radius:99px;padding:calc(var(--u)*5) calc(var(--u)*14);margin-left:calc(var(--u)*6)}
+.slide:has(.qres.shown) .bar:not(.ans){opacity:.3;filter:grayscale(.6)}
+.slide:has(.qres.shown) .bar.ans .track{outline:calc(var(--u)*5) solid var(--mint);outline-offset:calc(var(--u)*3)}
+.slide:has(.qres.shown) .bar.ans .k::after{content:'✓';margin-left:calc(var(--u)*4)}
+.qres{position:absolute!important;right:calc(var(--u)*96);top:calc(var(--u)*150);width:calc(var(--u)*420);z-index:5!important;background:#fff;color:var(--ink);border-radius:calc(var(--u)*26);padding:calc(var(--u)*24);box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.qres h4{margin:0;font:800 calc(var(--u)*22)/1.2 var(--hd);color:var(--blue)}
+.qres .okn{font:600 calc(var(--u)*17) var(--bd);color:var(--mute);margin:calc(var(--u)*4) 0 calc(var(--u)*12)}
+.slide:has(.reveal.shown) .qres{opacity:0;pointer-events:none}
+.pod{display:flex;flex-direction:column;gap:calc(var(--u)*8)}
+.pod div{display:flex;align-items:center;gap:calc(var(--u)*12);background:var(--mist);border-radius:calc(var(--u)*14);padding:calc(var(--u)*8) calc(var(--u)*12);font:700 calc(var(--u)*20) var(--hd);animation:popIn .5s both;animation-delay:calc(var(--i)*.15s)}
+.pod div i{font-style:normal;font-size:calc(var(--u)*30)}
+.pod div em{margin-left:auto;font-style:normal;color:var(--coral);font-size:calc(var(--u)*16)}
+.joined{margin-top:calc(var(--u)*26);display:flex;flex-direction:column;gap:calc(var(--u)*10)}
+.joined .jl{font:700 calc(var(--u)*20) var(--hd);color:var(--gold)}
+.joined .avs{justify-content:flex-start;max-width:none}
+.appr{display:grid;grid-template-columns:calc(var(--u)*560) 1fr;gap:calc(var(--u)*30);flex:1;min-height:0;margin-top:calc(var(--u)*16)}
+.awards{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*12)}
+.aw{background:#fff;color:var(--ink);border-radius:calc(var(--u)*20);padding:calc(var(--u)*14);text-align:center;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*4)}
+.aw .t{font:800 calc(var(--u)*15)/1.2 var(--hd);color:var(--c);text-transform:uppercase;letter-spacing:.03em}
+.aw .a{font-size:calc(var(--u)*54);line-height:1.1}
+.aw b{font:800 calc(var(--u)*19)/1.2 var(--hd);word-break:break-word}
+.aw span{font-size:calc(var(--u)*14);color:var(--mute)}
+.board{margin-top:calc(var(--u)*14);background:rgba(255,255,255,.12);border-radius:calc(var(--u)*20);padding:calc(var(--u)*14) calc(var(--u)*16);display:flex;flex-direction:column;gap:calc(var(--u)*6)}
+.board h4{margin:0 0 calc(var(--u)*4);font:800 calc(var(--u)*18) var(--hd);color:var(--gold)}
+.br{display:grid;grid-template-columns:calc(var(--u)*34) calc(var(--u)*40) 1fr auto;align-items:center;gap:calc(var(--u)*10);font:700 calc(var(--u)*19) var(--hd)}
+.br .n{color:var(--gold)}.br .a{font-size:calc(var(--u)*30)}.br em{font-style:normal;color:var(--mint)}
+.everyone{display:flex;flex-wrap:wrap;gap:calc(var(--u)*10);align-content:flex-start;max-height:calc(var(--u)*330);overflow:hidden}
+.pp{display:flex;flex-direction:column;align-items:center;width:calc(var(--u)*92);animation:avpop .6s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i)*40ms)}
+.pp i{font-style:normal;width:calc(var(--u)*64);height:calc(var(--u)*64);border-radius:50%;background:#fff;display:grid;place-items:center;font-size:calc(var(--u)*38)}
+.pp span{font:600 calc(var(--u)*13)/1.2 var(--hd);text-align:center;margin-top:calc(var(--u)*4);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kudos{display:flex;flex-wrap:wrap;gap:calc(var(--u)*10);margin-top:calc(var(--u)*14);align-content:flex-start;overflow:hidden;flex:1;min-height:0}
+.kudos .chip{font-size:calc(var(--u)*18);padding:calc(var(--u)*10) calc(var(--u)*16)}
+.ecount{font:800 calc(var(--u)*20) var(--hd);color:var(--gold);margin-bottom:calc(var(--u)*10)}
+/* audience game */
+.me-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:99px;padding:4px 12px 4px 4px;font:600 13px var(--hd)}
+.me-badge i{font-style:normal;font-size:22px;width:32px;height:32px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.me-badge b{color:var(--gold)}
+.avgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:6px 0 14px}
+.avgrid button{font-size:28px;aspect-ratio:1;border-radius:14px;border:2px solid #dfe2ee;background:#fff}
+.avgrid button.sel{border-color:var(--blue);background:#e8ebff;transform:scale(1.08)}
+.qfb{margin-top:12px;border-radius:14px;padding:12px 14px;font:700 16px var(--hd)}
+.qfb.ok{background:#dcf7f2;color:#0d6b5f}.qfb.no{background:#ffe6dc;color:#9a3412}.qfb.wait{background:var(--mist);color:var(--mute)}
+.opt.lock{opacity:.55}.opt.lock.sel{opacity:1}
+
+/* ---------- CULTURE FLYWHEEL ---------- */
+.cultg{display:grid;grid-template-columns:calc(var(--u)*840) 1fr;gap:calc(var(--u)*24);flex:1;min-height:0;align-items:center}
+.fw{position:relative;width:calc(var(--u)*580);height:calc(var(--u)*580);margin:0 auto}
+.fw .ring{position:absolute;inset:calc(var(--u)*50);border-radius:50%;border:calc(var(--u)*5) dashed rgba(31,47,158,.35);animation:spin 40s linear infinite}
+.fw .orb{position:absolute;inset:calc(var(--u)*50);animation:spin 7s linear infinite}
+.fw .orb::before{content:'';position:absolute;top:calc(var(--u)*-12);left:50%;translate:-50% 0;width:calc(var(--u)*22);height:calc(var(--u)*22);border-radius:50%;background:var(--amber);box-shadow:0 0 calc(var(--u)*20) var(--amber)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fw .core{position:absolute;inset:calc(var(--u)*175);border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-align:center;padding:calc(var(--u)*16);animation:breathe 4s ease-in-out infinite}
+.fw .core b{display:block;font:800 calc(var(--u)*27)/1.1 var(--hd);color:var(--amber)}
+.fw .core span{font-size:calc(var(--u)*14);opacity:.85}
+@keyframes breathe{50%{transform:scale(1.05);box-shadow:0 0 0 calc(var(--u)*18) rgba(20,31,110,.12)}}
+.fn{position:absolute;width:calc(var(--u)*270);background:#fff;color:var(--ink);border-radius:calc(var(--u)*18);padding:calc(var(--u)*12) calc(var(--u)*16);box-shadow:0 14px 30px rgba(20,31,110,.18);border-top:calc(var(--u)*6) solid var(--c)}
+.fn .nb{display:inline-grid;place-items:center;width:calc(var(--u)*30);height:calc(var(--u)*30);border-radius:50%;background:var(--c);color:var(--ink);font:800 calc(var(--u)*15) var(--hd);margin-right:calc(var(--u)*8)}
+.fn b{font:800 calc(var(--u)*19)/1.2 var(--hd)}
+.fn p{margin:calc(var(--u)*6) 0 0;font-size:calc(var(--u)*15);line-height:1.35}
+.fn.n1{top:calc(var(--u)*-10);left:50%;margin-left:calc(var(--u)*-135)}
+.fn.n2{top:50%;right:calc(var(--u)*-150);margin-top:calc(var(--u)*-70)}
+.fn.n3{bottom:calc(var(--u)*-10);left:50%;margin-left:calc(var(--u)*-135)}
+.fn.n4{top:50%;left:calc(var(--u)*-150);margin-top:calc(var(--u)*-70)}
+.fw .step.fn{transform:scale(.6)}.fw .step.fn.shown{transform:none}
+.outc{display:flex;flex-direction:column;gap:calc(var(--u)*12)}
+.outc h3{margin:0;font:800 calc(var(--u)*28)/1.15 var(--hd);color:var(--navy)}
+.srcs2{font-size:calc(var(--u)*13);color:var(--mute)}
+.tiles.five{grid-template-columns:repeat(5,minmax(0,1fr));margin-top:calc(var(--u)*40)}
+.tiles.five .tl{padding:calc(var(--u)*26) calc(var(--u)*22);min-height:calc(var(--u)*420)}
+.tiles.five .tl b{font-size:calc(var(--u)*80)}
+.tiles.five .tl p{font-size:calc(var(--u)*20)}
+.port .cultg,.port .appr{grid-template-columns:1fr}
+.port .fw{width:calc(var(--u)*420);height:auto;display:flex;flex-direction:column;gap:12px}
+.port .fw .ring,.port .fw .orb{display:none}
+.port .fw .core,.port .fn{position:relative;inset:auto;top:auto;left:auto;right:auto;bottom:auto;margin:0;width:auto}
+.port .tiles.five{grid-template-columns:1fr}
+.port .tiles.five .tl{min-height:0}
+.port .qres{position:relative!important;right:auto;top:auto;width:auto;margin-top:calc(var(--u)*20)}
+.port .awards{grid-template-columns:1fr 1fr 1fr}
 
 /* ---------- STACKED LAYOUT (.port: HP/portrait host + mirror di HP peserta) ---------- */
 #host.port{--u:calc(100vw / 760)}
@@ -443,13 +531,18 @@ const SC = ['#f26b3a','#ffc23d','#ffffff','#8fa2ff','#5fd3c4'];
 const IMG = 'img/';
 
 const POLLS = {
-  g1:{type:'choice',q:'Berapa persen karyawan yang benar-benar menerapkan skill dari training di pekerjaannya?',opts:['Sekitar 12%','Sekitar 30%','Sekitar 50%','Sekitar 70%']},
+  g1:{type:'choice',ans:0,q:'Berapa persen karyawan yang benar-benar menerapkan skill dari training di pekerjaannya?',opts:['Sekitar 12%','Sekitar 30%','Sekitar 50%','Sekitar 70%']},
+  q2:{type:'choice',ans:2,q:'Kalau nggak dipakai, berapa banyak materi training yang hilang dari ingatan dalam 6 hari?',opts:['Sekitar 25%','Sekitar 50%','Sekitar 75%','Hampir 100%']},
+  q3:{type:'choice',ans:2,q:'Di model 70-20-10, angka 70 itu untuk apa?',opts:['Training formal di kelas','Belajar dari rekan dan atasan','Pengalaman dan tugas nyata','Belajar online mandiri']},
+  q4:{type:'choice',ans:2,q:'Karyawan yang manager-nya aktif mendukung AI, berapa kali lebih mungkin bilang cara kerjanya berubah?',opts:['1,5×','3×','8,7×','15×']},
   t1:{type:'choice',q:'Di kantormu, training itu lebih mirip…',opts:['Vitamin: rutin, tapi efeknya nggak kerasa','Obat: baru dikasih kalau ada masalah','Reward: buat yang performanya bagus','Kewajiban: ikut biar absen aman','Makan siang: bagian dari kerja sehari-hari']},
   x1:{type:'choice',q:'Dari 10-20-70, mana yang paling jarang jalan di kantormu?',opts:['10: training formal','20: belajar dari rekan (sharing, coaching, CoP)','70: belajar lewat project dan tugas nyata','Semuanya sudah jalan']},
   r1:{type:'choice',q:'Kalau ada yang salah di tim, reaksi pertama atasan biasanya…',opts:['Cari siapa yang salah','Langsung ambil alih: "sini, saya aja"','Diam, tapi dibahas di belakang','Tanya: "apa yang bisa kita pelajari?"']},
-  w1:{type:'text',q:'Satu hal kecil yang mau kamu mulai minggu depan?'}
+  w1:{type:'text',q:'Satu hal kecil yang mau kamu mulai minggu depan?'},
+  k1:{type:'text',q:'Kolom apresiasi: satu kalimat terima kasih buat siapa pun malam ini'}
 };
 const PID = Object.keys(POLLS);
+const AV = ['🐱','🐶','🦊','🐼','🐨','🐯','🦁','🐸','🐵','🐧','🦉','🦄','🐙','🐢','🐰','🐹','🐻','🐮','🐷','🐝','🦋','🐳','🦖','🐲','🦩','🦔','🦦','🐞','🤖','👾','🌵','🍄'];
 const L = 'ABCDEFGH';
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ls = {get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
@@ -493,7 +586,7 @@ const PLANTS = `<svg class="plants" viewBox="0 0 600 720" preserveAspectRatio="x
 const ybars = (rows, max, col, fmt) => rows.map(([y,v])=>`<div class="yb" style="--c:${col}"><span>${y}</span><i style="--w:${(v/max*100).toFixed(1)}%"></i><em>${fmt(v)}</em></div>`).join('');
 const lg = (f, alt) => `<div class="lg"><img src="${IMG}${f}" alt="${esc(alt)}"></div>`;
 
-/* ============ 15 SLIDES ============ */
+/* ============ 19 SLIDES ============ */
 const S = [
  /* 1 */ {cls:'',html:()=>`<div class="ribbon">Learning Fest <span>2026</span></div><div class="cover"><div style="display:flex;flex-direction:column">
    <div class="brand">hrstories <span class="tag">MEETUP-25</span> <span style="font-weight:600;opacity:.8">×</span> CIRCLE HR ITB</div>
@@ -501,12 +594,16 @@ const S = [
    <div class="sub">Coffee Talk & Networking Session</div>
    <div class="meta"><div><b>Erdo Deshiant Garnaby</b><span>OD & Culture Practitioner<br>Founder OD.ID & Circle HR ITB</span></div>
      <div><b>Kamis, 26 Nov 2026</b><span>19.30–21.30 WIB<br>Sekretariat PP IA-ITB</span></div></div>
+   <div class="joined"><div class="jl">Pilih avatar, ketik nama, ikut main · <span data-jc>0</span> sudah masuk</div><div class="avs" data-avs="*"></div></div>
   </div>
   <div class="cside"><div style="width:calc(var(--u)*260);height:calc(var(--u)*210)">${PLANTS}</div>${qrBox(600)}<div class="scan"><b>Scan, ikut voting dari HP</b><div class="url" data-short></div><div class="small soft">Nggak perlu login</div></div></div></div>`,
   notes:`<h4>Buka</h4>Satu kalimat: "Malam ini kita nggak bahas teori. Kita bahas kenapa training yang sama hasilnya bisa beda jauh." Minta semua scan QR sekarang. Slide di layar akan ikut tampil di HP mereka.`},
 
  /* 2 */ {poll:'g1',cls:'',kick:'Tebak',extra:()=>`<div class="reveal step"><b>12%</b><q>Only 12% of employees apply new skills learned in L&D programs to their jobs.</q><cite><b>Steve Glaveski</b>, "Where Companies Go Wrong with Learning and Development", Harvard Business Review, 2 Oktober 2019</cite></div>`,
   notes:`<h4>Hook</h4>Biarkan vote 30 detik. Bacakan tebakan terbanyak. Tekan → untuk memunculkan pop-up HBR: 12%. Jeda sebentar. "Jadi kalau 100 orang ikut training, yang benar-benar pakai ilmunya di kerjaan cuma sekitar 12."`},
+
+ /* 2q */ {poll:'q2',cls:'mist',kick:'Quiz · Forgetting curve',
+  notes:`<h4>Quiz cepat</h4>Biarkan 20–30 detik. Tekan → untuk membuka jawaban (75%) dan 3 penjawab tercepat. Slide berikutnya menjelaskan angkanya.`},
 
  /* 3 */ {cls:'mist',kick:'Trivia',html:()=>`<h2>Training happens. Learning doesn't stick.</h2>
   <div class="facts">
@@ -529,11 +626,14 @@ const S = [
      <div class="cn" style="--d:2"><i class="no">3</i><div class="lgs">${lg('logo_itb.png','ITB')}</div><b>ITB</b><span>Master Engineering</span></div>
      <div class="cn end" style="--d:3"><i class="no">4</i><div class="lgs">${lg('logo_fmc.png','FMC')}</div><b>FMC</b><span>Consultant</span></div>
      <div class="cn" style="--d:4"><i class="no">5</i><div class="lgs">${lg('logo_dwidaya.png','Dwidaya')}</div><b>Dwidaya</b><span>OD Manager</span></div>
-     <div class="cn tgx" style="--d:5"><i class="no">6</i><div class="lgs" style="max-width:50%">${lg('logo_tigaraksa.png','Tigaraksa Satria')}</div><b>Tigaraksa Satria Tbk</b>
+     <div class="cn tgx" style="--d:5"><i class="no">6</i><div class="lgs">${lg('logo_tigaraksa.png','Tigaraksa Satria')}</div><b>Tigaraksa Satria Tbk</b>
       <div class="mini">${['OD & Field Development Head','HR Development Head (OD, TD)','OD & HRBP BU','CoE Head (OD, TM)'].map((r,i)=>`<div style="--i:${i}">${r}</div>`).join('')}</div></div>
-     <div class="cn alto end" style="--d:6"><i class="no">7</i><div class="lgs">${lg('logo_alto.png','ALTO Network')}</div><b>ALTO Network</b><span>OD Head (OD, IR, TM)</span></div>
+     <div class="cn alto end" style="--d:6"><i class="no">7</i>
+      <div class="r7">${lg('logo_alto.png','ALTO Network')}<div><b>ALTO Network</b><span style="display:block">OD Head (OD, IR, TM)</span></div></div>
+      <div class="r7"><div class="lg nb"><img src="${IMG}logo_ugm.png" alt="FEB UGM"></div><span>MBA Candidate, FEB UGM</span></div>
+      <div class="r7">${lg('logo_tnyi.png','TNYI')}<span>TNYI Scholarship</span></div></div>
     </div>
-    <div class="edu"><span class="bd"><i>●</i> MBA Candidate, FEB UGM</span><span class="bd"><i>●</i> TNYI Scholarship</span><span class="bridge">From Organization Development to Community Development →</span></div>
+    <div class="edu"><span class="bridge">From Organization Development to Community Development →</span></div>
    </div>
   </div>`,
   notes:`<h4>Perkenalan (±2 menit)</h4><ul><li>Alur karier muncul otomatis satu per satu: ITB (S1 Farmasi) → Pharos & Nestlé → ITB (Master Engineering) → FMC → Dwidaya (OD Manager) → Tigaraksa (OD & Field Development Head → HR Development Head → OD & HRBP BU → CoE Head) → ALTO (OD Head).</li><li>Sekarang MBA candidate di FEB UGM, penerima TNYI Scholarship.</li><li>Jembatan ke slide berikut: dari Organization Development ke Community Development.</li></ul>`},
@@ -548,11 +648,15 @@ const S = [
     <p><b>Circle HR ITB</b>: sesama praktisi HR alumni ITB, saling belajar dan berbagi.</p></div>
   </div>
   <figure class="pz pza step"><img src="${IMG}odsummit2026_land.jpg" alt="Foto bersama peserta OD Summit 2026"><figcaption>OD Summit 2026 · The Grand Voyage<span>Agustus 2026, 200+ peserta</span></figcaption></figure>
-  <figure class="pz pzb step"><img src="${IMG}nobar_dilan1997_land.jpg" alt="Nonton bareng Dilan 1997 bersama HR ITB di bioskop"><figcaption>Nobar Dilan 1997 bareng HR ITB<span>Belajar nggak selalu di ruang kelas</span></figcaption></figure>`,
-  notes:`<h4>Komunitas (tekan → satu per satu)</h4><ul><li>Angka OD.ID naik otomatis ke 1.024. Sebut sister communities: PD.ID, TM.ID, CB.ID, IR.ID, plus Industrial Sector & Chapter. Semua join lewat orgdev.id.</li><li>Tekan → 1: Circle HR ITB, angka naik ke 586.</li><li>Tekan → 2: foto OD Summit 2026. Tekan → 3: foto nobar Dilan 1997.</li><li>Pesannya: dua komunitas ini jalan tanpa budget training. Orang tetap belajar karena ada ruang rutin untuk saling cerita.</li></ul>`},
+  <figure class="pz pzb step"><img src="${IMG}nobar_dilan1997_land.jpg" alt="Nonton bareng Dilan 1997 bersama HR ITB di bioskop"><figcaption>Nobar Dilan 1997 bareng HR ITB<span>Belajar nggak selalu di ruang kelas</span></figcaption></figure>
+  <figure class="pz pzc step"><img src="${IMG}postsummit2026.jpg" style="aspect-ratio:auto" alt="Foto bersama OD.ID Post Summit Event 2026"><figcaption>OD.ID × Stories of Asia · Post Summit Event 2026<span>Minggu lalu: book launch Good Attracts Good, tiket.com HQ</span></figcaption></figure>`,
+  notes:`<h4>Komunitas (tekan → satu per satu)</h4><ul><li>Angka OD.ID naik otomatis ke 1.024. Sebut sister communities: PD.ID, TM.ID, CB.ID, IR.ID, plus Industrial Sector & Chapter. Semua join lewat orgdev.id.</li><li>Tekan → 1: Circle HR ITB, angka naik ke 586.</li><li>Tekan → 2: foto OD Summit 2026. Tekan → 3: foto nobar Dilan 1997. Tekan → 4: foto OD.ID × Stories of Asia Post Summit Event minggu lalu (paling atas).</li><li>Pesannya: dua komunitas ini jalan tanpa budget training. Orang tetap belajar karena ada ruang rutin untuk saling cerita.</li></ul>`},
 
  /* 5 */ {poll:'t1',cls:'mist',kick:'Segmen 1 · Training banyak, kok nggak berubah?',
   notes:`<h4>Polling</h4>Kalau "Kewajiban" atau "Obat" banyak dipilih: training masih dianggap event, belum jadi bagian dari kerja. Bandingkan dengan "Makan siang": rutin, kecil, dan nggak perlu disuruh.`},
+
+ /* 5q */ {poll:'q3',cls:'',kick:'Quiz · 70-20-10',
+  notes:`<h4>Quiz</h4>Buka jawaban dengan →: 70 = pengalaman dan tugas nyata. Jembatan ke slide Tigaraksa: di sana setiap training masuk IDP 10-20-70.`},
 
  /* 6 */ {cls:'mist',kick:'Dari past company: Tigaraksa Satria Tbk',html:()=>`<h2>Peserta training naik 5×. Biayanya hampir sama.</h2>
   <div class="tgk"><div>
@@ -585,38 +689,39 @@ const S = [
   </div>`,
   notes:`<h4>Tren 2027 (tekan → satu per satu)</h4><ul><li>Korn Ferry: 65% pekerja mau bertahan kalau ada kesempatan belajar.</li><li>SkillPath: angka serupa, 73%.</li><li>Skill nomor satu 2027 menurut Korn Ferry: adaptability. QS juga bilang continuous learning jadi syarat karier jangka panjang.</li><li>Pesannya: learning culture bukan lagi urusan L&D saja, ini urusan retensi.</li></ul>`},
 
- /* 6c */ {cls:'mist',kick:'Manfaat & cara membangun',html:()=>`<h2>Kenapa perlu, dan mulai dari mana</h2>
-  <div class="build">
-   <div class="why step"><h3>Manfaat learning culture</h3>
-    <div class="hook2"><b>&lt;20%</b><span>of training transfers to the workplace when there's no learning culture around it.<br><small style="opacity:.75">ATD, "Developing a Learning Culture in Organizations" (Stephen J. Gill, 2015)</small></span></div>
-    <div class="bens">${[['Engagement dan morale naik','var(--amber)'],['Turnover turun','var(--coral)'],['Upskilling & reskilling jalan','var(--sky)'],['Produktivitas naik','var(--mint)'],['Tim lebih agile','var(--gold)'],['Talent ter-recruit dan bertahan','var(--blue)']].map(([t,c])=>`<div style="--c:${c}">${t}</div>`).join('')}</div>
+ /* 6c */ {cls:'mist',kick:'Bagaimana learning culture membentuk organization culture',html:()=>`<h2>From learning habits to organization culture</h2>
+  <div class="cultg"><div class="fw"><div class="ring"></div><div class="orb"></div>
+    <div class="core"><div><b>Organization Culture</b><span>"cara kita bekerja di sini"</span></div></div>
+    ${[['Leader behavior','Leader jadi contoh: duluan belajar, duluan bilang "saya belum tahu".','var(--amber)'],
+       ['Practices & rituals','IDP 10-20-70, retro, sharing session, onboarding yang mengajarkan cara belajar.','var(--sky)'],
+       ['Shared experience','Orang lihat hasilnya: ilmu dipakai, salah dibahas bareng, yang penasaran diapresiasi.','var(--mint)'],
+       ['Beliefs & norms','Lama-lama jadi keyakinan bersama: belajar itu bagian dari kerja, bukan tambahan.','var(--coral)']]
+      .map(([b,t,c],i)=>`<div class="fn n${i+1} step" style="--c:${c}"><span class="nb">${i+1}</span><b>${b}</b><p>${t}</p></div>`).join('')}
    </div>
-   <div class="how step"><h3>Cara membangunnya</h3>
-    <ol>${[['Leader jadi contoh','Leader ikut belajar dan dimintai tanggung jawab untuk perilaku belajar timnya.'],['Sambungkan belajar ke kerjaan','Setiap training punya project atau tugas nyata (10-20-70).'],['Mulai dari hari pertama','Onboarding sudah mengajarkan cara belajar di sini.'],['Apresiasi rasa penasaran','Yang bertanya dan mencoba hal baru diberi ruang, bukan dicap lambat.'],['Jadikan active learners champion','Orang yang rajin belajar diajak membagikan ke tim.'],['Investasi di leader dulu, baru di library','Konten banyak nggak ada gunanya kalau atasan nggak mendukung.']].map(([b,t],i)=>`<li style="--i:${i}"><div><b>${b}</b>${t}</div></li>`).join('')}</ol>
-    <div class="srcs">Diolah dari ATD (Gill, 2015) dan AIHR, "9 Tips to Create a Learning Culture" (2022). AIHR: membangun learning culture masuk 3 tantangan terbesar bagi 42% manager.</div>
-   </div>
-  </div>`,
-  notes:`<h4>Manfaat & cara (tekan → dua kali)</h4><ul><li>Tekan → 1: manfaat. ATD: kurang dari 20% training benar-benar terbawa ke kerjaan.</li><li>Tekan → 2: enam cara membangun. Tekankan nomor 1 dan 6: leader dulu, baru konten.</li><li>Referensi video: AIHR, "9 Tips to Create a Learning Culture" (YouTube, 2022).</li></ul>`},
+   <div class="outc step"><h3>Hasilnya</h3>
+    <div class="hook2"><b>&lt;20%</b><span>of training transfers to the workplace without a learning culture around it.<br><small style="opacity:.75">ATD (Stephen J. Gill, 2015)</small></span></div>
+    <div class="bens">${[['Engagement naik','var(--amber)'],['Turnover turun','var(--coral)'],['Upskilling jalan','var(--sky)'],['Produktivitas naik','var(--mint)'],['Tim lebih agile','var(--gold)'],['Talent bertahan','var(--blue)']].map(([t,c])=>`<div style="--c:${c};background:#fff">${t}</div>`).join('')}</div>
+    <div class="srcs2">Diolah dari Edgar Schein, Organizational Culture and Leadership; ATD (Gill, 2015); AIHR, "9 Tips to Create a Learning Culture" (2022).</div>
+   </div></div>`,
+  notes:`<h4>Flywheel budaya (tekan → lima kali)</h4><ol><li>Leader behavior: semua mulai dari apa yang leader lakukan, bukan yang leader katakan.</li><li>Practices & rituals: perilaku itu dibuat rutin, misalnya IDP 10-20-70 dan retro.</li><li>Shared experience: orang merasakan hasilnya bareng-bareng.</li><li>Beliefs & norms: lama-lama jadi keyakinan, "di sini belajar itu biasa".</li><li>Hasilnya: engagement, retensi, agility. Lingkaran berputar lagi, dan makin kuat setiap putaran.</li></ol>`},
 
- /* 6d */ {cls:'',kick:'Tren 2027 · Yang perlu HR tahu',html:()=>`<h2>AI makin cepat. Manusianya harus ikut belajar.</h2>
-  <div class="tiles">
-   <div class="row step">${[
+ /* 6cq */ {poll:'q4',cls:'',kick:'Quiz · AI & manager',
+  notes:`<h4>Quiz</h4>Jawaban: 8,7× (Gallup 2026, via Simitri). Buka dengan →, lalu masuk ke slide tren.`},
+
+ /* 6d */ {cls:'',kick:'Tren 2027 · Angka yang paling bikin kaget',html:()=>`<h2>AI makin cepat. Manusianya harus ikut belajar.</h2>
+  <div class="tiles five">${[
+    ['6%','of respondents say their senior leaders are fully prepared to guide AI-driven transformation','Korn Ferry, Talent Trends 2027','var(--mint)'],
     ['8.7×','Employees whose managers actively champion AI are 8.7× more likely to say it has transformed how they work','Gallup 2026, via Simitri Learning Trends Report 2027','var(--amber)'],
-    ['22%','Manager engagement in 2025, down from 30%: the steepest drop of any employee group','Gallup, via SkillPath Learning Trends 2027','var(--coral)'],
     ['13%','of manager time goes to developing employees','Deloitte, via SkillPath Learning Trends 2027','var(--sky)'],
-    ['6%','say senior leaders are fully prepared to guide AI-driven transformation','Korn Ferry, Talent Trends 2027','var(--mint)']].map(([b,p,c,col],i)=>`<div class="tl" style="--c:${col};--i:${i}"><b>${b}</b><p>${p}</p><cite>${c}</cite></div>`).join('')}</div>
-   <div class="row step">${[
-    ['7×','increase in demand for "the ability to use and manage AI tools" in US job postings in two years','SkillPath, Learning Trends 2027','var(--gold)'],
-    ['21%','of companies have already stopped hiring entry-level employees because of AI','Resume.org 2026, via Simitri Learning Trends Report 2027','var(--sky)'],
-    ['50%','of companies that cut headcount because of AI will rehire for similar functions by 2027','Gartner 2026, via Simitri Learning Trends Report 2027','var(--amber)'],
-    ['61% vs 34%','say development works for individuals, but only 34% have a connected, company-wide strategy','Simitri Group, Learning Trends Report 2027','var(--mint)']].map(([b,p,c,col],i)=>`<div class="tl" style="--c:${col};--i:${i}"><b>${b}</b><p>${p}</p><cite>${c}</cite></div>`).join('')}</div>
+    ['21%','of companies have already stopped hiring entry-level employees because of AI','Resume.org 2026, via Simitri Learning Trends Report 2027','var(--coral)'],
+    ['50%','of companies that cut headcount because of AI will rehire for similar functions by 2027','Gartner 2026, via Simitri Learning Trends Report 2027','var(--gold)']].map(([b,p,c,col],i)=>`<div class="tl step" style="--c:${col}"><b>${b}</b><p>${p}</p><cite>${c}</cite></div>`).join('')}
   </div>`,
-  notes:`<h4>Tren 2027 (tekan → dua kali, satu baris per tekan)</h4><ul><li>Baris 1, manager: tim yang manager-nya mendukung AI 8,7× lebih mungkin merasakan perubahan. Tapi engagement manager turun ke 22%, waktu untuk develop orang cuma 13%, dan cuma 6% leader yang siap.</li><li>Baris 2, skill dan sistem: permintaan skill AI naik 7×, 21% perusahaan berhenti rekrut entry-level, separuh yang PHK karena AI akan rekrut lagi. Dan 61% vs 34%: banyak program, sedikit sistem.</li><li>Pesannya: learning culture adalah cara menyiapkan orang untuk perubahan yang belum kelihatan.</li></ul>`},
+  notes:`<h4>Lima angka (tekan → satu per satu)</h4><ul><li>6%: hampir nggak ada leader yang merasa siap.</li><li>8,7×: padahal manager yang mendukung bikin beda besar.</li><li>13%: tapi waktu manager untuk develop orang cuma segini.</li><li>21%: entry-level mulai hilang, padahal di situ orang belajar judgement.</li><li>50%: dan separuh yang PHK karena AI akan rekrut lagi. Manusia tetap dibutuhkan, jadi harus terus belajar.</li></ul>`},
 
  /* 7 */ {poll:'r1',cls:'',kick:'Segmen 2 · Rasa aman buat salah dan bertanya',
   notes:`Kalau "Cari siapa yang salah" atau "Dibahas di belakang" banyak: "Ini bukan soal materi. Ini soal apa yang terjadi kalau orang ngaku belum bisa." Lanjut ke apa yang dilakukan leader.`},
 
- /* 8 */ {cls:'mist',kick:'Segmen 2 & 3 · Apa yang dilakukan tim yang terus tumbuh',html:()=>`<h2>Mulai dari leader, jalan lewat ritual kecil</h2>
+ /* 8 */ {cls:'mist',kick:'Segmen 2 & 3 · Apa yang dilakukan tim yang terus tumbuh',html:()=>`<h2>Start with leaders, sustain it with small rituals</h2>
   <div class="grow2"><div class="cards">
    <div class="card step" style="--c:var(--amber)"><h3>Duluan bilang "saya belum tahu"</h3><p>Kalau leader-nya nggak gengsi, tim juga nggak.</p></div>
    <div class="card step" style="--c:var(--blue)"><h3>Tanya "minggu ini belajar apa?"</h3><p>Di 1:1, bukan cuma "target gimana?".</p></div>
@@ -634,13 +739,30 @@ const S = [
   notes:`Tunggu jawaban masuk, lalu bacakan 3–4 yang menarik. Ini jembatan ke Open Floor.`},
 
  /* 10 */ {qa:true,cls:'',kick:'Open Floor & Closing',
-  notes:`<h4>Open Floor + penutup</h4>Pertanyaan dari HP audiens muncul di kanan, urut vote terbanyak. Klik pertanyaan untuk menandai yang sedang dibahas, × untuk menyembunyikan. Tutup dengan punchline: "Training itu event. Learning culture itu kebiasaan." Bacakan empat poin wrap-up, lalu ajak scan: orgdev.id (pilih OD.ID atau PD.ID) atau grup Telegram umum.`}
+  notes:`<h4>Open Floor + penutup</h4>Pertanyaan dari HP audiens muncul di kanan, urut vote terbanyak. Klik pertanyaan untuk menandai yang sedang dibahas, × untuk menyembunyikan. Tutup dengan punchline: "Training is an event. Learning culture is a habit." Bacakan empat poin wrap-up, lalu ajak scan: orgdev.id (pilih OD.ID atau PD.ID) atau grup Telegram umum.`},
+
+ /* 11 */ {poll:'k1',cls:'',kick:'Appreciation',html:()=>`<h2>Thank you, learners!</h2>
+  <div class="appr"><div>
+    <div class="awards">
+     <div class="aw" style="--c:var(--coral)" data-award="fast"><div class="t">⚡ Fastest</div><div class="a">🏁</div><b>–</b><span>&nbsp;</span></div>
+     <div class="aw" style="--c:var(--amber)" data-award="active"><div class="t">🔥 Most active</div><div class="a">🏁</div><b>–</b><span>&nbsp;</span></div>
+     <div class="aw" style="--c:var(--blue)" data-award="acc"><div class="t">🎯 Most accurate</div><div class="a">🏁</div><b>–</b><span>&nbsp;</span></div>
+    </div>
+    <div class="board" data-board><h4>Leaderboard</h4></div>
+   </div>
+   <div style="display:flex;flex-direction:column;min-height:0">
+    <div class="ecount"><span data-ecount>0</span> learners ikut main malam ini</div>
+    <div class="everyone" data-everyone></div>
+    <div class="ecount" style="margin:calc(var(--u)*14) 0 0">💛 Kolom apresiasi · kirim dari HP</div>
+    <div class="kudos" data-kudos="k1"></div>
+   </div></div>`,
+  notes:`<h4>Appreciation</h4><ul><li>Semua avatar dan nama yang ikut main muncul di kanan.</li><li>Umumkan tiga award: Fastest (paling sering jawab benar paling cepat), Most active (paling banyak vote, tanya, dan upvote), Most accurate (paling banyak quiz benar).</li><li>Ajak peserta mengisi kolom apresiasi dari HP. Kalimatnya muncul di kanan bawah bersama avatarnya.</li><li>Skor: benar 100 poin, bonus kecepatan 10–50 poin, setiap partisipasi 10 poin.</li></ul>`}
 ];
 
 function slideBody(s){
   if (s.html) return s.html();
-  if (s.qa) return `<div class="closing"><div><div class="punch">Training itu event.<br><span class="hl2">Learning culture itu kebiasaan.</span></div>
-    <div class="lead">Kelihatannya di Senin pagi, bukan di sertifikat.</div>
+  if (s.qa) return `<div class="closing"><div><div class="punch">Training is an event.<br><span class="hl2">Learning culture is a habit.</span></div>
+    <div class="lead">You see it on Monday morning, not on a certificate.</div>
     <div class="wrap3">${['Leader duluan bilang "saya belum tahu"','Salah dibahas, bukan dihukum','Tiap training masuk 10-20-70','Mulai dari satu ritual kecil'].map((t,i)=>`<span style="--i:${i}">${t}</span>`).join('')}</div>
     <div class="joins">
      <div class="jcard">${qrBox(400, ORGDEV)}<div><b>Gabung komunitas</b><div class="jlogos"><img src="${IMG}logo_odid.png" alt="OD.ID"><img src="${IMG}logo_pdid.png" alt="PD.ID"></div><div class="lk">orgdev.id</div><p>Pilih OD.ID atau PD.ID</p></div></div>
@@ -648,14 +770,15 @@ function slideBody(s){
     </div></div>
     <div class="qlist" data-qlist><div class="qhead">Pertanyaan dari kamu</div></div></div>`;
   const P = POLLS[s.poll]; let inner;
-  if (P.type==='choice') inner = `<div class="bars" data-bars="${s.poll}">${P.opts.map((o,i)=>`<div class="bar" data-i="${i}" style="--c:${C[i]}"><div class="k">${L[i]}</div><div class="track"><div class="fill"></div><div class="lbl">${esc(o)}</div></div><div class="pct">0%<small>0</small></div></div>`).join('')}</div>`;
+  if (P.type==='choice') inner = `<div class="bars" data-bars="${s.poll}">${P.opts.map((o,i)=>`<div class="bar${P.ans===i?' ans':''}" data-i="${i}" style="--c:${C[i]}"><div class="k">${L[i]}</div><div class="track"><div class="fill"></div><div class="lbl">${esc(o)}</div></div><div class="pct">0%<small>0</small></div></div>`).join('')}</div>`;
   else if (P.type==='scale') inner = `<div class="avgbox"><div class="avg" data-avg="${s.poll}">–</div><div class="lead soft">rata-rata dari 5</div></div>
     <div class="scaleWrap" data-scale="${s.poll}">${P.opts.map((o,i)=>`<div class="col" data-i="${i}" style="--c:${SC[i]}"><b>0</b><div class="colbar"></div><span>${o}</span></div>`).join('')}</div><div class="ends"><span>1 = ${esc(P.lo)}</span><span style="text-align:right">5 = ${esc(P.hi)}</span></div>`;
   else inner = `<div class="wall" data-wall="${s.poll}"></div>`;
   return `<div class="pollgrid"><div style="display:flex;flex-direction:column;min-height:0"><div class="pollq">${esc(P.q)}</div>${inner}</div>
-    <div class="pollside">${qrBox(600)}<div><div class="count" data-count="${s.poll}">0</div><div class="small soft">jawaban masuk</div></div></div></div>`;
+    <div class="pollside">${qrBox(600)}<div><div class="count" data-count="${s.poll}">0</div><div class="small soft">jawaban masuk</div></div><div class="avs" data-avs="${s.poll}"></div></div></div>`;
 }
-const slideHTML = i => { const s=S[i]; return `<section class="slide ${s.cls}" data-i="${i}">${WAVES(s.cls==='mist'||s.cls==='amber')}${s.kick?`<div class="kick">${esc(s.kick)}</div>`:''}${slideBody(s)}${s.extra?s.extra():''}</section>`; };
+const isQuiz = s => s.poll && POLLS[s.poll].ans!=null;
+const slideHTML = i => { const s=S[i], q=isQuiz(s); return `<section class="slide ${s.cls}" data-i="${i}">${WAVES(s.cls==='mist'||s.cls==='amber')}${s.kick?`<div class="kick">${esc(s.kick)}${q?'<span class="qz">⚡ Quiz: makin cepat benar, makin besar poinnya</span>':''}</div>`:''}${slideBody(s)}${q?`<div class="qres step" data-qres="${s.poll}"></div>`:''}${s.extra?s.extra():''}</section>`; };
 function countUp(root){ root.querySelectorAll('[data-to]').forEach(el=>{
   if (el.dataset.done==='1' || el.closest('.step:not(.shown)')) return; el.dataset.done='1';
   const to=+el.dataset.to, t0=performance.now(), d=2000;
@@ -666,11 +789,16 @@ function hydrate(el){ el.querySelectorAll('[data-qr]').forEach(qrInto); el.query
 /* ============ SHARED TALLY ENGINE ============ */
 function Engine(getRoot, opts={}){
   const V = {}; PID.forEach(p=>V[p]={});
-  const E = { Q:{}, U:{}, M:{}, R:{}, hid:new Set(), pin:null };
+  const E = { Q:{}, U:{}, M:{}, R:{}, P:{}, hid:new Set(), pin:null }; let seq=0;
+  E.V = V;
+  E.prof = id => E.P[id] || {n:'Tamu', av:'🙂'};
   E.ingest = (d,t) => {
     if (!d || typeof d!=='object' || typeof d.id!=='string') return false;
-    if ((d.k==='v'||d.k==='w') && V[d.p]) { const prev=V[d.p][d.id]; if(!prev||prev.t<=t) V[d.p][d.id] = {a: d.k==='w'? String(d.a).slice(0,60) : +d.a, t}; return true; }
-    if (d.k==='q' && typeof d.qid==='string') { E.Q[d.qid] = {t:String(d.t).slice(0,220), time:t}; return true; }
+    if (d.k==='j') { E.P[d.id] = {n:String(d.n||'Tamu').slice(0,20), av: AV.includes(d.av)?d.av:'🙂', t}; return true; }
+    if ((d.k==='v'||d.k==='w') && V[d.p]) { const prev=V[d.p][d.id];
+      if (POLLS[d.p].ans!=null && prev && prev.t >= (E.R[d.p]||0)) return true; /* quiz: jawaban pertama yang dihitung */
+      if(!prev||prev.t<=t) V[d.p][d.id] = {a: d.k==='w'? String(d.a).slice(0,60) : +d.a, t, s:seq++, id:d.id}; return true; }
+    if (d.k==='q' && typeof d.qid==='string') { E.Q[d.qid] = {t:String(d.t).slice(0,220), time:t, by:d.id}; return true; }
     if (d.k==='u' && typeof d.qid==='string') { (E.U[d.qid] ||= new Set()); d.on===false ? E.U[d.qid].delete(d.id) : E.U[d.qid].add(d.id); return true; }
     return false;
   };
@@ -680,6 +808,13 @@ function Engine(getRoot, opts={}){
     (E.M[p]||[]).forEach((m,i)=>{ if(i<n) c[i]+=m||0; });
     return {c, list, total: P.type==='text' ? list.length : c.reduce((a,b)=>a+b,0)};
   };
+  E.voters = p => Object.values(V[p]).filter(v=>v.t >= (E.R[p]||0)).sort((a,b)=>a.t-b.t||a.s-b.s);
+  E.fastest = p => { const P=POLLS[p]; return E.voters(p).filter(v=>v.a===P.ans); };
+  E.scores = () => { const S={}; const g=id=>S[id] ||= {id, correct:0, speed:0, act:0, total:0};
+    Object.keys(E.P).forEach(g);
+    PID.forEach(p=>{ E.voters(p).forEach(v=>g(v.id).act++); if (POLLS[p].ans!=null) E.fastest(p).forEach((v,r)=>{ const x=g(v.id); x.correct++; x.speed += Math.max(10, 50-r*5); }); });
+    Object.values(E.Q).forEach(q=>q.by && g(q.by).act++); Object.values(E.U).forEach(set=>set.forEach(id=>g(id).act++));
+    const L = Object.values(S); L.forEach(x=>x.total = x.correct*100 + x.speed + x.act*10); return L.sort((a,b)=>b.total-a.total); };
   E.questions = () => Object.entries(E.Q).filter(([id])=>!E.hid.has(id)).map(([id,q])=>({id,...q,n:(E.U[id]?E.U[id].size:0)})).sort((a,b)=>b.n-a.n||a.time-b.time);
   function renderPoll(root,p){
     const {c,list,total} = E.tally(p), max = Math.max(...c, 0);
@@ -690,7 +825,10 @@ function Engine(getRoot, opts={}){
     root.querySelectorAll(`[data-avg="${p}"]`).forEach(e=>{const s=c.reduce((a,v,i)=>a+v*(i+1),0); e.textContent = total ? (s/total).toFixed(1).replace('.',',') : '–';});
     root.querySelectorAll(`[data-wall="${p}"]`).forEach(w=>{ const items = list.sort((a,b)=>b.t-a.t).slice(0,40);
       const key = items.map(x=>x.t+x.a).join('|'); if (w.dataset.key===key) return; w.dataset.key=key; w.innerHTML='';
-      items.forEach((x,i)=>{const d=document.createElement('div');d.className='chip';d.style.setProperty('--c',['#ffffff','#1f2f9e','#f26b3a','#5fd3c4','#8fa2ff'][i%5]);if(i%5===1)d.style.color='#fff';d.textContent=x.a;w.appendChild(d)}); });
+      items.forEach((x,i)=>{const d=document.createElement('div');d.className='chip';d.style.setProperty('--c',['#ffffff','#1f2f9e','#f26b3a','#5fd3c4','#8fa2ff'][i%5]);if(i%5===1)d.style.color='#fff';d.textContent=E.prof(x.id).av+' '+x.a;w.appendChild(d)}); });
+    root.querySelectorAll(`[data-kudos="${p}"]`).forEach(w=>{ const items = list.sort((a,b)=>b.t-a.t).slice(0,24);
+      const key = items.map(x=>x.t+x.a).join('|'); if (w.dataset.key===key) return; w.dataset.key=key; w.innerHTML='';
+      items.forEach((x,i)=>{const d=document.createElement('div');d.className='chip';d.style.setProperty('--c',['#ffffff','#ffc23d','#5fd3c4','#8fa2ff'][i%4]);const pr=E.prof(x.id);d.textContent=pr.av+' '+pr.n+': '+x.a;w.appendChild(d)}); });
   }
   function renderQA(root){
     root.querySelectorAll('[data-qlist]').forEach(el=>{
@@ -704,8 +842,28 @@ function Engine(getRoot, opts={}){
         el.appendChild(d);});
     });
   }
+  const avHTML = (list, max) => { const shown=list.slice(-max); return shown.map(v=>{const p=E.prof(v.id||v); return `<span class="av" title="${esc(p.n)}">${p.av}</span>`;}).join('') + (list.length>max?`<span class="av more">+${list.length-max}</span>`:''); };
+  function renderGame(root){
+    root.querySelectorAll('[data-avs]').forEach(el=>{ const p=el.dataset.avs; const list = p==='*' ? Object.keys(E.P).sort((a,b)=>E.P[a].t-E.P[b].t) : E.voters(p);
+      const key = list.length+':'+(list.length?(list[list.length-1].id||list[list.length-1]):''); if (el.dataset.key===key) return; el.dataset.key=key;
+      el.innerHTML = avHTML(list, p==='*'?40:22); });
+    root.querySelectorAll('[data-jc]').forEach(e=>e.textContent=Object.keys(E.P).length);
+    root.querySelectorAll('[data-qres]').forEach(el=>{ const p=el.dataset.qres, P=POLLS[p], f=E.fastest(p), tot=E.voters(p).length;
+      el.innerHTML = `<h4>Jawaban benar: ${esc(P.opts[P.ans])}</h4><div class="okn">${f.length} dari ${tot} orang benar · 3 tercepat:</div><div class="pod">${f.slice(0,3).map((v,i)=>{const pr=E.prof(v.id);return `<div style="--i:${i}"><span>${['🥇','🥈','🥉'][i]}</span><i>${pr.av}</i>${esc(pr.n)}<em>+${150-i*5}</em></div>`;}).join('') || '<div>Belum ada yang benar</div>'}</div>`; });
+    const needs = root.querySelector('[data-board],[data-award],[data-everyone]'); if (!needs) return;
+    const sc = E.scores(), withAct = sc.filter(x=>x.act>0||E.P[x.id]);
+    const best = (k, tie) => [...withAct].sort((a,b)=>b[k]-a[k]||b[tie]-a[tie])[0];
+    const aw = {fast:[best('speed','correct'),'speed','poin kecepatan'], active:[best('act','total'),'act','partisipasi'], acc:[best('correct','speed'),'correct','quiz benar']};
+    root.querySelectorAll('[data-award]').forEach(el=>{ const [x,k,lab]=aw[el.dataset.award]; if(!x||!x[k]) return; const pr=E.prof(x.id);
+      el.querySelector('.a').textContent=pr.av; el.querySelector('b').textContent=pr.n; el.querySelector('span').textContent=x[k]+' '+lab; });
+    root.querySelectorAll('[data-board]').forEach(el=>{ el.innerHTML = '<h4>Leaderboard</h4>' + (sc.slice(0,5).map((x,i)=>{const pr=E.prof(x.id);return `<div class="br"><span class="n">#${i+1}</span><span class="a">${pr.av}</span><span>${esc(pr.n)}</span><em>${x.total}</em></div>`;}).join('') || '<div class="small soft">Belum ada skor.</div>'); });
+    root.querySelectorAll('[data-everyone]').forEach(el=>{ const ids = [...new Set([...Object.keys(E.P), ...sc.filter(x=>x.act>0).map(x=>x.id)])];
+      root.querySelectorAll('[data-ecount]').forEach(e=>e.textContent=ids.length);
+      const key=ids.join(','); if(el.dataset.key===key) return; el.dataset.key=key;
+      el.innerHTML = ids.slice(0,60).map((id,i)=>{const pr=E.prof(id);return `<div class="pp" style="--i:${i}"><i>${pr.av}</i><span>${esc(pr.n)}</span></div>`;}).join('') + (ids.length>60?`<div class="pp"><i>+${ids.length-60}</i></div>`:''); });
+  }
   let raf=0;
-  E.render = () => { if(raf) return; raf=requestAnimationFrame(()=>{raf=0; const root=getRoot(); if(!root) return; PID.forEach(p=>renderPoll(root,p)); renderQA(root);}); };
+  E.render = () => { if(raf) return; raf=requestAnimationFrame(()=>{raf=0; const root=getRoot(); if(!root) return; PID.forEach(p=>renderPoll(root,p)); renderQA(root); renderGame(root); opts.onRender&&opts.onRender();}); };
   return E;
 }
 function subscribe(topic, since, onMsg, onOpen, onErr){
@@ -804,14 +962,30 @@ function audience(){
   let me = ls.get('hrs25-me',''); if(!me){ me = Math.random().toString(36).slice(2)+Date.now().toString(36); ls.set('hrs25-me',me); }
   const mine = ls.get('hrs25-mine',{}), myUps = new Set(ls.get('hrs25-ups',[]));
   let st = null, shownSlide = -1, tab='live', busy=false, ok='';
+  let prof = ls.get('hrs25-prof', null);
   root.innerHTML = `<div class="atop"><span class="abrand">hrstories <span>#25</span> · Learning Culture</span><span id="ast">Menghubungkan…</span></div>
+    <div style="padding:10px 16px 0"><button class="me-badge hidden" id="meb"></button></div>
+    <div id="join"></div>
     <div class="tabs"><button data-t="live" class="on">Live</button><button data-t="qa">Tanya</button></div>
     <div id="vote"></div><div id="qa" class="hidden"></div><div id="live"><div class="livetag">● Slide di layar</div><div class="mirror" id="mirror"></div></div>`;
   const $ = id => document.getElementById(id);
-  const E = Engine(()=>$('mirror'));
+  const E = Engine(()=>$('mirror'), {onRender:()=>badge()});
+  function badge(){ const b=$('meb'); if(!prof){ b.classList.add('hidden'); return; } b.classList.remove('hidden');
+    const sc=E.scores(), r=sc.findIndex(x=>x.id===me), x=sc[r]; b.innerHTML=`<i>${prof.av}</i><span></span> · <b>${x?x.total:0} poin</b>${r>=0&&x.total?` · #${r+1}`:''}`; b.querySelector('span').textContent=prof.n; }
+  function drawJoin(){ const j=$('join'); const show=!prof || j.dataset.edit==='1';
+    ['vote','qa','live'].forEach(id=>$(id).classList.toggle('hidden', show || (id==='qa'?tab!=='qa':tab!=='live'))); root.querySelector('.tabs').classList.toggle('hidden', show);
+    if(!show){ j.innerHTML=''; return; }
+    let pick = prof?prof.av:AV[Math.floor(Math.random()*AV.length)];
+    j.innerHTML = `<div class="acard"><div class="hint">Ikut main</div><h2>Pilih avatar dan ketik namamu</h2><div class="avgrid">${AV.map(a=>`<button data-a="${a}" class="${a===pick?'sel':''}" aria-label="avatar ${a}">${a}</button>`).join('')}</div>
+      <input class="ainput" id="nm" maxlength="20" placeholder="Nama panggilan"><button class="abtn" id="go">Masuk</button><div class="ok" style="color:var(--mute)">Avatarmu muncul di layar setiap kamu menjawab. Jawab quiz paling cepat dan benar untuk naik leaderboard.</div></div>`;
+    j.querySelector('#nm').value = prof?prof.n:'';
+    j.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{ pick=b.dataset.a; j.querySelectorAll('[data-a]').forEach(x=>x.classList.toggle('sel',x===b)); });
+    j.querySelector('#go').onclick=()=>{ const n=j.querySelector('#nm').value.trim(); if(!n){ j.querySelector('#nm').focus(); return; }
+      prof={n:n.slice(0,20),av:pick}; ls.set('hrs25-prof',prof); j.dataset.edit=''; const m={k:'j',id:me,...prof}; E.ingest(m,Date.now()/1000); post(TV,m).catch(()=>{}); drawJoin(); drawTab(); badge(); }; }
+  $('meb').onclick=()=>{ $('join').dataset.edit='1'; drawJoin(); };
   root.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t; ok=''; root.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b)); drawTab();});
 
-  function drawTab(){ $('live').classList.toggle('hidden', tab!=='live'); $('vote').classList.toggle('hidden', tab!=='live'); $('qa').classList.toggle('hidden', tab!=='qa'); if(tab==='qa') drawQA(); else drawVote(); }
+  function drawTab(){ if(!prof || $('join').dataset.edit==='1') return drawJoin(); $('live').classList.toggle('hidden', tab!=='live'); $('vote').classList.toggle('hidden', tab!=='live'); $('qa').classList.toggle('hidden', tab!=='qa'); if(tab==='qa') drawQA(); else drawVote(); }
   function drawMirror(){
     const m = $('mirror');
     if (!st){ m.innerHTML = `<div class="acard wait" style="margin:0 16px"><svg viewBox="0 0 120 120"><rect x="56" y="40" width="8" height="50" rx="4" fill="#5fd3c4"/><path d="M60 60 C70 44 92 44 98 54 C86 62 70 64 60 60Z" fill="#5fd3c4"/><path d="M60 72 C50 56 28 56 22 66 C34 74 50 76 60 72Z" fill="#8fa2ff"/><circle cx="60" cy="34" r="10" fill="#f7a823"/><path d="M34 90h52l-6 26H40z" fill="#f7a823"/></svg><h2>Sebentar lagi mulai</h2><p style="color:var(--mute)">Slide dari layar akan muncul di sini otomatis.</p></div>`; return; }
@@ -828,8 +1002,11 @@ function audience(){
   function drawVote(){
     const b = $('vote'); const p = st && st.poll, P = POLLS[p];
     if (!P) { b.innerHTML=''; return; }
-    let html = `<div class="acard"><div class="hint">Vote sekarang</div><h2></h2>`;
-    if (P.type==='choice') html += P.opts.map((o,i)=>`<button class="opt ${mine[p]===i?'sel':''}" data-i="${i}" style="--c:${C[i]}" ${busy?'disabled':''}><span class="k">${L[i]}</span><span></span></button>`).join('');
+    const quiz = P.ans!=null, locked = quiz && mine[p]!=null, revealed = quiz && st.step>=1;
+    let html = `<div class="acard"><div class="hint">${quiz?'⚡ Quiz · jawab cepat':'Vote sekarang'}</div><h2></h2>`;
+    if (P.type==='choice') html += P.opts.map((o,i)=>`<button class="opt ${mine[p]===i?'sel':''} ${locked?'lock':''}" data-i="${i}" style="--c:${C[i]}" ${busy||locked?'disabled':''}><span class="k">${L[i]}</span><span></span></button>`).join('');
+    if (quiz && locked) { const f=E.fastest(p), r=f.findIndex(v=>v.id===me);
+      html += revealed ? (mine[p]===P.ans ? `<div class="qfb ok">✅ Benar! +${100+Math.max(10,50-Math.max(r,0)*5)} poin${r>=0?` · kamu #${r+1} tercepat`:''}</div>` : `<div class="qfb no">Belum tepat. Jawaban benar: ${esc(P.opts[P.ans])}</div>`) : `<div class="qfb wait">Jawaban terkunci. Tunggu jawaban benar dibuka di layar.</div>`; }
     else if (P.type==='scale') html += `<div class="scl">${P.opts.map((o,i)=>`<button class="opt ${mine[p]===i?'sel':''}" data-i="${i}" ${busy?'disabled':''}>${o}</button>`).join('')}</div><div class="ends2"><span>1 = ${esc(P.lo)}</span><span style="text-align:right">5 = ${esc(P.hi)}</span></div>`;
     else html += `<input class="ainput" id="wt" maxlength="60" placeholder="Contoh: retro 30 menit tiap Jumat"><button class="abtn" id="ws" ${busy?'disabled':''}>Kirim</button>`;
     html += `<div class="ok">${esc(ok)}</div></div>`;
@@ -859,9 +1036,10 @@ function audience(){
     E.R = d.R||{}; E.M = d.M||{}; E.hid = new Set(Array.isArray(d.hid)?d.hid:[]); E.pin = d.pin||null;
     st = {slide:d.slide, step:+d.step||0, poll:POLLS[d.poll]?d.poll:null};
     if (pollChanged) ok='';
-    drawMirror(); if (tab==='live' && (pollChanged || !document.querySelector('#wt:focus'))) drawVote();
+    drawMirror(); if (tab==='live' && prof && $('join').dataset.edit!=='1' && (pollChanged || !document.querySelector('#wt:focus'))) drawVote();
   }, ()=>stEl.textContent='Terhubung', ()=>stEl.textContent='Menyambung ulang…');
-  subscribe(TV, 'all', (d,t)=>{ if(!E.ingest(d,t)) return; E.render(); if(tab==='qa' && document.activeElement?.id!=='qt' && (d.k==='q'||d.k==='u')) drawQA(); });
+  if (prof) post(TV,{k:'j',id:me,...prof}).catch(()=>{});
+  let qT=0; subscribe(TV, 'all', (d,t)=>{ if(!E.ingest(d,t)) return; E.render(); if(prof && tab==='live' && st && st.poll && POLLS[st.poll].ans!=null){ clearTimeout(qT); qT=setTimeout(drawVote,300); } if(tab==='qa' && document.activeElement?.id!=='qt' && (d.k==='q'||d.k==='u')) drawQA(); });
   drawMirror(); drawTab();
 }
 
